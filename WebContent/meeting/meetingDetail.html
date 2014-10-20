@@ -1,0 +1,248 @@
+<div class="report-s">
+	<h5><font>${(meetingMaster.MeetingContent)!}</font><span></span></h5>
+    <div class="report-s-con">    		
+            
+            <div class="del">
+            	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              	<tr>
+                <td align="left" valign="top">
+	                
+	                <table width="100%" border="0" cellspacing="1" cellpadding="0" class="meetingDel-tab">
+	                  <tr>
+	                  	<th>会议详情：</th>
+	                  	<td>${(meetingMaster.MeetingDetail)!}</td>
+	                  </tr>
+	                  <tr>
+	                    <th>会议地址：</th>
+	                    <td>${(meetingMaster.MeetingLocation)!}</td>
+	                  </tr>
+	                  <tr>
+	                    <th>会议时间：</th>
+	                    <td>${(meetingMaster.MeetingDate)!}<b style="padding-left:10px">${(meetingMaster.MeetingTime)!}</b></td>
+	                  </tr>
+	                  <tr>
+	                    <th>参会人员：</th>
+	                    <td>
+	                    	<#list meetingIndex as object>
+	                    		<#if (object.ObjectClass==1)>
+	                    		<i>${(object.ObjectName)!}</i>
+	                    		</#if>	
+	                    	</#list>
+	                    </td>
+	                  </tr>
+	                  <tr>
+	                    <th>传阅人员：</th>
+	                    <td>
+	                    	<#list meetingIndex as object>
+	                    		<#if (object.ObjectClass==2)>
+	                    		<i>${(object.ObjectName)!}</i>
+	                    		</#if>	
+	                    	</#list>
+	                    </td>
+	                  </tr>
+	                  <tr>
+	                    <th>会议发起人：</th>
+	                    <td>${(meetingMaster.Caption)!}</td>
+	                  </tr>
+	                </table>
+	                <div class="fileFont"><h4><img src="lib/images/links.png" width="17" height="17" />附件：</h4></div>
+	                <div class="img">
+	                    <div id ="attachList">
+	                    <#if (userID==meetingMaster.CreateUserID)>
+	                    	<#list (meetingAttach)! as attach>
+	                    		<div class="addList" onclick="viewAttach(this)" attach-id="${(attach.AttachID)!}"><a class="free" onclick="delAttach(this)" title="移除此附件"></a><i><img src="../disk/lib/images/file_type/document/log.gif"/></i><p>${(attach.AttachmentName)!}</p></div>
+	                    	</#list>
+	                    <#else>
+	                    	<#list (meetingAttach)! as attach>
+	                    		<div class="addList" onclick="viewAttach(this)" attach-id="${(attach.AttachID)!}"><a class="free" onclick="downloadAttach(this)" title="下载附件"></a><i><img src="../disk/lib/images/file_type/document/log.gif"/></i><p>${(attach.AttachmentName)!}</p></div>
+	                    	</#list>
+	                    </#if>
+	              		</div>
+	              		<#if (userID==meetingMaster.CreateUserID)>
+	              			<a id="attUpload" class="addList-oper" onclick="uploadAttach()" title="添加附件"></a>
+	                    	<form id="attachForm" name="attachForm" style="display:none" enctype="multipart/form-data">
+				      			<input id="attachFile" name="attachFile" type="file" />
+				      		</form>
+				      	</#if>
+	              	</div>
+	            </td>
+                <td align="left" valign="top" style="width:120px; padding-left:10px;">
+                	
+                    <div>
+                    	<div class="reg-link-ti">操作</div>
+                        <div>
+                        	<#if (meetingMaster.MarkImportantTime=="")>
+                        		<div class="reg-hi"><a onClick="markImportant(1)" class="report-links check"><i class="reg-linkIco ico03"></i><b>设为重要</b></a></div>
+                        	<#else>
+                        		<div class="reg-hi"><a onClick="markImportant(2)" class="report-links"><i class="reg-linkIco ico03"></i><b>取消重要</b></a></div>
+                        	</#if>
+                            <#if (meetingMaster.MarkSignTime=="")>
+                           		<div class="reg-hi"><a onClick="markSign()" class="report-links check"><i class="reg-linkIco ico01"></i><b>签收</b></a></div>
+                           	<#else>
+                           		<div class="reg-hi"><a class="report-links"><i class="reg-linkIco ico01"></i><b>已签收</b></a></div>
+                            </#if>
+                            <#if (userID==meetingMaster.CreateUserID)>
+                            	<div class="reg-hi"><a onClick="delMeeting()" class="report-links"><i class="reg-linkIco ico02"></i><b>删除</b></a></div>
+                            </#if>
+                        </div>
+                    </div>
+                    
+                </td>
+              </tr>
+            </table>            
+            
+    </div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#attachFile").change(function() {
+		var fileInfo = $("#attachFile").val().split('.');
+        var fileType = fileInfo[fileInfo.length-1].toLowerCase();
+        if(!(fileType =='exe' || fileType=='com' || fileType=='bat' || fileType=='sh' || fileType=='msi')){ //控制不能上传执行文件
+        	$("#attachForm").ajaxSubmit({
+                url: "../meeting/uploadAttach?meetingID="+${(meetingMaster.MeetingID)!},
+                type: "post",
+                dataType: "json",
+                resetForm: "true",
+                beforeSubmit: function() {
+                	$("#attUpload").hide();
+                },
+                success: function(data) {
+                    if(data.Result){
+                    	alert(data.Msg);
+                    	$("#attUpload").show();
+                    	var html='<div onclick="viewAttach(this)" class="addList" attach-id="'+data.AttachInfo.AttachID+'"><a class="free" onclick="delAttach(this)" title="移除此附件"></a><i><img src="../disk/lib/images/file_type/document/log.gif"/></i><p>'+data.AttachInfo.AttachmentName+'</p></div>';
+						$("#attachList").prepend(html);
+                    }else{
+                    	alert(data.Msg);
+                    	$("#attUpload").show();
+                    }
+                },
+                error: function(jqXHR, errorMsg, errorThrown) {
+                    alert(errorMsg);
+                }
+            });
+        }else{
+        	alert("不允许上传可执行文件！");
+        	return;
+        }
+	});
+});
+
+function uploadAttach(){
+	$("#attachFile").click();
+}
+
+function viewAttach(obj){
+	var attachID= $(obj).attr("attach-id");
+	if(attachID>0){
+		$.ajax({
+            url: "../meeting/getAttachFileURL",
+            type: "GET",
+            dataType: "json",
+            data: {
+				attachID : attachID
+            	},
+            success: function(data) {
+            	window.open('../preview/filePreview?dir='+data.FilePath+'&fileName='+data.FileName,'_new', '');                           	
+            }
+		});
+	}else{
+		alert("请选择需要查看的会议附件！");
+	}
+}
+
+function delAttach(obj){
+	var attachID= $(obj).parent().attr("attach-id");
+	if(attachID>0){
+		$.ajax({
+            url: "../meeting/delAttachFile",
+            type: "GET",
+            dataType: "json",
+            data: {
+				attachID : attachID
+            	},
+            success: function(data) {
+            	if(data.Result){
+					alert(data.Msg);
+					$(obj).parent().remove();
+            	}else{
+            		alert(data.Msg);	
+            	}                            	
+            }
+		});
+	}else{
+		alert("请选择需要删除的会议附件！");
+	}
+}
+
+function downloadAttach(obj){
+	var attachID= $(obj).parent().attr("attach-id");
+	if(attachID>0){
+		$.ajax({
+            url: "../meeting/getAttachFileURL",
+            type: "GET",
+            dataType: "json",
+            data: {
+				attachID : attachID
+            	},
+            success: function(data) {
+            	try{
+               	   var elemIF = document.createElement("iframe");
+               	   elemIF.src = data.FileURL;
+               	   elemIF.style.display = "none";
+               	   document.body.appendChild(elemIF);
+                }catch(e){
+                 	
+                }                           	
+            }
+		});
+	}else{
+		alert("请选择需要下载的会议附件！");
+	}
+}
+
+function markImportant(operateType){
+	$.ajax({
+        url: "../meeting/markImportant",
+        type: "POST",
+        dataType: "json",
+        data: {
+        	operateType : operateType,
+        	meetingID : ${(meetingMaster.MeetingID)!}
+        	},
+        success: function(data) {
+            alert(data.Msg);
+        }
+    });	
+}
+
+function markSign(){
+	$.ajax({
+        url: "../meeting/markSign",
+        type: "POST",
+        dataType: "json",
+        data: {
+        	meetingID : ${(meetingMaster.MeetingID)!}
+        	},
+        success: function(data) {
+            alert(data.Msg);
+        }
+    });
+}
+
+function delMeeting(){
+	$.ajax({
+        url: "../meeting/delMeeting",
+        type: "POST",
+        dataType: "json",
+        data: {
+        	meetingID : ${(meetingMaster.MeetingID)!}
+        	},
+        success: function(data) {
+            alert(data.Msg);
+        }
+    });
+}
+</script>
+

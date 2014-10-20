@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>用户注册</title>
+<link href="../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/register.css" type="text/css" rel="stylesheet" />
+<script src="../lib/javascript/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+var type = '${(type)!}';
+var interfaceUrl = '${(interfaceUrl)!}'
+
+document.onkeydown = function(e) {
+    // 兼容FF和IE和Opera
+    var theEvent = e || window.event;
+    var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+    if (code == 13 && (document.activeElement.type == 'text' || document.activeElement.type == 'password')) {
+    	submitLogin(); //要触发的方法
+        return false;
+    }
+    return true;
+}
+
+$(function(){
+	
+	$('#MobilePhone1').blur(function(){
+		var urlStr = interfaceUrl+"UserRegisterCorpList";
+    	$.ajax({
+				url: urlStr,
+	            type: "GET",
+				dataType: "jsonp",
+		        jsonp: "Callbackparam",
+				data: {mobilePhone:this.value},
+		        success: function(result) {
+					$('#CorpList option').remove();
+					if(result.Data.length>0){
+						for(var i=0;i<result.Data.length;i++){
+							$('#CorpList').append("<option value='"+result.Data[i].columns.CorpID+"'>"+result.Data[i].columns.CorpName+"</option>");
+						}
+						$('#CorpList').removeAttr("disabled");
+					}else{
+						$('#CorpList').attr("disabled","disabled");
+					}
+		        }	
+			});
+    });
+    
+	function switchStyle(){
+		$(".reg-frame").each(function(){
+			$(this).bind("click", function(){
+					$(".reg-frame").addClass("reg-color");
+					$(this).removeClass("reg-color");
+					$(".reg-subBtn").addClass("green");
+					$(this).find(".reg-subBtn").removeClass("green");
+					$(".reg-frame .font").addClass("reg-font01");
+					$(this).find(".font").removeClass("reg-font01");
+					$(this).find(".font").addClass("reg-font");
+			});	
+		});
+	}
+	switchStyle();
+	
+	if(type=='retrieve'){
+		$("#retrieveDiv").trigger("click");
+	}else{
+		$("#registerDiv").trigger("click");
+	}	
+});
+
+function userRegister(){
+	if($('#MobilePhone1').val()==''){
+		alert('请输入注册的手机号！');
+	}else if($('#CorpList option').length==0){
+		alert('请选择需要注册的组织！');
+	}else{
+		var urlStr = interfaceUrl+"UserCorpRegister";
+    	$.ajax({
+				url: urlStr,
+	            type: "GET",
+				dataType: "jsonp",
+		        jsonp: "Callbackparam",
+				data: {mobilePhone:$('#MobilePhone1').val(),corpID:$("#CorpList").val()},
+		        success: function(result) {
+					alert(result.Msg);
+		        }	
+			});
+	}
+}
+
+function retrievePassword(){
+	if($('#MobilePhone2').val()==''){
+		alert('请输入注册时的手机号！');
+	}else{
+		var urlStr = interfaceUrl+"RetrievePassword";
+    	$.ajax({
+				url: urlStr,
+	            type: "GET",
+				dataType: "jsonp",
+		        jsonp: "Callbackparam",
+				data: {mobilePhone:$('#MobilePhone2').val()},
+		        success: function(result) {
+					alert(result.Msg);
+		        }	
+			});
+	}
+}
+</script>
+</head>
+
+<body class="bodyBack">
+
+<!-- Start of toppart -->
+<div class="fontLeft register-top">
+	<div class="register-t-f"><a href="../login.html">返回首页</a></div>
+	<div  class="register-margin">
+        <div class="register-t-pad">
+        
+        </div>
+    </div>
+</div>
+<!-- End of toppart -->
+
+
+<!-- Start of con -->
+<div class="comMarginTop01 fontLeft">
+	<div  class="register-margin">
+    	
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="left" valign="top">
+            	<div class="reg-frame" id="registerDiv">
+                	<div class="reg-title">用户注册</div>
+                    <div class="reg-content">
+                        <div class="reg-li"><label>手机号码：</label><input id="MobilePhone1" type="text" class="reg-input"/></div>
+                        <div class="reg-li"><label>注册组织：</label><select id="CorpList" class="reg-select" disabled="disabled">
+                                        </select>
+                        </div>
+                        <div class="reg-li"><label></label><span class="font reg-font">您好，初始密码将通过短信发送到您注册的手机!</span></div>
+                        <div class="reg-li"><label></label><a onclick="userRegister()" class="reg-subBtn">注册</a></div>
+                    </div>
+            	</div>
+            </td>
+            <td align="left" valign="top" style="width:52%; padding-left:30px;">
+            	<div class="reg-frame reg-color" id="retrieveDiv">
+                	<div class="reg-title">忘记密码</div>
+                    <div class="reg-content">
+                        <div class="reg-li"><label>手机号码：</label><input id="MobilePhone2" type="text" class="reg-input"/></div>
+                        <div class="reg-li"><label>找回方式：</label><select name="" class="reg-select" disabled="disabled">
+                                          <option>短信找回</option>
+                                          <option>邮箱找回</option>
+                                        </select>
+                        </div>
+                        <div class="reg-li"><label></label><span class="font reg-font01">您好，当前密码将通过短信发送到您注册的手机！</span></div>
+                        <div class="reg-li"><label></label><a onclick="retrievePassword()" class="reg-subBtn green">找回密码</a></div>
+                    </div>
+            	</div>
+            </td>
+          </tr>
+        </table>
+    
+    </div>
+</div>
+<!-- End of con -->
+
+<!-- Start of footer -->
+<div id="footer" class="comMarginTop01 com-footer">
+</div>
+<!-- End of footer -->
+<script type="text/javascript">
+		
+	$(function() {
+		$("#footer").load("../footer");
+	});
+</script>
+</body>
+</html>

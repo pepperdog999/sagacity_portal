@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="application">
+	<sql id="getCorpApps">
+		select distinct a.AppID,a.AppName,a.Desc,a.ICON_URL,a.WEB_URL,a.WEB_ICON
+		from app_baseinfo a
+		left join app_corpassign ca on ca.AppCode=a.AppCode
+		where (a.corpID=? or ca.CorpID=? or a.blnDefault=1) and (a.WEB_URL is not null) and a.intState=1
+	</sql>
+</sqlGroup>
+

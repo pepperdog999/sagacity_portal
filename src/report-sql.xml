@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="report">
+	<sql id="getReportSummary">
+		select 'processing' type,count(rm.ReportingID) count
+		from reporting_master rm
+		left join reporting_userindex rui on rui.ReportingID = rm.ReportingID
+		where rui.UserID=?
+		union 
+		select 'created' type,count(rm.ReportingID) count
+		from reporting_master rm
+		where rm.createUserID=?
+	</sql>
+	<sql id="getProcessingList-select">
+		select DISTINCT rm.ReportingID,rm.ReportingContent,rm.CreateTime,rm.CreateUserID,u.Caption
+		,CONCAT(REVERSE(RIGHT(REVERSE(ra.AttachURL),LENGTH(ra.AttachURL)-INSTR(REVERSE(ra.AttachURL),'/')+1)),"/preview",REVERSE(LEFT(REVERSE(ra.AttachURL),INSTR(REVERSE(ra.AttachURL),'/')))) AttachURL
+	</sql>
+	<sql id="getProcessingList-from">
+		from reporting_master rm
+		left join sys_users u on rm.CreateUserID=u.UserID
+		left join (select min(AttachID),ReportingID,AttachURL,AttachType from reporting_attachment group by ReportingID) ra 
+			on ra.ReportingID=rm.ReportingID and ra.AttachType=1
+		left join reporting_userindex rui on rui.ReportingID = rm.ReportingID
+		where rui.UserID=?
+		order by rm.CreateTime DESC
+	</sql>
+	<sql id="getCreatedList-select">
+		select rm.ReportingID,rm.ReportingContent,rm.CreateTime
+		,CONCAT(REVERSE(RIGHT(REVERSE(ra.AttachURL),LENGTH(ra.AttachURL)-INSTR(REVERSE(ra.AttachURL),'/')+1)),"/preview",REVERSE(LEFT(REVERSE(ra.AttachURL),INSTR(REVERSE(ra.AttachURL),'/')))) AttachURL
+	</sql>
+	<sql id="getCreatedList-from">
+		from reporting_master rm
+		left join (select min(AttachID),ReportingID,AttachURL,AttachType from reporting_attachment group by ReportingID) ra 
+			on ra.ReportingID=rm.ReportingID and ra.AttachType=1
+		where rm.createUserID=?
+		order by rm.CreateTime DESC
+	</sql>
+	<sql id="getImportantReportList">
+		select DISTINCT rm.ReportingID,rm.ReportingContent,rm.CreateTime,rm.CreateUserID,u.Caption
+		from reporting_master rm
+		left join sys_users u on rm.CreateUserID=u.UserID
+		left join reporting_userindex rui on rui.ReportingID=rm.ReportingID
+		where rui.UserID=? and rui.MarkImportantTime is not null
+		order by rm.CreateTime DESC limit 5
+	</sql>
+</sqlGroup>
+

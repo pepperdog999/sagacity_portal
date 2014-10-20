@@ -1,0 +1,76 @@
+/* CSS Document */
+
+/*disk*/
+.disk-option{ height:32px; position:relative;}
+.disk-option span{}
+.disk-option font.disk-page{ position:absolute; right:80px; top:0px;}
+.disk-option font.disk-change{ position:absolute; right:10px; top:3px;}
+.disk-option span a{  padding:4px 8px; display:inline-block; vertical-align:middle; margin-right:4px;-webkit-border-radius: 2px;-moz-border-radius:2px;border-radius:2px; background-color:#fff; color:#333;border:1px solid #ccc; cursor:pointer;}
+.disk-option span a i{ margin-right:5px; margin-top:-2px;}
+.disk-option span a:hover{ background-color:#f6f6f6;}
+.disk-option span a.create{background-color:#28acd2; color:#FFF;border:1px solid #1c97ba;}
+.disk-option span a.create:hover{background-color:#23a4c9;}
+.page-ico{ background:url(../images/page-ico.png) no-repeat; width:11px; height:10px; display:inline-block; vertical-align:middle; font-size:0px;}
+.disk-page a.prev i{ background-position:0px 0px;}
+.disk-page a.next i{ background-position:0px -11px;}
+.disk-page a{ margin-right:8px; border:1px solid #cccccc; background-color:#fafafa; padding:4px 10px; display:inline-block; vertical-align:middle; cursor:pointer;}
+.disk-page a:hover{ background-color:#f5f5f5;}
+.disk-page em{ font-style:normal; margin-right:8px; font-size:14px; font-family:Arial, Helvetica, sans-serif;font-weight:bold; margin-top:1px;display:inline-block; vertical-align:middle;}
+
+.disk-change a{ margin-right:10px; cursor:pointer;}
+.shape-ico{ background:url(../images/shape-ico.png) no-repeat; width:15px; height:13px; display:inline-block; vertical-align:middle; font-size:0px;}
+.disk-change .shape-ico.list{ background-position:0px -14px;}
+.disk-change .shape-ico.list.check{ background-position:0px 0px;}
+.disk-change .shape-ico.icon{ background-position:-16px 0px;}
+.disk-change .shape-ico.icon.check{ background-position:-16px -14px;}
+
+.disk-content{ background-color:#fefefe; height:600px;}
+.disk-c-list{ position:relative; border-bottom:1px solid #d9d9d9; padding-top:10px; padding-bottom:10px; padding-left:10px; padding-right:10px;}
+.time-title{ position:absolute; top:35%; right:200px; color:#999; width:130px; text-align:center; display:inline-block; vertical-align:middle;}
+.size-title{ position:absolute; top:35%; right:50px; color:#999;width:70px; text-align:center; display:inline-block; vertical-align:middle;}
+
+.disk-checkbox{ background:url(../images/checkbox-ico.png) no-repeat; width:14px; height:12px; display:inline-block; vertical-align:middle; font-size:0px;}
+.disk-checkbox.check{ background-position:-14px 0px;}
+
+.disk-c-list em{ font-style:normal; margin-right:10px;}
+.disk-c-list i{ margin-right:10px;}
+.disk-c-list a.disk-linka{ display:inline-block; vertical-align:middle; cursor:pointer;}
+.disk-c-list b{ margin-right:10px; display:inline-block; vertical-align:middle; width:32px; height:32px;}
+.disk-c-list b img{ width:32px; height:32px;}
+
+
+/*目录链接*/
+.directory-path {position:relative;z-index:11;height:24px;border:1px solid #d9d9d9;background:#f7f7f7;cursor:default;}
+.path-contents {position:relative;float:left;overflow:hidden;}
+.path-contents a,
+.path-contents em,
+.path-contents span {float:left;max-width:150px;height:24px;margin-left:-8px;padding:0 18px;line-height:25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#666;background:url(../images/file_path.png) no-repeat 0 0; cursor:pointer;}
+.path-contents a:hover {text-decoration:none;color:#666;background-color:#FFF;background-position:0 -24px;}
+.path-contents i {display:none;}
+.path-contents span {position:relative;padding-right:25px;}
+.path-contents .delete {position:absolute;top:7px;right:10px;width:11px;height:11px;margin:0;padding:0;line-height:10;overflow:hidden;}
+.path-contents .delete:hover {background-color:transparent;background-position:0 -11px;}
+
+
+.opi-ico{ background:url(../images/folderOption-ico.png) no-repeat; width:16px; height:16px; display:inline-block; vertical-align:middle; font-size:0px;}
+
+.disk-operate{position:absolute;top:1300px;left:1300px;border: 1px solid #cecece;background-color: #FFF;padding: 4px 0;display: block!important; width:150px;
+-moz-box-shadow: 0 0 1px #cecece;
+-webkit-box-shadow: 0 0 1px #cecece;
+box-shadow: 0 0 1px #cecece;
+}
+.disk-operate ul{ list-style:none; text-align:left;}
+.disk-operate ul li{ list-style:none;}
+.disk-operate ul li:hover{ background-color:#e8e8e8;}
+.disk-operate ul li a{ height:24px; line-height:24px; display:block; cursor:pointer; padding-left:15px; padding-right:15px;}
+.disk-operate ul li i{ margin-top:-2px; margin-right:10px;}
+.d-icons{ background:url(../images/operate-ico.png) no-repeat; width:14px; height:14px; display:inline-block; vertical-align:middle; font-size:0px;}
+.d-icons.open{ background-position:0px 0px;}
+.d-icons.down{ background-position:-15px 0px;}
+.d-icons.share{ background-position:-30px 0px;}
+.d-icons.send{ background-position:-90px 0px;}
+.d-icons.move{ background-position:-45px 0px;}
+.d-icons.rename{ background-position:-60px 0px;}
+.d-icons.delate{ background-position:-75px 0px;}
+
+}

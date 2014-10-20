@@ -1,0 +1,580 @@
+<script type="text/javascript">
+$(function(){
+	$('.fixed').fixScroll({defultTop:0,center:false});
+});
+</script>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" valign="top" class="com-oriented">
+        <div class="oriented fixed">
+            <div class="oriented-lineCir oriented-ico"></div>
+            <div class="oriented-listBox" id="orientedFrame">
+                <div class="oriented-list check" data-id="business_projectBase">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>项目信息</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="business_clientInfo">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>客户基本信息</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="business_techScheme">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>技术方案</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="business_schemeConfirm">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>方案确认</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="business_commercialReview">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>商务评审</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="business_majorReview">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>三重-大评审</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="business_superiorReview">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>省公司评审</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="business_contractInfo">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>合同签订</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="business_constructInfo">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>工程信息录入</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="business_codeList">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>计费代码</h5>
+                    
+                </div>
+            </div>
+        </div>
+    </td>
+    <td align="left" valign="top"> 
+                <div id="oriented-content">
+                <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                  <tr>
+                    <th>项目编号</th>
+                    <td id="pb_Code">${(pb.Code)!}</td>
+                    <th>MIS编号</th>
+                    <td>${(ii.MISCode)!}</td>
+                    <th>创建时间</th>
+                    <td id="pb_AddTime">${(pb.AddTime)!}</td>
+                  </tr>
+                </table>
+				<div id="business_projectBase">
+                	<h4 class="com-tab-tit">项目信息</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr>
+                        <th>项目名称</th>
+                        <td colspan="3"><input type="text" id="pb_Name" value="${(pb.Name)!}" class="com-tabInput inputWidth"/><!-- <a class="process-icons bm bindDialog" data-type="ment"></a> --></td>
+                      </tr>
+                      <tr>
+                        <th>项目简介</th>
+                        <td colspan="3"><textarea id="pb_Memo" cols="" rows="" class="com-tabTextarea inputWidth">${(pb.Memo)!}</textarea></td>
+                      </tr>
+                      <tr>
+                        <th>项目收益</th>
+                        <td><input type="text" id="pb_Income" value="${(pb.Income)!}" class="com-tabInput inputWidth01" /></td>
+                        <th>工期要求</th>
+                        <td><input type="text" id="pb_Require" value="${(pb.Require)!}" class="com-tabInput inputWidth01" /></td>
+                      </tr>
+                      <tr>
+                        <th>信息化支撑需求申请表</th>
+                        <td colspan="3">
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="pb_AttachURL" value="" />
+                        	<ul class="up-ul" id="projectBase_attach">
+                        	<#if (pb.AttachURL)! != ''>
+                        		<li><t>${(pb.AttachURL)?substring((pb.AttachURL)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载申请表"></a><a class="process-icons delate" title="删除申请表"></a></li>
+                            </#if>
+                            </ul> 
+                        	<div id="attUpload1" class="up-add" onclick="uploadPBAttach()"><a><i class="process-icons updata"></i>上传申请表</a></div>
+                        	<form id="attForm1" name="attForm1" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile1" name="attFile1" type="file" />
+					      	</form>
+                         </td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="business_clientInfo">
+                	<h4 class="com-tab-tit">客户基本信息</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <th>客户名称</th>
+                        <td><input type="text" id="ci_Name"  value="${(ci.Name)!}" class="com-tabInput inputWidth01"/></td>
+                        <th>客户编码</th>
+                        <td><input type="text" id="ci_Code"  value="${(ci.Code)!}" class="com-tabInput inputWidth01" /></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>客户联系人</th>
+                        <td><input type="text" id="ci_ContactPerson"  value="${(ci.ContactPerson)!}" class="com-tabInput inputWidth01" /></td>
+                        <th>联系方式</th>
+                        <td><input type="text" id="ci_ContactInfo" value="${(ci.ContactInfo)!}" class="com-tabInput inputWidth01" /></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>所属区县</th>
+                        <td colspan="3">
+                        	<ul class="upNameList" id="ci_branch" value="${(ci.Branch)!}">
+                            </ul>
+                        	<a class="process-icons bm bindDialog" data-type="ment"></a>
+                        </td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>客户经理</th>
+                        <td colspan="3">
+                        	<ul class="upNameList" id="ci_ClientManager" value="${(ci.ClientManager)!}">
+                            </ul>
+                        	<a class="process-icons lxr bindDialog" data-type="user"></a>
+                        </td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th colspan="4" class="com-tab-remark">由<em>${(ci.UserName)!}</em>于<time>${(ci.AddTime)!}</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="business_techScheme">
+                	<h4 class="com-tab-tit">技术方案</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <th>投资估算</th>
+                        <td><input type="text" id="ts_Budget" value="${(ts.Budget)!}" class="com-tabInput inputWidth"/></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>投资估算表</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="ts_AttachURL" value="" />
+                        	<ul class="up-ul" id="techScheme_attach">
+                        	<#if (ts.AttachURL)! != ''>
+                        		<li><t>${(ts.AttachURL)?substring((ts.AttachURL)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载估算表"></a><a class="process-icons delate" title="删除估算表"></a></li>
+                            </#if>
+                            </ul> 
+                        	<div id="attUpload2" class="up-add" onclick="uploadTSAttach()"><a><i class="process-icons updata"></i>上传估算表</a></div>
+                        	<form id="attForm2" name="attForm2" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile2" name="attFile2" type="file" />
+					      	</form>
+                        </td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>工期预估</th>
+                        <td><input type="text" id="ts_Estimate" value="${(ts.Estimate)!}"  class="com-tabInput inputWidth" /></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>备注</th>
+                        <td><textarea id="ts_Memo" cols="" rows="" class="com-tabTextarea inputWidth">${(ts.Memo)!}</textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th colspan="2" class="com-tab-remark">由<em>${(ts.UserName)!}</em>于<time>${(ts.AddTime)!}</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="2" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="business_schemeConfirm">
+                	<h4 class="com-tab-tit">方案确认</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <th>方案确定情况：</th>
+                        <td><label><input onclick="setCheckbox(this)" id="sc_blnConfirm" type="checkbox" value="${(sc.blnConfirm)?default(0)}" <#if (sc.blnConfirm)?default(0) == 1> checked </#if> />同意</label><span>（全局校验勾选"同意"时，只能使用"同意提交"按钮）</span></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>价值评估表</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="sc_AttachURL1" value="" />
+                        	<ul class="up-ul" id="schemeConfirm_attach1">
+                        	<#if (sc.AttachURL1)! != ''>
+                        		<li><t>${(sc.AttachURL1)?substring((sc.AttachURL1)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载评估表"></a><a class="process-icons delate" title="删除评估表"></a></li>
+                            </#if>
+                            </ul> 
+                        	<div id="attUpload3" class="up-add" onclick="uploadSCAttach1()"><a><i class="process-icons updata"></i>上传评估表</a></div>
+                        	<form id="attForm3" name="attForm3" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile3" name="attFile3" type="file" />
+					      	</form>
+                        </td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>需求请示PPT</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="sc_AttachURL2" value="" />
+                        	<ul class="up-ul" id="schemeConfirm_attach2">
+	                       	<#if (sc.AttachURL2)! != ''>
+	                       		<li><t>${(sc.AttachURL2)?substring((sc.AttachURL2)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载演示PPT"></a><a class="process-icons delate" title="删除演示PPT"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload4" class="up-add" onclick="uploadSCAttach2()"><a><i class="process-icons updata"></i>上传演示PPT</a></div>
+                        	<form id="attForm4" name="attForm4" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile4" name="attFile4" type="file" />
+					      	</form>
+						</td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>需求请示WORD</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="sc_AttachURL3" value="" />
+                        	<ul class="up-ul" id="schemeConfirm_attach3">
+                        	<#if (sc.AttachURL3)! != ''>
+	                       		<li><t>${(sc.AttachURL3)?substring((sc.AttachURL3)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载演示Word"></a><a class="process-icons delate" title="删除演示Word"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload5" class="up-add" onclick="uploadSCAttach3()"><a><i class="process-icons updata"></i>上传演示Word</a></div>
+                        	<form id="attForm5" name="attForm5" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile5" name="attFile5" type="file" />
+					      	</form>
+					    </td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>备注</th>
+                        <td><textarea id="sc_Memo" cols="" rows="" class="com-tabTextarea inputWidth">${(sc.Memo)!}</textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th colspan="2" class="com-tab-remark">由<em>${(sc.UserName)!}</em>于<time>${(sc.AddTime)!}</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="2" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="business_commercialReview">
+                	<h4 class="com-tab-tit">商务评审</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <th>态度：</th>
+                       <td><label><input onclick="setCheckbox(this)" id="cr_blnAgree" type="checkbox" value="${(cr.blnAgree)?default(0)}" <#if (cr.blnAgree)?default(0) == 1> checked </#if>/>同意</label></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>意见：</th>
+                        <td>项目总费用：【<input type="text" id="cr_Key1" vale="${(cr.Key1)!}" class="com-tabInput01 inputWidth03" />】万元。其中设备费：【<input type="text" id="cr_Key2" value="${(cr.Key2)!}" class="com-tabInput01 inputWidth03" />】万元，集成费：【<input type="text" id="cr_Key3" value="${(cr.Key3)!}" class="com-tabInput01 inputWidth03" />】万元，工程建设其他费：【<input type="text" id="cr_Key4" value="${(cr.Key4)!}" class="com-tabInput01 inputWidth03" />】万元，【<input type="text" id="cr_Key5" value="${(cr.Key5)!}" class="com-tabInput01 inputWidth03" />】年维护成本：【<input type="text" id="cr_Key6" value="${(cr.Key6)!}" class="com-tabInput01 inputWidth03" />】万元，资金利息：【<input type="text" id="cr_Key7" value="${(cr.Key7)!}" class="com-tabInput01 inputWidth03" />】万元。协议期【<input type="text" id="cr_Key8" value="${(cr.Key8)!}" class="com-tabInput01 inputWidth03" />】年，共计收入【<input type="text" id="cr_Key9" value="${(cr.Key9)!}" class="com-tabInput01 inputWidth03" />】万元，协议期收益【<input type="text" id="cr_Key10" value="${(cr.Key10)!}" class="com-tabInput01 inputWidth03" />】万元，第【<input type="text" id="cr_Key11" value="${(cr.Key11)!}" class="com-tabInput01 inputWidth03" />】年可收回投资</td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>评审会议纪要附件</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="cr_AttachURL" value="" />
+                        	<ul class="up-ul" id="commercialReview_attach">
+                        	<#if (cr.AttachURL)! != ''>
+	                       		<li><t>${(cr.AttachURL)?substring((cr.AttachURL)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载会议纪要"></a><a class="process-icons delate" title="删除会议纪要"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload6" class="up-add" onclick="uploadCRAttach()"><a><i class="process-icons updata"></i>上传会议纪要</a></div>
+                        	<form id="attForm6" name="attForm6" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile6" name="attFile6" type="file" />
+					      	</form>
+                        </td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>业务类型：</th>
+                        <td>
+                        	<div id="checkboxList" group-ids="${(cr.CommercialType)!}">
+                        	<label id="c1"><input type="checkbox" value="" />专线</label>&nbsp;<label id="c2"><input type="checkbox" value="" />IMS</label>&nbsp;<label id="c3"><input type="checkbox" value="" />IDC</label>&nbsp;<label id="c4"><input type="checkbox" value="" />商务动力</label>&nbsp;<label id="c5"><input type="checkbox" value="" />M2M </label>&nbsp;<label id="c6"><input type="checkbox" value="" />WLAN</label>&nbsp;<label id="c7"><input type="checkbox" value="" />单兵</label>&nbsp;<label id="c8"><input type="checkbox" value="" />视频监控</label>&nbsp;<label id="c9"><input type="checkbox" value="" />视频会议</label>&nbsp;<label id="c10"><input type="checkbox" value="" />其他</label>
+                        	</div>
+                        	<script type="text/javascript" src="lib/javascript/setCheckGroup.js"></script>
+                        </td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>备注</th>
+                        <td><textarea id="cr_Memo" cols="" rows="" class="com-tabTextarea inputWidth">${(cr.Memo)!}</textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th colspan="4" class="com-tab-remark">由<em>${(cr.UserName)!}</em>于<time>${(cr.AddTime)!}</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="business_majorReview">
+                	<h4 class="com-tab-tit">三重一大评审</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <th>会议结论</th>
+                        <td><input type="text" id="mr_Conclusion" value="${(mr.Conclusion)!}" class="com-tabInput inputWidth"/></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>会议纪要附件</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="mr_AttachURL" value="" />
+                        	<ul class="up-ul" id="majorReview_attach">
+                        	<#if (mr.AttachURL)! != ''>
+	                       		<li><t>${(mr.AttachURL)?substring((mr.AttachURL)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载会议纪要"></a><a class="process-icons delate" title="删除会议纪要"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload7" class="up-add" onclick="uploadMRAttach()"><a><i class="process-icons updata"></i>上传会议纪要</a></div>
+                        	<form id="attForm7" name="attForm7" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile7" name="attFile7" type="file" />
+					      	</form>
+						</td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>备注</th>
+                        <td><textarea id="mr_Memo" cols="" rows="" class="com-tabTextarea inputWidth">${(mr.Memo)!}</textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th colspan="4" class="com-tab-remark">由<em>${(mr.UserName)!}</em>于<time>${(mr.AddTime)!}</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="business_superiorReview">
+                	<h4 class="com-tab-tit">省公司评审</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <th>评审结论</th>
+                        <td colspan="3"><textarea id="sr_Conclusion" cols="" rows="" class="com-tabTextarea inputWidth">${(sr.Conclusion)!}</textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>需求请示签报附件</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="sr_AttachURL1" value="" />
+                        	<ul class="up-ul" id="superiorReview_attach1">
+                        	<#if (sr.AttachURL1)! != ''>
+	                       		<li><t>${(sr.AttachURL1)?substring((sr.AttachURL1)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载签报表"></a><a class="process-icons delate" title="删除签报表"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload8" class="up-add" onclick="uploadSRAttach1()"><a><i class="process-icons updata"></i>上传签报表</a></div>
+                        	<form id="attForm8" name="attForm8" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile8" name="attFile8" type="file" />
+					      	</form>                        
+                        </td>
+                        <th>评审会议纪要附件</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="sr_AttachURL2" value="" />
+                        	<ul class="up-ul" id="superiorReview_attach2">
+                        	<#if (sr.AttachURL2)! != ''>
+	                       		<li><t>${(sr.AttachURL2)?substring((sr.AttachURL2)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载会议纪要"></a><a class="process-icons delate" title="删除会议纪要"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload9" class="up-add" onclick="uploadSRAttach2()"><a><i class="process-icons updata"></i>上传会议纪要</a></div>
+                        	<form id="attForm9" name="attForm9" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile9" name="attFile9" type="file" />
+					      	</form>
+                        </td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>备注</th>
+                        <td colspan="3"><textarea id="sr_Memo" cols="" rows="" class="com-tabTextarea inputWidth">${(sr.Memo)!}</textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th colspan="4" class="com-tab-remark">由<em>${(sr.UserName)!}</em>于<time>${(sr.AddTime)!}</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="business_contractInfo">
+                	<h4 class="com-tab-tit">合同确认</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <th>电子版合同（PDF）</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="cc_AttachURL1" value="" />
+                        	<ul class="up-ul" id="contractInfo_attach1">
+                        	<#if (cc.AttachURL1)! != ''>
+	                       		<li><t>${(cc.AttachURL1)?substring((cc.AttachURL1)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载电子版"></a><a class="process-icons delate" title="删除电子版"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload10" class="up-add" onclick="uploadCCAttach1()"><a><i class="process-icons updata"></i>上传电子版</a></div>
+                        	<form id="attForm10" name="attForm10" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile10" name="attFile10" type="file" />
+					      	</form>
+						</td>
+                        <th>纸质合同扫描件（打包图片）</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="cc_AttachURL2" value="" />
+                        	<ul class="up-ul" id="contractInfo_attach2">
+                        	<#if (cc.AttachURL2)! != ''>
+	                       		<li><t>${(cc.AttachURL2)?substring((cc.AttachURL2)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载扫描版"></a><a class="process-icons delate" title="删除扫描版"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload11" class="up-add" onclick="uploadCCAttach2()"><a><i class="process-icons updata"></i>上传扫描版</a></div>
+                        	<form id="attForm11" name="attForm11" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile11" name="attFile11" type="file" />
+					      	</form>
+                        </td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>备注</th>
+                        <td colspan="3"><textarea id="cc_Memo" cols="" rows="" class="com-tabTextarea inputWidth">${(cc.Memo)!}</textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th colspan="4" class="com-tab-remark">由<em>${(cc.UserName)!}</em>于<time>${(cc.AddTime)!}</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="business_constructInfo">
+                	<h4 class="com-tab-tit">工程信息录入</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <th>立项申请报告附件</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="ii_AttachURL1" value="" />
+                        	<ul class="up-ul" id="constructInfo_attach1">
+                        	<#if (ii.AttachURL1)! != ''>
+	                       		<li><t>${(ii.AttachURL1)?substring((ii.AttachURL1)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载立项申请"></a><a class="process-icons delate" title="删除立项申请"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload12" class="up-add" onclick="uploadIIAttach1()"><a><i class="process-icons updata"></i>上传立项申请</a></div>
+                        	<form id="attForm12" name="attForm12" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile12" name="attFile12" type="file" />
+					      	</form>
+                        </td>
+                        <th>立项批复报告附件</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="ii_AttachURL2" value="" />
+                        	<ul class="up-ul" id="constructInfo_attach2">
+                        	<#if (ii.AttachURL2)! != ''>
+	                       		<li><t>${(ii.AttachURL2)?substring((ii.AttachURL2)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载立项批复"></a><a class="process-icons delate" title="删除立项批复"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload13" class="up-add" onclick="uploadIIAttach2()"><a><i class="process-icons updata"></i>上传立项批复</a></div>
+                        	<form id="attForm13" name="attForm13" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile13" name="attFile13" type="file" />
+					      	</form>
+                        </td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>设计批复报告附件</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="ii_AttachURL3" value="" />
+                        	<ul class="up-ul" id="constructInfo_attach3">
+                        	<#if (ii.AttachURL3)! != ''>
+	                       		<li><t>${(ii.AttachURL3)?substring((ii.AttachURL3)?last_index_of("/")+1)}</t><a class="process-icons down" title="下载设计批复"></a><a class="process-icons delate" title="删除设计批复"></a></li>
+	                        </#if>
+	                        </ul> 
+	                        <div id="attUpload14" class="up-add" onclick="uploadIIAttach3()"><a><i class="process-icons updata"></i>上传立项批复</a></div>
+                        	<form id="attForm14" name="attForm14" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile14" name="attFile14" type="file" />
+					      	</form>
+                        </td>
+                        <th>MIS编码</th>
+                        <td><input type="text" id="ii_MISCode" value="${(ii.MISCode)!}" class="com-tabInput inputWidth01" /></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>备注</th>
+                        <td colspan="3"><textarea id="ii_Memo" cols="" rows="" class="com-tabTextarea inputWidth">${(ii.Memo)!}</textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th colspan="4" class="com-tab-remark">由<em>${(ii.UserName)!}</em>于<time>${(ii.AddTime)!}</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="business_codeList">
+                	<h4 class="com-tab-tit">计费代码</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                      	<th>计费代码导入</th>
+                      	<td>
+                      		<ul class="up-ul">
+	                        <li><t>计费代码导入模板</t><a class="process-icons down" title="下载模板"></a></li>
+	                        </ul>
+	                        <div id="attUpload15" class="up-add" onclick="uploadCL()"><a><i class="process-icons updata"></i>导入计费代码</a></div>
+	                       	<form id="attForm15" name="attForm15" style="display:none" enctype="multipart/form-data">
+					      		<input id="attFile15" name="attFile15" type="file" />
+					      	</form>
+				      	</td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>计费代码列表</th>
+                        <td>
+                        	<input type="hidden" class="com-tabInput inputWidth01" id="cl_CodeJson" value="" />
+                        	<table id="codeTable" width="100%" border="0" cellspacing="1" cellpadding="0"  class="com-listtab">
+                        		<tr>
+                        			<th width="10%">序号</th><th width="30%">业务代码</th><th width="60%">业务类型</th>
+                        		</tr>
+                        	</table>
+						</td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>备注</th>
+                        <td colspan="2"><textarea id="cl_Memo" cols="" rows="" class="com-tabTextarea inputWidth">${(cl.Memo)!}</textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th colspan="2" class="com-tab-remark">由<em>${(cl.UserName)!}</em>于<time>${(cl.AddTime)!}</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="2" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>                
+              </div>
+    	</td>
+	</tr>
+</table>
+<script type="text/javascript" src="lib/javascript/process.js"></script>
+<script type="text/javascript" src="lib/javascript/attach.js"></script>
+<script type="text/javascript">
+//根据流程节点打开相应的表单部分
+$(document).ready(function () {
+	var processCode='${(processCode)!}';
+	setProcessHiddenIndex(processCode);
+	setCodeTable(${(cl.CodeJson)!});
+});
+
+//人员选择确定
+function chooseUserConfirm(){
+	var userList=document.getElementById("dialogIframe").contentWindow.submitLsit();
+	var html='';
+	for (var i=0;i<userList.length;i++){
+		html+='<li onclick="removeUser(this)"><b>'+userList[i].Name+'</b><i></i></li>';
+	}
+	$("#ci_ClientManager").append(html);
+}
+
+function removeUser(obj){
+	$(obj).remove();
+}
+
+function setCheckbox(obj){
+	if($(obj)[0].checked){
+		$(obj).val(1);
+	}else{
+		$(obj).val(0);
+	}
+}
+
+function setCodeTable(codeJson){
+	var codeJson = eval('(' + JSON.stringify(codeJson) + ')');
+	if(codeJson){
+		var html='';
+		html+='<tr><th width="10%">序号</th><th width="30%">计费代码</th><th width="60%">说明</th></tr>';
+		for(i in codeJson){
+			html+='<tr><td>'+i+'</td><td>'+codeJson[i].Code+'</td><td>'+codeJson[i].Desc+'</td></tr>';
+		}
+		$("#codeTable").html(html);
+	}
+	
+}
+
+</script>

@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>通讯录</title>
+<link href="../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/contact.css" type="text/css" rel="stylesheet" />
+<link href="../widget/frame/css/frame.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../widget/frame/javascript/createDialog.js"></script>
+<script type="text/javascript" src="lib/javascript/contact.js"></script>
+</head>
+
+<body class="bodyBack">
+
+<!-- Start of toppart -->
+<div id="banner" class="fontLeft com-top toDiv">
+</div>
+<!-- End of toppart -->
+
+
+<!-- Start of con -->
+<div class="comMarginTop01 fontLeft">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="top" class="menu-left" id="memuFrame">
+        	
+        	<div class="menu-line"></div>
+            <div class="menu-c" id="navTree">
+            </div>
+        </td>
+        <td align="left" valign="top" class="com-right">
+        	<div class="com-rightPosition">
+                    <div class="com-optionMenu">
+	                    <a class="returnHome" title="返回主页" href="index" hidefocus="true"><i></i></a>
+	                    <a class="closeMenu close" id="setMenuFrame" title="打开菜单" hidefocus="true"><i></i></a>
+                    </div>
+                    <div class="com-tit" style="display:none;"><font>个人信息</font><em>/</em><b>User Message</b></div>
+                    <div class=" com-userDel">
+                        
+                         <div class="com-userDel-ik">
+		                	<h5>${(userContact.Name)!}</h5>
+		                	<p class="green"><span><i class="com-pics dw"></i><label>组织：</label>${(userContact.CorpName)!}</span></p>
+		                    <p><span><i class="com-pics bm"></i><label>部门：</label>${(userContact.DeptName)!}</span></p>
+		                    <p><span><i class="com-pics zw"></i><label>职务：</label>${(userContact.PosName)!('暂无职务')}</span></p>
+		                </div>
+                        <div class="com-in">
+                        	<#list contactSummary as cs>
+	                		<#switch cs.type>
+	  							<#case "corpContact">
+								     <div class="com-info address01"><a href="index"><p class="com-info-ic"><b><i class="com-icons"></i></b></p><p class="com-info-num">${(cs.count)!}</p><font>组织通讯录</font></a></div>
+								    <#break>
+								<#case "groupContact">
+		  							<div class="com-info address03"><a href="groupIndex"><p class="com-info-ic"><b><i class="com-icons"></i></b></p><p class="com-info-num">${(cs.count)!}</p><font>自定义组</font></a></div>
+								    <#break>
+	  							<#default>
+							</#switch>
+                			</#list>
+                        </div>
+                        
+                    </div>
+                    <div class="com-member">
+                        <div class="com-member-tit">
+                            <div class="com-member-tit-l" id="path_nav"></div>
+                            <div class="com-member-tit-r">
+                            	<font class="disk-page"><b id="pageInfo"><em>1/1</em></b><a class="prev" onclick="pageLast()"><i class="page-ico"></i></a><a class="next" onclick="pageNext()"><i class="page-ico"></i></a></font>
+                                <font class="disk-change"><a class="shape-ico list check" title="列表展示"></a><a class="shape-ico icon" title="图标展示"></a></font>
+                            </div>
+                        </div>
+                        <div class="com-member-listContact" id="deptContainer">
+                        </div>
+                        
+                        <div class="com-member-listContact" id="contactContainer">  
+                        </div>
+                    </div>
+            </div>
+        </td>
+      </tr>
+    </table>
+</div>
+<!-- End of con -->
+
+<!-- Start of footer -->
+<div id="footer" class="comMarginTop01 com-footer">
+</div>
+<!-- End of footer -->
+<script type="text/javascript">
+
+	var pageNumber=1;
+	var pageSize=12;
+	var totalPage=1;
+	var pathID="";
+	var pathType="";
+	
+	$(function() {
+		$("#banner").load("../banner?navInfo=m,2");
+		$("#navTree").load("../navTree?navInfo=m,2");
+		$("#footer").load("../footer");
+		$("#memuFrame").show();
+		setDefaultPath();
+	});
+	
+	function setDefaultPath(){
+		$.ajax({
+            url: "../contact/getFullPath",
+            type: "GET",
+            dataType: "json",
+            data: {},
+            success: function(data) {
+				//列表信息
+				var pathList='';
+				for(var i=data.path_list.length-1;i>=0;i--){
+					pathList+='<a onclick="navClick(this)" pathType="'+data.path_list[i].pathType+'" pathID="'+data.path_list[i].pathID+'">'+data.path_list[i].pathName+'</a>';
+					if(i>0){
+						pathList+='<em>&gt;&gt;</em>';
+					}
+				}
+				pathID=data.path_list[0].pathID;
+				pathType=data.path_list[0].pathType;
+				$("#path_nav").html(pathList);
+				getContactList();
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+	}
+	
+	function getContactList(){
+		$.ajax({
+            url: "../contact/getContactList",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	pageNumber: pageNumber,
+				pageSize: pageSize,
+				pathID: pathID,
+				pathType:pathType
+            	},
+            success: function(data) {
+				//列表信息
+				var deptList='';
+				var contactList='';
+				for(var i=0;i<data.DataList.length;i++){
+					if(data.DataList[i].Type==1){ //部门
+						deptList+='<div class="com-member-list" onclick="navClick(this)" pathType="dept" pathID="'+data.DataList[i].ID+'"><div class="com-member-list-c">';
+						deptList+='<div class="infoDel-img"><span></span><div class="infoDel-imgfloatdepart"></div></div>';
+						deptList+='<div class="infoDel infoPad"><h4>'+data.DataList[i].Name+'</h4><p class="infoDel-k"><b>通讯录('+data.DataList[i].Info1+')</b><b>子部门('+data.DataList[i].Info2+')</b></p>';
+						deptList+='</div></div>';
+						deptList+='<div class="com-member-list-option"><a onclick="navClick(this)" pathType="dept" pathID="'+data.DataList[i].ID+'" class="look"><i class="com-pics"></i></a><a Type="1" ID="'+data.DataList[i].ID+'" class="mes bindDialog" data-type="mes"><i class="com-pics"></i></a><a Type="1" ID="'+data.DataList[i].ID+'" class="file bindDialog" data-type="file"><i class="com-pics"></i></a></div>';
+						deptList+='</div></div>';
+					}else if(data.DataList[i].Type==2){ //通讯录
+						var info2= (data.DataList[i].Info2==null) ? '暂无邮箱':data.DataList[i].Info2;
+						contactList+='<div class="com-member-list"><div class="com-member-list-c">';
+						contactList+='<div class="infoDel-img"><span><img src="${(resourceUrl)!}'+data.DataList[i].UserID+'${(headerFix)!}" onerror="javascript:this.src=\'../user/header/header.png\'"/></span><div class="infoDel-imgfloat"></div></div>';
+						contactList+='<div class="infoDel"><h5>'+data.DataList[i].Name+'</h5><p class="infoDel-t"></p><p class="infoDel-f"><i class="com-pics phone"></i>'+data.DataList[i].Info1+'</p><p class="infoDel-f"><i class="com-pics emill"></i>'+info2+'</p>';
+						contactList+='</div></div>';
+						contactList+='<div class="com-member-list-option"><a contactID="'+data.DataList[i].ID+'" onclick="contactDetail(this)" class="look"><i class="com-pics"></i></a><a Type="2" ID="'+data.DataList[i].ID+'" class="mes bindDialog" data-type="mes"><i class="com-pics"></i></a><a Type="2" ID="'+data.DataList[i].ID+'" class="file bindDialog" data-type="file"><i class="com-pics"></i></a><a ID="'+data.DataList[i].ID+'" class="add bindDialog" data-type="collect"><i class="com-pics"></i>添加收藏</a></div>';
+						contactList+='</div></div>';
+					}
+				}
+				$("#deptContainer").html(deptList);
+				$("#contactContainer").html(contactList);
+				jugDialogPage();
+            	//分页信息
+            	totalPage = Math.ceil(data.TotalCount/pageSize);
+            	pageNumber = data.PageNumber;	
+            	var pageInfo = '<em>'+pageNumber+'/'+totalPage+'</em>';
+				$("#pageInfo").html(pageInfo);
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+	}
+	
+	function contactDetail(obj){
+		var contactID=$(obj).attr("contactID");
+		window.open("../contact/contactDetail?contactID="+contactID, "_self", "");
+		
+	}
+	
+	function navClick(obj){
+		pathID=$(obj).attr("pathID");
+		pathType=$(obj).attr("pathType");
+		var pathInfo='{"pathType":"'+pathType+'","pathID":"'+pathID+'"}';
+		$.ajax({
+            url: "../contact/getFullPath",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	pathInfo:pathInfo
+            	},
+            success: function(data) {
+				//列表信息
+				var pathList='';
+				for(var i=data.path_list.length-1;i>=0;i--){
+					pathList+='<a onclick="navClick(this)" pathType="'+data.path_list[i].pathType+'" pathID="'+data.path_list[i].pathID+'">'+data.path_list[i].pathName+'</a>';
+					if(i>0){
+						pathList+='<em>&gt;&gt;</em>';
+					}
+				}
+				//pathID=data.path_list[0].pathID;
+				//pathType=data.path_list[0].pathType;
+				$("#path_nav").html(pathList);
+				getContactList();
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+	}
+	
+	function pageNext(){
+		if(pageNumber>=totalPage)
+			return;
+		pageNumber++;
+		getContactList();
+	}
+	
+	function pageLast(){
+		if(pageNumber<=1)
+			return;			
+		pageNumber--;
+		getContactList();
+	}
+	
+</script>
+</body>
+</html>

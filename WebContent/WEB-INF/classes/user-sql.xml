@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="user">
+	<sql id="login">
+		SELECT u.UserID,u.Caption,u.LoginName,r.RoleID,r.roleName
+		FROM sys_users u
+		LEFT JOIN sys_roles r ON r.RoleID=u.RoleID
+		WHERE trim(u.LoginName)=? AND trim(u.Password)=?
+	</sql>
+	<sql id="getCorpListByLoginName">
+		select c.CorpID,c.CorpName,ur.blnIsPrimary
+		from zq_corpinfo c
+		inner join sys_usercorprelation ur on ur.CorpID=c.CorpID
+		inner join sys_users u on u.UserID=ur.UserID
+		where u.LoginName=?
+	</sql>
+	<sql id="getUserInfo">
+		select u.UserID,u.LoginName,u.Caption,u.NickName,u.Sign
+		from sys_users u
+		where u.UserID=?
+	</sql>
+	<sql id="getContactInfoByUserID">
+		select cc.CContactID,ur.UserID,c.CorpID,c.CorpName,d.DeptID,d.DeptName,cc.Name,cc.PosName 
+		from zq_corpcontact cc
+		left join zq_corpinfo c on c.CorpID=cc.CorpID
+		left join zq_deptinfo d on d.DeptID=cc.DeptID
+		left join sys_usercorprelation ur on ur.CContactID=cc.CContactID
+		where ur.CorpID=? and ur.UserID=?
+	</sql>
+	<sql id="getContactInfoByCCID">
+		select cc.CContactID,ur.UserID,c.CorpID,c.CorpName,d.DeptID,d.DeptName,cc.Name,cc.PosName 
+		from zq_corpcontact cc
+		left join zq_corpinfo c on c.CorpID=cc.CorpID
+		left join zq_deptinfo d on d.DeptID=cc.DeptID
+		left join sys_usercorprelation ur on ur.CContactID=cc.CContactID
+		where ur.CContactID=?
+	</sql>
+	<sql id="getDeptUsers">
+		select u.UserID ID,cc.Name
+		from sys_users u 
+		inner join sys_usercorprelation ur on ur.UserID=u.UserID
+		inner join zq_corpcontact cc on cc.CContactID=ur.CContactID
+		where cc.DeptID=?
+	</sql>
+	<sql id="getDeptContacts">
+		select cc.CContactID ID,cc.Name
+		from zq_corpcontact cc
+		where cc.DeptID=?
+	</sql>
+</sqlGroup>
+

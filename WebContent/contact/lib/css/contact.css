@@ -1,0 +1,130 @@
+/* CSS Document */
+
+/*member*/
+.com-member{ border-top:1px dashed #ccc; padding-top:10px;}
+.com-member-tit{ height:40px;}
+.com-member-tit-l{ float:left;text-shadow: 1px 1px 1px #f8f8f8; margin-top:4px;}
+.com-member-tit-r{ float:right;}
+.com-member-tit-l a,.com-member-tit-l font,.com-member-tit-l em,.com-member-tit-l b{display:inline-block; vertical-align:middle;}
+.com-member-tit-l a{ font-style:normal;font-size:14px; color: #909090; cursor:pointer; }
+.com-member-tit-l a:hover{ text-decoration:underline; color:#28acd2;}
+.com-member-tit-l font{ font-size:14px; color: #909090; margin-left:10px;}
+.com-member-tit-l em{ font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;font-size: 14px;color: #909090;font-style: normal;font-weight: normal;padding-left: 8px;padding-right: 8px;}
+.com-member-tit-l b{font-family: Arial, Helvetica, sans-serif;font-weight: normal;font-size: 16px;color: #909090;}
+
+.com-member-listContact{ clear:both; overflow:hidden; padding-bottom:24px;}
+.com-member-list{ margin-right:10px; margin-bottom:10px; float:left; width:23%; min-width:260px; height:auto;background-color:#fff; border:2px solid #d4d4d4;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px; }
+.com-member-list-c{ background:url(../images/member-listShadow.png) left bottom repeat-x; background-color:#f5f7f6; height:95px;-webkit-border-radius:3px 3px 0px 0px;-moz-border-radius:3px 3px 0px 0px;border-radius:3px 3px 0px 0px; position:relative;}
+.depart{ background-color:#28acd2}
+
+.infoDel{ padding-left:96px; padding-top:10px;}
+.infoPad{ padding-top:25px;}
+.infoDel h4{ font-size:17px; font-weight:bold; color:#333;}
+.infoDel h5{ font-size:15px; font-weight:normal; color:#333;}
+.infoDel-t{ font-size:12px; color:#6da10b; margin-bottom:8px;}
+.infoDel-k{ font-size:12px; color:#6da10b; margin-top:10px;}
+.infoDel-k b{ margin-right:15px;}
+.infoDel-f{ font-size:12px; color:#a6a6a6;}
+
+.infoDel-img{ position:absolute; z-index:1; bottom:0px; left:9px;}
+.infoDel-img span{ display:inline-block; vertical-align:middle;width:78px; height:62px; text-align:center; overflow:hidden;}
+.infoDel-img span img{height:78px; width:78px;}
+.infoDel-imgfloat{ position:absolute; background:url(../images/member-headerback.png) no-repeat; z-index:11; width:98px; height:78px; left:0px; top:0px;}
+.infoDel-imgfloat img{ width:100%; height:100%;}
+.infoDel-imgfloatdepart{ position:absolute; z-index:11; background:url(../images/member-departmentback.png) no-repeat; width:78px; height:62px; left:0px; top:0px;}
+.infoDel-f{ font-family:"宋体"; font-size:12px; margin-top:2px;}
+.infoDel-f .phone{ background-position:0px -45px; width:17px; height:17px;}
+.infoDel-f .emill{ background-position:-17px -45px; width:17px; height:17px;}
+.infoDel-f i{ margin-right:10px;}
+
+.com-member-list-option{ height:32px; background-color:#FFF;-webkit-border-radius:0px 0px 3px 3px ;-moz-border-radius:0px 0px 3px 3px;border-radius:0px 0px 3px 3px; text-align:right;}
+.com-member-list-option a{ display:inline-block; vertical-align:middle; cursor:pointer;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; width:25px; height:25px; font-size:12px; color:#FFF; margin-right:5px; margin-top:4px; text-align:center;}
+.com-member-list-option a i{width:17px; height:17px; margin-top:3px;}
+/*.com-member-list-option .write{ background-color:#dedede;}
+.com-member-list-option .warn{ background-color:#dedede; }
+.com-member-list-option .mes{ background-color:#dedede;}*/
+.com-member-list-option .add{ background-color:#28acd2; width:85px; line-height:25px;}
+.com-member-list-option .remove{ background-color:#28acd2; width:85px; line-height:25px;}
+/*.com-member-list-option .look{ background-color:#dedede;}*/
+
+/*.com-member-list-option .write:hover{ background-color:#b0b0b0;}
+.com-member-list-option .warn:hover{ background-color:#b0b0b0; }
+.com-member-list-option .mes:hover{ background-color:#b0b0b0;}*/
+.com-member-list-option .add:hover{ background-color:#1c9ec3;}
+.com-member-list-option .remove:hover{ background-color:#1c9ec3;}
+/*.com-member-list-option .look:hover{ background-color:#b0b0b0;}*/
+
+.com-member-list-option .file i{background-position:-34px -45px; }
+.com-member-list-option .warn i{background-position:-51px -45px;}
+.com-member-list-option .mes i{background-position:-68px -45px;}
+.com-member-list-option .add i{ background-position:-85px -44px; margin-top:-3px; margin-right:3px;}
+.com-member-list-option .remove i{ background-position:-85px -61px; margin-top:-3px; margin-right:3px;}
+.com-member-list-option .look i{background-position:-102px -45px;}
+
+
+/*contact-detail*/
+.tac-posi{ font-size:14px; padding-bottom:10px; padding-top:10px; color:#666;}
+.tac-posi a{ cursor:pointer; margin-right:8px;color:#999;}
+.tac-posi a:hover{ text-decoration:underline; color:#28acd2;}
+.tac-posi em{ font-size:14px; color:#999; font-style:normal; font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif; margin-right:8px;}
+
+.tac-b{ position:relative; height:460px;width:690px;}
+
+.tac-header{ position:absolute; left:200px; top:150px;}
+.tac-j{ position:relative;}
+.tac-j h4{ background:url(../images/contact-userheader.png) no-repeat; width:277px; height:277px; position:absolute; z-index:11; left:0px; top:0px;}
+.tac-j p img{ width:277px; height:277px;}
+.tac-bm,.tac-zw{ position:absolute; z-index:22; width:120px;}
+.tac-bm{ left:-90px; top:118px; text-align:left;width:90px;}
+.tac-zw{ left:206px; top:225px; text-align:right;}
+.tac-bm h5,.tac-zw h5{ font-size:12px; font-weight:normal; border-bottom:1px solid #cdcdcd;color:#333; padding-bottom:3px;}
+.tac-bm p,.tac-zw p{ font-size:14px; font-weight:normal; color:#333; padding-top:2px;}
+
+.tac-ico{ background:url(../images/tac-icons.png) no-repeat; width:32px; height:32px; display:inline-block; vertical-align:middle;}
+.tac-crile{ background:url(../images/tac-crile.png) no-repeat; width:83px; height:83px; display:inline-block; vertical-align:middle;}
+
+.tac-h{ position:absolute; left:0px; top:42px; background:url(../images/tac-halfcrile.png) no-repeat center top; width:690px; height:500px;}
+
+.tac-links{ position:absolute; z-index:333;}
+.tac-links h5{}
+.tac-links h5 a,.tac-links p a{ text-align:center; cursor:pointer;}
+.tac-links h5 a i{ margin-top:24px;}
+.tac-links p{ text-align:center; font-size:16px; color:#666; padding-top:5px;}
+
+.t-emill{ left:10px; top:208px;}
+.t-mes{left:110px; top:35px;}
+.t-meeting{left:300px; top:-42px;}
+.t-synergy{left:500px; top:35px;}
+.t-file{left:590px; top:208px;}
+
+.t-emill h5 a,.t-file h5 a{ background-position:0px 0px;}
+.t-mes h5 a,.t-synergy h5 a{ background-position:-83px 0px;}
+.t-meeting h5 a{ background-position:-166px 0px;}
+
+.t-emill h5 a i{ background-position:0px 0px;}
+.t-mes h5 a i{ background-position:-32px 0px;}
+.t-meeting h5 a i{ background-position:-64px 0px;}
+.t-synergy h5 a i{ background-position:-96px 0px;}
+.t-file h5 a i{ background-position:-128px 0px;}
+
+.tac-name{ width:690px; font-size:40px; text-align:center; color:#28acd2;}
+
+
+
+/*翻页  列表 图标切换*/
+.page-ico{ background:url(../images/page-ico.png) no-repeat; width:11px; height:10px; display:inline-block; vertical-align:middle; font-size:0px;}
+.disk-page,.disk-change{ display:inline-block; vertical-align:middle; margin-left:10px;}
+.disk-page a.prev i{ background-position:0px 0px;}
+.disk-page a.next i{ background-position:0px -11px;}
+.disk-page a{ margin-right:8px; border:1px solid #cccccc; background-color:#fafafa; padding:4px 10px; display:inline-block; vertical-align:middle; cursor:pointer;}
+.disk-page a:hover{ background-color:#f5f5f5;}
+.disk-page em{ font-style:normal; margin-right:8px; font-size:14px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; margin-top:1px;display:inline-block; vertical-align:middle;}
+
+.disk-change a{ margin-right:10px; cursor:pointer;}
+.shape-ico{ background:url(../images/shape-ico.png) no-repeat; width:15px; height:13px; display:inline-block; vertical-align:middle; font-size:0px;}
+.disk-change .shape-ico.list{ background-position:0px -14px;}
+.disk-change .shape-ico.list.check{ background-position:0px 0px;}
+.disk-change .shape-ico.icon{ background-position:-16px 0px;}
+.disk-change .shape-ico.icon.check{ background-position:-16px -14px;}
+
+

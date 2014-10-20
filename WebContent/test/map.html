@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=RjGyXdLnqs1ZYz2MOixYziSV"></script>
+<title>地图官网展示效果</title>
+</head>
+<body>
+<div id="allmap"></div>
+<script type="text/javascript">
+
+// 百度地图API功能
+// 百度地图API功能
+var map = new BMap.Map("allmap");
+map.centerAndZoom(new BMap.Point(104.05241,30.67752), 10);
+map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
+map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
+map.addControl(new BMap.OverviewMapControl());              //添加缩略地图控件
+map.enableScrollWheelZoom();                            //启用滚轮放大缩小
+
+var marker1 = new BMap.Marker(new BMap.Point(104.05241,30.67752));  // 创建标注
+map.addOverlay(marker1);              // 将标注添加到地图中
+var infoWindow1 = new BMap.InfoWindow("地址一"); //创建信息窗口
+marker1.addEventListener("click", function(){this.openInfoWindow(infoWindow1);});
+
+var marker2 = new BMap.Marker(new BMap.Point(104.06381,30.678675));
+map.addOverlay(marker2);
+var infoWindow2 = new BMap.InfoWindow("地址二");
+marker2.addEventListener("click", function(){this.openInfoWindow(infoWindow2);});
+
+var marker3 = new BMap.Marker(new BMap.Point(103.75614,29.58920));
+map.addOverlay(marker3);
+var infoWindow3 = new BMap.InfoWindow("地址三");
+marker3.addEventListener("click", function(){this.openInfoWindow(infoWindow3);});
+</script>
+</body>
+</html>

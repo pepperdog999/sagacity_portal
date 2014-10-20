@@ -1,0 +1,96 @@
+<div class="mess-rel">
+	<div>
+    	<div class="mess-d-ti">
+        	<h5>选中的人员：</h5>
+			<div class="mess-d-l" id="contactList">
+			</div>
+        </div>
+        <div class="mess-d-ti part">
+        	<h5>选中的部门：</h5>
+			<div class="mess-d-l" id="deptList">
+			</div>
+        </div>
+        <div class="mess-d-ti group">
+        	<h5>选中的自定义组：</h5>
+			<div class="mess-d-l" id="groupList">
+			</div>
+        </div>
+    </div>
+	<div class="mess-rel-users">
+		<h5>
+			<span>勾选列表左侧<i class="mess-checkNBox check"></i>选中
+			</span><font>群发消息</font>
+		</h5>
+		<div class="mess-rel-users-c">
+			<div class="mess-rel-l">
+				<textarea id="messageContent" cols="" rows="" class="mess-rel-textarea">我要写点我的想法!</textarea>
+			</div>
+			<div class="mess-rel-btn">
+				<a class="btn01" onclick="sendMessage()">发送消息</a>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	function sendMessage(){
+		if(selectedList.length > 0){
+			var content = $("#messageContent").val();
+			if(content != ''){
+				$.ajax({
+		            url: "../system/sendMsg",
+		            type: "GET",
+		            dataType: "json",
+		            data: {
+		            	contents : content,
+		            	indexData : JSON.stringify(selectedList)
+		            },
+		            success: function(data) {
+		            	$("#messageContent").val("");
+		            	alert(data.Msg);
+		            }
+				});
+			}else{
+				alert("请填写发送内容");
+			}
+		}else{
+			alert("请选择发送对象！");
+		}
+	}
+	
+	function buildSelectedPage(){
+		var contactListHtml='';
+		var deptListHtml='';
+		var groupListHtml='';
+		
+		for(var i=0;i<selectedList.length;i++){
+			switch(selectedList[i].Type){
+		    case 1 :
+		    	deptListHtml+='<span id="'+selectedList[i].ID+'" type="'+selectedList[i].Type+'">'+selectedList[i].Name+'<a title="删除" onclick="removeSelect(this)"><i></i></a></span>';
+			    break;
+		    case 2 :
+		    	contactListHtml+='<span id="'+selectedList[i].ID+'" type="'+selectedList[i].Type+'">'+selectedList[i].Name+'<a title="删除" onclick="removeSelect(this)"><i></i></a></span>';
+				break;
+		    case 3 :
+		    	groupListHtml+='<span id="'+selectedList[i].ID+'" type="'+selectedList[i].Type+'">'+selectedList[i].Name+'<a title="删除" onclick="removeSelect(this)"><i></i></a></span>';
+				break;
+		    default : 
+			   break;
+			}	
+		}
+		$("#contactList").html(contactListHtml);
+		$("#deptList").html(deptListHtml);
+		$("#groupList").html(groupListHtml);
+		
+	}
+	
+	function removeSelect(obj){
+		obj = $(obj).parent();
+		//从	selectedList数组中删除值
+		operateSelectedList('remove',obj.attr("id"),obj.attr("type"),'');
+		obj.remove();
+	}
+	
+	
+</script>

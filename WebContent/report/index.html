@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>云简报</title>
+<link href="../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/report.css" type="text/css" rel="stylesheet" />
+<link href="../widget/frame/css/frame.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="lib/javascript/faceplate.js"></script>
+<script type="text/javascript" src="lib/javascript/report.js"></script>
+<script type="text/javascript" src="../widget/frame/javascript/createDialog.js"></script>
+<script type="text/javascript" src="../lib/javascript/jquery.form.min.js"></script>
+</head>
+
+<body class="bodyBack">
+
+<!-- Start of toppart -->
+<div id="banner" class="fontLeft com-top toDiv">
+</div>
+<!-- End of toppart -->
+
+
+<!-- Start of con -->
+<div class="comMarginTop01 fontLeft">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="top" class="menu-left" id="memuFrame">
+        	
+        	<div class="menu-line"></div>
+             <div class="menu-c" id="navTree">
+        </td>
+        <td align="left" valign="top" class="com-right">
+        	<div class="com-rightPosition">
+            	<div class="com-optionMenu">
+            		 <a class="returnHome" title="返回主页" href="index" hidefocus="true"><i></i></a>
+	                 <a class="closeMenu close" id="setMenuFrame" title="打开菜单" hidefocus="true"><i></i></a>
+            	</div>
+        		<div class="com-member">
+                	
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td align="left" valign="top">
+                        <div class="report-frame">
+                    
+                            <div>
+                                    <div class="report-tg">
+                                        <dt id="listName">简报列表</dt>
+                                        <div id="reportList">
+                                        
+                                        </div>
+                                    </div>
+                                    <div class="com-member-list-page report-list-page"><span><a onclick="pageLast()" class="last"><i></i></a><b id="pageInfo"><em>0</em>/0</b><a onclick="pageNext()" class="next"><i></i></a></span><font><input name="" type="text" /><a>跳转</a></font></div>
+                            </div>
+                    
+                    	</div></td>
+                        <td align="left" valign="top" style="width:280px; padding-left:10px;">
+                        <div class="report-port">
+                            <div>
+                                <div class="report-p-u">
+                                <#list reportSummary as rs>
+		                		<#switch rs.type>
+		  							<#case "processing">
+		  								<div class="report-p-i report-bor"><a href="#" onclick="loadProcessingList()"><b class="red">${(rs.count)!}</b><p>收到的简报</p></a></div>
+									    <#break>
+		  							<#case "created">
+		  								<div class="report-p-i"><a href="#" onclick="loadCreatedList()"><b class="green">${(rs.count)!}</b><p>发起的简报</p></a></div>
+									    <#break>
+		  							<#default>
+								</#switch>
+	                			</#list>
+	                				<div class="report-p-i"><a onclick="addReport()" href="javascript:void(0)" title="新建简报" class="report-create" id="addReport"><i></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="report-port01">
+                            <div>
+                                    <div class="report-g">
+                                        <dt><i><img src="lib/images/import.png" width="20" height="25" /></i><b>重要简报</b></dt>
+                                        <div class="report-g-uf" id="importantReportList">
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    	</td>
+                      </tr>
+                    </table>
+                    
+                    
+                </div>
+            </div>
+        </td>
+      </tr>
+    </table>
+</div>
+<!-- End of con -->
+
+<!-- Start of footer -->
+<div id="footer" class="comMarginTop01 com-footer">
+</div>
+<!-- End of footer -->
+<script type="text/javascript">
+	
+	$(function() {
+		$("#banner").load("../banner?navInfo=a,14");
+		$("#navTree").load("../navTree?navInfo=a,14");
+		$("#footer").load("../footer");
+		$("#memuFrame").show();
+		loadProcessingList();
+		getImportantReportList();
+	});
+	
+	var pageNumber=1;
+	var pageSize=7;
+	var totalPage=1;
+	var loadType=1;
+
+	
+	function getImportantReportList(){
+		$.ajax({
+            url: '../report/getImportantReportList',
+            type: "GET",
+            dataType: "json",
+            data: {
+            	},
+            success: function(data) {
+				//列表信息
+				var importantReportList='';
+				for(var i=0;i<data.list.length;i++){
+					importantReportList+='<div class="report-g-li">';
+					importantReportList+='<p class="del"><a data-id="'+data.list[i].ReportingID+'" class="openDeal">'+data.list[i].ReportingContent+'</a></p>';
+					importantReportList+='<p class="time">'+data.list[i].Caption+'</p></div>';
+				}
+				$("#importantReportList").html(importantReportList);
+				$("a .openDeal").each(function(){
+					$(this).click(function(){
+						var dataID = $(this).attr("data-id");
+						var HtmlElement = createDivElement("../report/reportDetail?reportID="+dataID);
+						var Myfaceplate = new faceplate({
+								width:"700",					
+								height:"630",
+								top:"80"
+							});
+						Myfaceplate.render(HtmlElement);
+						return false;
+					});	
+				})
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+	}
+	
+	function getReportList(){
+		var url="";
+		var resourceURL= '${(resourceUrl)!}';
+		if(loadType==1){
+			url="../report/getProcessingList";
+		}else{
+			url="../report/getCreatedList";			
+		}
+			
+		$.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            data: {
+            	pageNumber: pageNumber,
+				pageSize: pageSize
+            	},
+            success: function(data) {
+				//列表信息
+				var reportList='';
+				for(var i=0;i<data.list.length;i++){
+					reportList+='<div class="rep-list openDeal" data-id="'+data.list[i].ReportingID+'">';
+					reportList+='<div class="rep-list-pre"><img src="'+resourceURL+data.list[i].AttachURL+'"/></div>';
+					reportList+='<div class="rep-list-del"><p>'+data.list[i].ReportingContent+'</p></div>';
+					reportList+='<div class="rep-list-type">'+data.list[i].CreateTime+'</div>';
+					if(loadType==1){
+						reportList+='<div class="rep-list-name">来自：'+data.list[i].Caption+'</div>';	
+					}
+					reportList+='</div>';
+				}
+				$("#reportList").html(reportList);
+				setReportListLink();
+            	//分页信息
+            	totalPage = data.totalPage;
+            	pageNumber = data.pageNumber;
+            	var pageInfo = '<em>'+data.pageNumber+'</em>/'+data.totalPage;
+				$("#pageInfo").html(pageInfo);
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+	}
+	
+	function pageNext(){
+		if(pageNumber>=totalPage)
+			return;
+		pageNumber++;
+		getReportList();
+	}
+	
+	function pageLast(){
+		if(pageNumber<=1)
+			return;			
+		pageNumber--;
+		getReportList();
+	}
+	
+	function loadProcessingList(){
+		$("#listName").html("收到的云简报");
+		loadType=1;
+		getReportList();
+	}
+	
+	function loadCreatedList(){
+		$("#listName").html("发起的云简报");
+		loadType=2;
+		getReportList();
+	}
+	
+	function addReport(){
+		var HtmlElement = createDivElement("addReport.html");
+		var Myfaceplate = new faceplate({
+				width:"700",					
+				height:"630",
+				top:"80"
+			});
+		Myfaceplate.render(HtmlElement);
+		return false;
+	}
+</script>
+</body>
+</html>

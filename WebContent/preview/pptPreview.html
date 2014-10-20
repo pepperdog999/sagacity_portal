@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>PPT预览</title>
+<link href="../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/preview.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/slide.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="yl">
+	<h3 class="yl-tit">${(fileName)!}<span><a class="yl-btn">手机查看附件</a><a class="yl-btn">下载</a></span></h3>
+	<div id="preview" style="background-color: #f6f6f6;">
+	
+		<div id="spec-n1">
+			<div class="o-img">
+				<img id="1stPage" src="" onerror="this.src='lib/images/none_347.gif'"  />
+			</div>
+			<div class="switch">
+				<a id="foward">&nbsp;</a>
+				<a id="next">&nbsp;</a>
+			</div>													
+		</div><!--spec-n1 end-->
+		
+		<div id="spec-n5">
+			<div id="spec-top" class="control disabled"></div>
+			<div id="spec-bottom" class="control"></div>
+			<div id="spec-list">
+				<ul id="items">
+				
+				</ul>
+			</div>
+		</div><!--spec-n5 end-->
+		
+		<div id="intro">第1页</div>
+		
+	</div>
+</div>
+
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+<script src="lib/javascript/slide.js"></script>
+<script type="text/javascript">
+
+$(function() {
+	var picFolder="${(parameters)!}";
+	$.ajax({
+        url: "../preview/getPPTImages",
+        type: "GET",
+        dataType: "json",
+        data: {
+        	folder : picFolder
+        	},
+        success: function(data) {
+			if(data.Result){
+				var html='';
+				for (var i=0;i<data.picFileList.length;i++){
+					if(i==0){
+						html+='<li class="curr"><img name="'+data.picFileList[i]+'" width="128" height="96" title="第'+(i+1)+'页" src="'+data.picFileList[i]+'"/></li>';
+						$("#1stPage").attr("src",data.picFileList[i].replace("preview","orignal"));
+					}else{
+						html+='<li><img name="'+data.picFileList[i]+'" width="128" height="96" title="第'+(i+1)+'页" src="'+data.picFileList[i]+'"/></li>';
+					}
+				}
+				$("#items").html(html);
+				initSlider();
+				
+			}
+        }
+	});
+});
+
+function initSlider(){
+	var a={ 
+			obj:$("#spec-list"),
+			subobj:$("#spec-n1 img"),
+			width:720,
+			height:490,
+			subheight:540,
+			posi:function(){ 
+				var h=a.subobj.attr("height");
+				if(h<a.subheight&&h>0){
+					a.subobj.css({ "margin-top":(a.subheight-h)/2})
+				}else{
+					a.subobj.css({ "margin-top":0 });
+				}
+			},
+			
+			images:function(){ 
+				a.obj.find("img").bind("click",function(){ 
+					var src=$(this).attr("src");
+					var cont = $(this).attr("title");
+					$("#intro").html(cont);
+					$("#spec-n1 img").attr("src",src.replace("preview","orignal"));
+					a.posi();
+					
+					if($("#spec-list li").hasClass("curr")){
+						$("#spec-list .curr").removeClass("curr")
+						};
+						$(this).parent().addClass("curr");
+						var m=a.calculate.swith();   
+						  
+						if(m[1]==0){ 
+							$("#foward").addClass("disabled");
+						}else{ 
+							if(m[1]+1==m[0]){ 
+							$("#next").addClass("disabled");
+						}else{
+							$("#foward").removeClass("disabled");	
+							$("#next").removeClass("disabled");
+						}
+					}
+				})
+			},
+			
+			alpha:function(){ 
+				var img=new Image();
+				img=$("#spec-n1").find("img").eq(0).get(0);
+				var appname = navigator.appName.toLowerCase();
+				if(appname.indexOf("netscape") == -1){ 
+					if(img.readyState == "complete"){ 
+						a.posi();
+					}
+				}else{ 
+					img.onload = function (){ 
+						if(img.complete == true){ 
+							a.posi();
+						}
+					}	
+				}
+			},
+		
+			calculate:{ 	
+				swith:function(){ 
+					var p=a.obj.find("li");
+					var m=[];
+					m[0]=p.length;
+					m[1]=p.index($(".curr"));
+					return m;	
+				},
+				roll:function(){ 
+					var p=a.obj.find("ul");
+					var m=[];
+					m[0]=parseInt(p.css("margin-top"));
+					m[1]=p.height();
+					return m;
+				}
+			},
+			
+			swith:function(){ 
+				$("#foward").bind("click",function(){ 
+					var m=a.calculate.swith();
+					var s=a.calculate.roll();
+					if(m[1]>0){ 
+						$("#next").removeClass("disabled");
+						$("#spec-list .curr").removeClass("curr");
+						var ob = a.obj.find("li").eq(m[1]-1).find("img");
+						var src=ob.attr("name"); 
+						var cont = ob.attr("title");
+						$("#intro").html(cont);
+						$("#spec-n1").find("img").attr("src",src.replace("preview","orignal"));
+						a.posi();
+						a.obj.find("li").eq(m[1]-1).addClass("curr");
+					};
+					if(m[1]==1){ 
+						$("#foward").addClass("disabled");
+					};
+					if(m[1]==0){
+						/*
+						$(".thickdiv,.thickbox").show();
+						setTimeout(function(){ closebox();},1200);
+						*/
+						alert("已是第一页！");
+					}
+					if(m[1]>2&&s[0]<0){ 
+						a.roll.next(1);
+					}
+				});
+				
+				$("#next").bind("click",function(){ 
+					var m=a.calculate.swith();
+					var s=a.calculate.roll();
+					if(m[1]<m[0]-1){ 
+						$("#foward").removeClass("disabled");
+						$("#spec-list .curr").removeClass("curr");
+						var ob = a.obj.find("li").eq(m[1]+1).find("img");
+						var src= ob.attr("name"); 
+						var cont = ob.attr("title");
+						$("#intro").html(cont);
+						$("#spec-n1").find("img").attr("src",src.replace("preview","orignal"));
+						a.posi();
+						a.obj.find("li").eq(m[1]+1).addClass("curr");
+					};
+					if(m[1]+2==m[0]){ 
+						$("#next").addClass("disabled")
+					};
+					if(m[1]+1==m[0]){ 
+						/*
+						$(".thickdiv,.thickbox").show();
+						setTimeout(function(){ closebox();},1200);
+						*/
+						alert("已是最后一页！");
+					};
+					if(m[1]>=2&&s[1]+s[0]>490){ 
+						a.roll.foward(1);
+					}
+				})
+			},
+			
+			list:function(){ 
+				$("#spec-top").bind("click",function(){ 
+					var m=a.calculate.roll();
+					if(m[0]<0){ 
+						a.roll.next(2);	
+					}
+				});
+				
+				$("#spec-bottom").bind("click",function(){ 
+					var m=a.calculate.roll();
+					if(m[1]+m[0]>490){ 
+						a.roll.foward(2);	
+					}
+				});
+			},
+			
+			roll:{ 
+				foward:function(step){ 
+					var m=a.calculate.roll();
+					a.obj.find("ul").animate({ "marginTop":m[0]-125*step},100);
+				},
+				next:function(step){ 
+					var m=a.calculate.roll();
+					a.obj.find("ul").animate({ "marginTop":m[0]+125*step},100)		
+				}	
+			},
+			
+			init:function(){ 
+				a.obj.jdMarquee({
+					deriction:"up",
+					width:134,
+					height:490,
+					step:1,
+					speed:4,
+					delay:10,
+					control:false
+				});
+			
+				a.obj.find("ul").eq(1).remove();
+				var h=a.obj.find("li").length;
+				a.obj.find("ul").css({ "height":h*125});
+				a.images();
+				a.swith();
+				a.list();
+				a.alpha();
+			}
+		}; 
+		
+		a.init();	
+};
+
+</script>
+</body>
+</html>

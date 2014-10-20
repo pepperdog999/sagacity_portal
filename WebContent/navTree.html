@@ -1,0 +1,20 @@
+<h5><font>平台功能</font><span class="all-icons"></span></h5>
+<ul class="menu-ul">
+	<#list modules as module>
+		<#if (navInfo[0]=="m" && navInfo[1]?number==module.ModuleID)>
+			<li class="check"><a href="..${(module.URL)!}" target="_self"><i class="${(module.CssClass)!}"></i>${(module.Caption)!}</a></li>
+		<#else>
+			<li><a href="..${(module.URL)!}" target="_self"><i class="${(module.CssClass)!}"></i>${(module.Caption)!}</a></li>
+		</#if>
+	</#list>
+</ul>
+<h5><font>应用中心</font><span class="all-icons up"></span></h5>
+<ul class="menu-ul">  
+	<#list corpApps as app>
+		<#if (navInfo[0]=="a" && navInfo[1]?number==app.AppID)>
+			<li class="check"><a href="..${(app.WEB_URL)!}" target="_self"><i class="menu-icons menuIco${(app.WEB_ICON)!('04')}"></i>${(app.AppName)!}</a></li>
+		<#else>
+			<li><a href="..${(app.WEB_URL)!}" target="_self"><i class="menu-icons menuIco${(app.WEB_ICON)!('04')}"></i>${(app.AppName)!}</a></li>
+		</#if>
+	</#list>
+</ul>

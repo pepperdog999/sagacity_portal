@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="business">
+	<sql id="getProjectSummary">
+		select 'processing' type,count(c.CoordinateID) count
+		from coordinate_info c
+		left join coordinate_node cn on cn.CoordinateID=c.CoordinateID
+		left join coordinate_nodeuserruntime cnr on cnr.NodeID=cn.NodeID
+		where cnr.SubmitDate is NULL and cnr.ExecuteUserID=?
+		union
+		select 'processed' type,count(c.CoordinateID) count
+		from coordinate_info c
+		left join coordinate_node cn on cn.CoordinateID=c.CoordinateID
+		left join coordinate_nodeuserruntime cnr on cnr.NodeID=cn.NodeID
+		where cnr.SubmitDate is not NULL and cnr.ExecuteUserID=?
+		union
+		select 'created' type,count(c.CoordinateID) count
+		from coordinate_info c
+		left join sys_users u on u.UserID=c.OwnerID
+		where c.OwnerID=?
+		union
+		select 'library' type,count(pb.ProjectID) count
+		from business_projectbase pb
+		where 1=1
+	</sql>
+	<sql id="getCreatedList-select">
+		select c.CoordinateID,c.CoordinateName,c.CreateDate,u.Caption
+		,case when c.ArchiveDate is NULL then '流程未结束' else '流程已归档' end CoorStatus
+	</sql>
+	<sql id="getCreatedList-from">
+		from coordinate_info c
+		left join sys_users u on u.UserID=c.OwnerID
+		where c.OwnerID=?
+		order by c.CreateDate DESC
+	</sql>
+	<sql id="getProcessedList-select">
+		select c.CoordinateID,c.CoordinateName,cn.NodeName,cn.NodeID,nr.SubmitDate,u.Caption
+	</sql>
+	<sql id="getProcessedList-from">
+		from coordinate_info c
+		left join coordinate_node cn on cn.CoordinateID=c.CoordinateID
+		left join coordinate_noderuntime nr on nr.NodeID=cn.NodeID
+		left join coordinate_nodeuserruntime cnr on cnr.NodeID=cn.NodeID
+		left join sys_users u on u.UserID=c.OwnerID
+		where cnr.SubmitDate is not NULL and cnr.ExecuteUserID=?
+		order by c.CreateDate DESC
+	</sql>
+	<sql id="getProcessingList-select">
+		select c.CoordinateID,c.CoordinateName,cn.NodeName,cn.NodeID,nr.ActiveDate,u.Caption
+	</sql>
+	<sql id="getProcessingList-from">
+		from coordinate_info c
+		left join coordinate_node cn on cn.CoordinateID=c.CoordinateID
+		left join coordinate_noderuntime nr on nr.NodeID=cn.NodeID
+		left join coordinate_nodeuserruntime cnr on cnr.NodeID=cn.NodeID
+		left join sys_users u on u.UserID=c.OwnerID
+		where cnr.SubmitDate is NULL and cnr.ExecuteUserID=?
+		order by c.CreateDate DESC
+	</sql>
+	<sql id="getProjectList-select">
+		select pb.ProjectID,pb.Code,pb.Name,pb.AddTime,u.Caption,ci.Name ClientName,c.CoordinateID
+	</sql>
+	<sql id="getProjectList-from">
+		from business_projectbase pb
+		left join sys_users u on u.UserID=pb.UserID
+		left join business_clientinfo ci on ci.ProjectID=pb.ProjectID
+		left join coordinate_info c on c.FormDataID=pb.ProjectID
+		where 1=1
+		order by pb.AddTime DESC
+	</sql>
+</sqlGroup>
+

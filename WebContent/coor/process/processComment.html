@@ -1,0 +1,43 @@
+<div class="discussion fontLeft">
+    
+    <div class="discussion-listBox">
+        <h4>处理人意见区<span>（${(commentInfo?size)!(0)}条）</span></h4>
+        <div class="discussion-list">
+       		<div class="interMes-dialogue">
+           		<!-- Start of del -->
+                <#assign currentNodeID=0 />
+                <#list commentInfo as comments>
+                <#if (comments.NodeID != currentNodeID) >
+                <div class="interMes-dialogue-l">
+					<div class="interMes-dialogue-to"><a data-toid="oriented04" class="linksToProcess"><i class="com-icons"></i>${(comments.NodeName)!}</a></div>
+				 	<div class="interMes-dialogue-b">
+				 		<div class="interMes-dia-lit">
+                             <div class="interMes-dia-sendImg"><p class="interMes-dia-sendImg-i"><img src="user/header/header.png"/></p>
+                             	<p>${(comments.Caption)!}</p>
+                             	<#if (comments.CoorOpinon == 1) >
+                             		<p>(同意)</p>
+                             	<#else>
+                             		<p>(不同意)</p>
+                             	</#if>
+                             </div>
+                             <div class="interMes-dia-ko">
+                                     <div class="interMes-dia-gi"><i></i><span>${(comments.SubmitDate)!}</span><font>${(comments.CoorContent)!}</font></div>
+                                     <div class="interMes-dia-usersB">
+                                         <div class="interMes-dia-usersN"><a title="回复" class="bindDialog" data-type="reply"></a></div>
+                                     </div>
+                             </div>
+                             <div></div>
+                         </div>
+				 	</div>
+				</div>
+				</#if>
+				<#assign currentNodeID=comments.NodeID />
+                </#list>   
+                <!-- End of del -->
+            </div>
+       
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="lib/javascript/processComment.js"></script>

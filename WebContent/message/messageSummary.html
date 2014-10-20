@@ -1,0 +1,37 @@
+<div class="mess-basic">
+
+	<div class="mess-bs-fl hang01">
+		<h5>
+			<span><b id="URCount">0</b></span>
+		</h5>
+		<p>未读消息</p>
+	</div>
+
+	<div class="mess-bs-fl hang02">
+		<h5>
+			<span><b id="CCCount">0</b></span>
+		</h5>
+		<p>通讯录数</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		$.ajax({
+            url: "../message/getMessageSummary",
+            type: "GET",
+            dataType: "json",
+            data: {},
+            success: function(data) {
+				$("#URCount").html(data.URCount);
+				$("#CCCount").html(data.CCCount);
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });		
+	});
+	
+</script>

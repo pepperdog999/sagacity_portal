@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>用户自定义组</title>
+<link href="../../../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="../../lib/css/frameDetail.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript" src="../../../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../lib/javascript/collect.js"></script>
+<script type="text/javascript">
+
+function cancelFunction(){
+	window.parent.dialogCollect.free();
+}
+
+function submitFunction(){
+	if(selContactGroupID==0){
+		alert("请选择一个分组！");
+		return;
+	}
+	$.ajax({
+        url: "../../../contact/addContactGroupMember",
+        type: "GET",
+        dataType: "json",
+        data: {
+        	contactID : id,
+        	contactGroupID : selContactGroupID,
+		},
+        success: function(data) {
+			alert(data.Msg);
+        }
+	});
+}
+
+function delUserContactGroup(obj,event){
+	stopBubble(event);
+	var contactGroupID=$(obj).parent().attr("data-id");
+	$.ajax({
+        url: "../../../contact/removeUserContactGroup",
+        type: "GET",
+        dataType: "json",
+        data: {contactGroupID : contactGroupID},
+        success: function(data) {
+			alert(data.Msg);
+			$(obj).parent().remove();        
+		}
+	});
+}
+
+function stopBubble(e) {  
+    var e = e ? e : window.event;  
+    if (window.event) { // IE  
+        e.cancelBubble = true;   
+    }else{ // no ies     
+        e.stopPropagation();   
+    }   
+}
+
+//获取URL参数
+function getQueryParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+
+var id=getQueryParam("id");
+var selContactGroupID = 0;
+
+function addNewContactGroup(){
+	var html='<div class="col-list add"><span><input id="newGroup" type="text" value="" onblur="addUserContactGroup()" /></span></a><t><s></s></t></div>';
+	if($("#newGroup").length==0){
+		$("#collectList").append(html);
+		$("#newGroup").focus();
+	}
+}
+
+function addUserContactGroup(){
+	var groupName = $("#newGroup").val();
+	$.ajax({
+        url: "../../../contact/addUserContactGroup",
+        type: "GET",
+        dataType: "json",
+        data: {groupName : groupName},
+        success: function(data) {
+			alert(data.Msg);
+			$("#newGroup").parent().parent().remove();
+			var html='<div class="col-list" data-id="'+data.ContactGroupID+'"><span>'+groupName+'</span><a href="javascript:void(0)" onclick="delUserContactGroup(this)" class="col-to" title="删除"></a><t><s></s></t></div>';
+			$("#collectList").append(html);
+			collectHanderEvent();
+        }
+	});
+}
+
+$(function() {
+	$.ajax({
+        url: "../../../contact/getUserContactGroup",
+        type: "GET",
+        dataType: "json",
+        data: {contactID : id},
+        success: function(data) {
+			var html='';
+			for(var i=0;i<data.Groups.length;i++){
+				html+='<div class="col-list" data-id="'+data.Groups[i].ContactGroupID+'"><span>'+data.Groups[i].GroupName+'</span><a href="javascript:void(0)" onclick="delUserContactGroup(this)" class="col-to" title="删除"></a><t><s></s></t></div>';
+			}
+			//html+='<div class="col-list add"><span><input id="newGroup" type="text" value="新用户组" onfocus="if (value ==\'新用户组\'){value =\'\'}" onblur="if (value ==\'\'){value=\'新用户组\'}"/></span></a><t><s></s></t></div>';
+			$("#collectList").html(html);
+			//表内样式事件	
+			collectHanderEvent();
+        }
+	});
+});
+
+</script>
+</head>
+
+<body>
+<div class="fontLeft comment">
+
+    <div class="comment-l">
+        <div class="comment-n" style="border-top:0px; margin:0px;">
+           	<div style="overflow:auto; height:300px; border-bottom:1px dashed #dfdfdf;" id="collectList">
+           		
+            </div>
+            <div class="comment-btnh comment-height"><span class="comment-b-left"><a onclick="addNewContactGroup()" class="col-addBtn">+添加新用户组</a></span><span class="comment-b-right"><button class="comment-btn" onclick="submitFunction()">提交</button><button class="comment-cancelbtn" onclick="cancelFunction()">取消</button></span></div>
+        </div>
+    </div>
+    
+</div>
+</body>
+</html>

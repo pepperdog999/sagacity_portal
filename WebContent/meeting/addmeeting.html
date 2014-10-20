@@ -1,0 +1,246 @@
+<div class="report-s">
+	<h5><font>新建会议</font><span></span></h5>
+    <div class="report-s-con">
+    		
+            
+            <div class="del">
+                <div class="title"><label>会议主题：</label><input id="content" type="text" class="meeting-input01"/></div>
+                <table width="100%" border="0" cellspacing="1" cellpadding="0" class="meetingDel-tab">
+                  <tr>
+                  	<th>相关事项：</th>
+                  	<td><textarea id="detail" cols="" rows="" class="meeting-textarea"></textarea></td>
+                  </tr>
+                  <tr>
+                    <th>会议地址：</th>
+                    <td><input id="location" type="text" class="meeting-input"/></td>
+                  </tr>
+                  <tr>
+                    <th>会议时间：</th>
+                    <td><input type="text" readonly="readonly" class="meeting-input" id="time" onclick="SelectDate(this,'yyyy-MM-dd hh:mm')"/></td>
+                  </tr>
+                  <tr>
+                    <th>参会人员：</th>
+                    <td>
+                    	<div class="relative" style="z-index:2">
+	                    	<ul class="upNameList" style="width:450px;" id="sendObject1"></ul><a class="process-icons lxr bindDialog" class-type="1" data-type="user"></a>
+	                        <div class="userListMore" id="moreDiv1"></div>
+	                    </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>传阅人员：</th>
+                    <td>
+                    	<div class="relative">
+	                    	<ul class="upNameList" style="width:450px;" id="sendObject2"></ul><a class="process-icons lxr bindDialog" class-type="2" data-type="user"></a>
+	                        <div class="userListMore" id="moreDiv2"></div>
+	                    </div>
+                    </td>
+                  </tr>
+                </table>
+
+                <div class="fileFont"><h4><img src="lib/images/links.png" width="17" height="17" />附件：</h4></div>
+                <div class="img">
+               		<div id ="attachList">
+       
+	              	</div>
+	              	<a id="attUpload" class="addList-oper" onclick="uploadAttach()" title="添加附件"></a>
+                   	<form id="attachForm" name="attachForm" style="display:none" enctype="multipart/form-data">
+		      			<input id="attachFile" name="attachFile" type="file" />
+		      		</form>
+              	</div>
+                <div class="meeting-linkFrame"><a onclick="createMeeting()" class="meeting-subbtn">确定</a><a class="meeting-cancelbtn">取消</a></div>
+            </div>
+
+    </div>
+</div>
+<script type="text/javascript" src="../widget/datepicker/javascript/adddate.js"></script>
+
+<script type="text/javascript">
+	jugDialogPage();
+	var indexData=[];
+	
+	function checkData(){
+		if($("#time").val()=='' || $("#time").val()==null){
+			alert('请设置会议时间！');
+			return false;
+		}else if ($("#content").val()=='' || $("#content").val()==null){
+			alert('请设置会议主题！');
+			return false;
+		}else if ($("#location").val()=='' || $("#location").val()==null){
+			alert('请设置会议地址！');
+			return false;
+		}else if (indexData.length==0){
+			alert('请选择参会人员！');
+			return false;
+		}
+		return true;
+	}
+	
+	function createMeeting(){
+		if(!checkData()){
+			return;
+		}
+		//附件数组
+		var attachArray = new Array();
+		$('#attachList').find(".addList").each(function(item){
+			attachArray.push($(this).attr('attach-id'));
+		});
+		$.ajax({
+            url: "../meeting/addMeeting",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	content : $("#content").val(),
+            	detail : $("#detail").val(),
+            	location : $("#location").val(),
+            	dateTime : $("#time").val(),
+            	attachArray : attachArray.toString(),
+            	indexData : JSON.stringify(indexData)
+            },
+            success: function(data) {
+            	alert(data.Msg);
+            }
+		});
+		
+	}
+	
+	//人员选择确定
+	function chooseUserConfirm(){
+		var clickObj = dialogUser.getClickObject();
+		var classType = $(clickObj).attr("class-type");
+
+		var userList=document.getElementById("dialogIframe").contentWindow.submitLsit();
+		
+		var html1='';
+		var html2='<ul class="upNameList reStyle">';
+		for(var i=0;i<userList.length;i++){
+			if(i<=5){
+    			html1+='<li data-id="'+userList[i].ID+'" onclick="removeUser(this)"><b>'+userList[i].Name+'</b><i></i></li>';
+			}else{
+				html2+='<li data-id="'+userList[i].ID+'" onclick="removeUser(this)"><b>'+userList[i].Name+'</b><i></i></li>'
+			}
+    		var single = new Object();
+    		single["Type"]=2;
+			single["ID"]=userList[i].ID;
+			single["Name"]=userList[i].Name;
+			single["Class"]=classType;
+			indexData.push(single);
+		}
+		html1+='<li onclick="more(this)" class="more"><a title="显示更多"></a></li>';
+		html2+='</ul>';
+		if(classType==1){
+			$("#sendObject1").html(html1);
+			$("#moreDiv1").html(html2);
+		}else{
+			$("#sendObject2").html(html1);
+			$("#moreDiv2").html(html2);
+		}
+    	
+	}
+	
+	function more(obj){
+		if($(obj).hasClass("up")){
+			$(obj).removeClass("up");
+			$(obj).parent().parent().find(".userListMore").hide();
+		}else{
+			$(obj).addClass("up");
+			$(obj).parent().parent().find(".userListMore").show();
+		}
+	}
+	
+	function removeUser(obj){
+		if(indexData.length>1){
+			for(var i=0;i<indexData.length;i++){
+				if(indexData[i]["ID"]==$(obj).attr("data-id")){
+					indexData.splice(i,1);
+				}
+			}
+			$(obj).remove();	
+		}else{
+			alert("不允许删除！");
+		}
+		
+	}
+	
+	$(function(){
+		$("#attachFile").change(function() {
+			var fileInfo = $("#attachFile").val().split('.');
+	        var fileType = fileInfo[fileInfo.length-1].toLowerCase();
+	        if(!(fileType =='exe' || fileType=='com' || fileType=='bat' || fileType=='sh' || fileType=='msi')){ //控制不能上传执行文件
+	        	$("#attachForm").ajaxSubmit({
+	                url: "../meeting/uploadAttach?meetingID=0",
+	                type: "post",
+	                dataType: "json",
+	                resetForm: "true",
+	                beforeSubmit: function() {
+	                	$("#attUpload").hide();
+	                },
+	                success: function(data) {
+	                    if(data.Result){
+	                    	alert(data.Msg);
+	                    	$("#attUpload").show();
+	                    	var html='<div onclick="viewAttach(this)" class="addList" attach-id="'+data.AttachInfo.AttachID+'"><a class="free" onclick="delAttach(this)" title="移除此附件"></a><i><img src="../disk/lib/images/file_type/document/log.gif"/></i><p>'+data.AttachInfo.AttachmentName+'</p></div>';
+							$("#attachList").prepend(html);
+	                    }else{
+	                    	alert(data.Msg);
+	                    	$("#attUpload").show();
+	                    }
+	                },
+	                error: function(jqXHR, errorMsg, errorThrown) {
+	                    alert(errorMsg);
+	                }
+	            });
+	        }else{
+	        	alert("不允许上传可执行文件！");
+	        	return;
+	        }
+		});
+	});
+
+	function uploadAttach(){
+		$("#attachFile").click();
+	}
+
+	function viewAttach(obj){
+		var attachID= $(obj).attr("attach-id");
+		if(attachID>0){
+			$.ajax({
+	            url: "../meeting/getAttachFileURL",
+	            type: "GET",
+	            dataType: "json",
+	            data: {
+					attachID : attachID
+	            	},
+	            success: function(data) {
+	            	window.open('../preview/filePreview?dir='+data.FilePath+'&fileName='+data.FileName,'_new', '');                           	
+	            }
+			});
+		}else{
+			alert("请选择需要查看的会议附件！");
+		}
+	}
+
+	function delAttach(obj){
+		var attachID= $(obj).parent().attr("attach-id");
+		if(attachID>0){
+			$.ajax({
+	            url: "../meeting/delAttachFile",
+	            type: "GET",
+	            dataType: "json",
+	            data: {
+					attachID : attachID
+	            	},
+	            success: function(data) {
+	            	if(data.Result){
+						alert(data.Msg);
+						$(obj).parent().remove();
+	            	}else{
+	            		alert(data.Msg);	
+	            	}                            	
+	            }
+			});
+		}else{
+			alert("请选择需要删除的会议附件！");
+		}
+	}
+</script>

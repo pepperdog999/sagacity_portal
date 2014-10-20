@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>新建协同</title>
+<link href="../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/common.css" type="text/css" rel="stylesheet" />
+<link href="../widget/frame/css/frame.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../lib/javascript/jquery.form.min.js"></script>
+<script type="text/javascript" src="lib/javascript/common.js"></script>
+<script type="text/javascript" src="lib/javascript/addprocess.js"></script>
+<script type="text/javascript" src="lib/javascript/fixscroll.js"></script>
+<script type="text/javascript" src="../widget/frame/javascript/createDialog.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.fixed').fixScroll({defultTop:0,center:false});
+});
+</script>
+
+</head>
+
+<body class="bodyBack">
+
+<!-- Start of toppart -->
+<div id="banner" class="fontLeft com-top toDiv">
+</div>
+<!-- End of toppart -->
+
+
+<!-- Start of con -->
+<div class="comMarginTop01 fontLeft">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="top" class="menu-left" id="memuFrame" style="display:none;">
+        	
+        	<div class="menu-line"></div>
+            <div class="menu-c" id="navTree">
+            </div>
+        </td>
+        <td align="left" valign="top" class="com-right">
+        	<div class="com-rightPosition">
+            <div class="com-optionMenu">
+	           	<a class="returnHome" title="返回主页" href="index" hidefocus="true"><i></i></a>
+	           	<a class="closeMenu" id="setMenuFrame" title="打开菜单" hidefocus="true"><i></i></a>
+           	</div>
+          	<div class="com-content">
+                 <div class="process">
+                         <div class="com-op">
+                                 <div class="com-op-padding">  
+                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                     <tr>
+                                     <td align="left" valign="top" class="com-fp">
+                                     <p>
+                                     	<label>标题：</label><input id="coorName" type="text" value="协同名称" class="com-tabInput inputWidth"
+                                     		onfocus="if(value == '协同名称'){value = ''}" onblur="if(!value){value = '协同名称'}"/>
+                                     	<select id="">
+	                                    	<option>普通</option>
+	                                    	<option>紧急</option>
+                                     	</select>
+                                     </p>
+                                     <p>
+                                     	<label>流程：</label>
+                                     		<input id="workflow" type="text" readOnly="true" onclick="addFlow()" value="点击创建流程" class="com-tabInput inputWidth"/>
+                                     		<a class="com-lookBtn">流程模板</a>
+                                     </p>
+                                     </td>
+                                     <td align="left" valign="top" class="com-fpBtn">
+                                     	<div>
+                                         	<div class="fixed com-fpBtn-back" data-border="true">
+                                         		<a class="bcdf" onclick="initCoor(0)" data-title="保存待发"><i class="process-icons"></i><p>保存待发</p></a>
+                                         		<a class="tjfs" onclick="initCoor(1)" data-title="提交发送"><i class="process-icons"></i><p>提交发送</p></a>
+			                                   	<a class="dy" data-title="打印"><i class="process-icons"></i><p>打印</p></a>
+			                                   	<a class="zk" data-title="节点展开" id="processNodesShow"><i class="process-icons"></i><p>节点展开</p></a>
+			                                   	<a class="sq" data-title="节点收起" id="processNodesHide"><i class="process-icons"></i><p>节点收起</p></a>
+                                             </div>
+                                         </div>
+                                      </td>
+                                     </tr>
+                                     </table>
+                                 </div>
+                         </div>
+                         <div class="comMarginTop">
+                             <p class="com-selections" id="selections"><a class="first check">正文</a><a>流程追踪</a><a class="last">流程意见</a></p>
+                         </div>
+                         <div class="process-frame">
+                             <h5 id="selectionsArrows"><i></i></h5>
+                             <div class="process-frame-dashed" id="frameProcess">
+                                <script type="text/javascript">
+                                	var coordinateID=0;
+                                	var nodeID=0;
+						 			processText(coordinateID,nodeID);
+								</script> 
+                             </div>
+                         </div>
+                 	</div>
+          		</div>
+          </div>
+    	</td></tr>
+    </table>
+</div>
+<!-- End of con -->
+
+<!-- Start of footer -->
+<div id="footer" class="comMarginTop01 com-footer">
+</div>
+<!-- End of footer -->
+
+<!-- Start of flowEditor -->
+<div class="pathLayer" id="pathLayer" style="display:none">
+	<div class="pathLayer-pad">
+    	<div class="pathLayer-shadow">
+            <h5 class="pathLayer-tit"><font>流程设置</font><span><a onclick="getProcessPath()">确定</a><a onclick="clearProcessPath()">清空</a><a class="cancel" onclick="processPathClose()">关闭</a></span></h5>
+            <div><iframe id="pathFrame" name="pathFrame" width="100%" height="550" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="auto" allowtransparency="true"  style="background-color:transparent;" src=""></iframe></div>
+        </div>
+    </div>
+</div>
+<!-- End of flowEditor -->
+
+<script type="text/javascript">
+		
+	$(function() {
+		$("#banner").load("../banner?navInfo=a,16");
+		$("#navTree").load("../navTree?navInfo=a,16");
+		$("#footer").load("../footer");
+		$("#memuFrame").hide();
+		$("#processNodesHide").hide();
+	});
+	
+	var linkJson = [];
+	var dataJson = [];
+	var userID = '${(userContact.UserID)!}';
+	
+	function getDataJson(){
+		return dataJson;
+	}
+	
+	function getLinkJson(){
+		return linkJson;
+	}
+	
+	function addFlow(){
+		var dialogUsers;
+		dialogUsers = new SfDialog();
+		dialogUsers.init("选择人员", "filter/choice/departusers.html");
+		dialogUsers.beforeHideEvent(DialogBackFun,chooseUserConfirm,true);
+		dialogUsers.render();
+		dialogUsers.show(600, 515, true, false);
+	}
+	
+	function editFlow(){
+		processPathShow();
+	}
+	
+	function clearProcessPath(){
+		document.getElementById("pathFrame").contentWindow.clearProcess();
+		dataJson.length=0;
+		linkJson.length=0;
+		$("#pathLayer").hide();
+		$("#workflow").val("点击创建流程");
+		$("#workflow").attr("onclick","addFlow()");
+	}
+	
+	function getProcessPath(){
+		dataJson.length=0;
+		dataJson = document.getElementById("pathFrame").contentWindow.getDataJson();
+		linkJson.length=0;
+		linkJson = document.getElementById("pathFrame").contentWindow.getLinkJson();
+		$("#pathLayer").hide();
+	}
+	
+	//人员选择确定
+	function chooseUserConfirm(){
+		var userList = document.getElementById("dialogIframe").contentWindow.submitLsit();
+		var flowType = document.getElementById("dialogIframe").contentWindow.returnFlowType();
+		if(flowType==1){
+			var nodeArray=new Array();
+			var fNodeCode = 'u'+Date.parse(new Date());
+			//首节点
+			var node = {};
+			node["code"] = fNodeCode;
+			node["name"] = '协同';
+			node["topname"] = '发起人';
+			node["parentCode"] = new Array("start");
+			node["childrenCode"] = new Array(userList[0]["Code"]);
+			node["status"] = 3;
+			node["typeImg"] = 6;
+			node["executors"] = '[{Name:"发起人", Type:"99", ID:""}]';
+			node["links"] = '';
+			dataJson.push(node);
+			//选择人员的节点
+			for(var i=0;i<userList.length;i++){
+				var node = {};
+    			node["code"] = userList[i]["Code"];
+    			node["name"] = '[协同]';
+    			node["topname"] = userList[i]["Name"];
+    			if(i==0){
+    				node["parentCode"] = new Array(fNodeCode);	
+    			}else{
+    				node["parentCode"] = new Array(userList[i-1]["Code"]);
+    			}
+    			if(i<userList.length-1){
+    				node["childrenCode"] = new Array(userList[i+1]["Code"]);	
+    			}else{
+    				node["childrenCode"] = new Array("end");
+    			}
+    			node["status"] = 2;
+    			node["typeImg"] = 6;
+    			node["executors"] = '[{Name:"'+userList[i]["Name"]+'", Type:"4", ID:"'+userList[i]["ID"]+'"}]';
+    			node["links"] = '';
+    			dataJson.push(node);
+			}
+			linkJson = [];
+		}else if(flowType==2){
+			var cNodeArray=new Array();
+			var fNodeCode = 'u'+Date.parse(new Date());
+			//选择人员的节点
+			for(var i=0;i<userList.length;i++){
+				cNodeArray.push(userList[i]["Code"]);
+				var node = {};
+    			node["code"] = userList[i]["Code"];
+    			node["name"] = '[协同]';
+    			node["topname"] = userList[i]["Name"];
+    			node["parentCode"] = new Array(fNodeCode);
+    			node["childrenCode"] = new Array("link1");
+    			node["status"] = 2;
+    			node["typeImg"] = 6;
+    			node["links"] = 'link1';
+    			node["executors"] = '[{Name:"'+userList[i]["Name"]+'", Type:"4", ID:"'+userList[i]["ID"]+'"}]';
+    			dataJson.push(node);
+			}
+			//首节点
+			var node = {};
+			node["code"] = fNodeCode;
+			node["name"] = '[协同]';
+			node["topname"] = '发起人';
+			node["parentCode"] = new Array("start");
+			node["childrenCode"] = cNodeArray;
+			node["status"] = 3;
+			node["typeImg"] = 6;
+			node["executors"] = '[{Name:"发起人", Type:"99", ID:""}]';
+			node["links"] = '';
+			dataJson.unshift(node);
+			
+			var linkNode = {};
+			linkNode["code"] = 'link1';
+			linkNode["parentCode"] = cNodeArray;
+			linkNode["childrenCode"] = new Array("end");			
+			linkJson.push(linkNode);
+		}
+		$("#workflow").val("流程已设置，点击修改");
+		$("#workflow").attr("onclick","editFlow()");
+	}
+	
+	function checkData(){
+		if($('#coorName').val()=='协同名称'){
+			alert("请设置协同名称！");
+			return false;
+		}
+		if(!$("#coorContent").val()){
+			alert("请设置协同内容！");
+			return false;
+		}
+		if(dataJson.length==0){
+			alert("请设置协同流程！");
+			return false;
+		}
+		return true;
+	}
+	
+	//初始化流程，接受参数判断是否提交首节点
+	function initCoor(blnSubmit){
+		if(!checkData()){
+			return;
+		}
+		//附件数组
+		var attachArray = new Array();
+		$('#attachList').find("li").each(function(item){
+			attachArray.push($(this).attr('attach-id'));
+		});
+		$.ajax({
+            url: "../coor/initCoor",
+            type: "POST",
+            dataType: "json",
+            data: {
+            	coorName : $("#coorName").val(),
+            	coorContent : $("#coorContent").val(),
+            	extraContent : $("#extraContent").val(),
+            	attachArray : attachArray.toString(),
+            	dataJson : JSON.stringify(dataJson),
+            	linkJson : JSON.stringify(linkJson),
+            	blnSubmit : blnSubmit
+            	},
+            success: function(data) {
+                if (data.Result) {
+                	alert(data.Msg);
+                	window.open("index", "_self", ""); // 返回列表页面
+                }else{
+                	alert(data.Msg);
+                }
+            }
+        });
+	}
+</script>
+</body>
+</html>

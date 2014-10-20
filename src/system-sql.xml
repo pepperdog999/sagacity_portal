@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="system">
+	<sql id="getModules">
+		select m.ModuleID,m.Caption,m.CssClass,m.URL
+		from sys_moduleinfo m
+		where m.Type=0 and m.intState=1
+	</sql>
+	<sql id="getCorpApps">
+		select distinct a.AppID,a.AppName,a.Desc,a.ICON_URL,a.WEB_URL
+		from app_baseinfo a
+		left join app_corpassign ca on ca.AppCode=a.AppCode
+		where (ca.CorpID=? or a.blnDefault=1) and (a.WEB_URL is not null) and a.intState=1
+	</sql>
+</sqlGroup>
+

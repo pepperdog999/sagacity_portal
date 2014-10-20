@@ -1,0 +1,63 @@
+<div class="app-user">
+    <div class="tac-b">
+        <div class="tac-h" id="app_list">
+        </div>
+        <div class="tac-header">
+                <div class="tac-j">
+                    <h4></h4>
+                    <p><img src="${(resourceUrl)!}${(userContact.UserID)!}${(headerFix)!}" onerror="javascript:this.src='../user/header/header.png'"/></p>
+                </div>
+                <div class="tac-bm">
+                  <h5>部门</h5>
+                    <p>${(userContact.DeptName)!}</p>
+                </div>
+                <div class="tac-zw">
+                    <h5>职务</h5>
+                    <p>${(userContact.PosName)!('暂无职务')}</p>
+                </div>
+        </div>
+        <div class="tac-btnA"><a class="link-left" href="javascript:void(0)"></a><a class="link-right" href="javascript:void(0)"></a></div>
+    </div>
+    <div class="tac-name">${(userContact.Name)!}</div>
+</div>
+<script type="text/javascript">
+	
+	var pageIndex=0;
+	var pageSize=8;
+
+	$(function() {
+		getUserApps();
+	});
+
+	function getUserApps(){
+		$.ajax({
+            url: "../application/corpAppIndex",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	corpID: '${(userContact.CorpID)!}',
+            	pageIndex: pageIndex,
+				pageSize: pageSize
+            },
+            success: function(data) {
+				var appList='';
+				for(var i=0;i<8;i++){
+					appList+='<div class="tac-links t-app0'+(i+1)+'">';
+					if(i<data.list.length){
+						appList+='<h5><a href="..'+data.list[i].WEB_URL+'" class="tac-crile"><img src="${resourceUrl}'+data.list[i].ICON_URL+'"/></a></h5>';
+						appList+='<p><a href="..'+data.list[i].WEB_URL+'">'+data.list[i].AppName+'</a></p>';
+					}else{
+						appList+='<h5><a class="tac-crile"><img src="lib/images/appicon/add.png"/></a></h5>';
+						appList+='<p><a>添加一个</a></p>';
+					}
+					appList+='</div>';
+				}
+				$("#app_list").html(appList);
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+	}
+</script>         
+          

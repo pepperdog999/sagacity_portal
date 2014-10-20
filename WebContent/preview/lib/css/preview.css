@@ -1,0 +1,14 @@
+/* CSS Document */
+
+.yl{ text-align:left;}
+.yl-tit{ font-size:22px; text-align:center; padding:20px 0px; border-bottom:1px dashed #ccc; background-color:#fafafa; position:relative;font-weight:normal; }
+.yl-tit span{ position:absolute; top:20px; right:80px; font-weight:normal; font-size:16px;}
+.yl-tit span a{ margin-left:20px; cursor:pointer;}
+.yl-btn{ background-color:#2fbcea; color:#FFF; text-align:center; padding:8px 20px; display:inline-block; vertical-align:middle;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px; }
+.yl-btn:hover{ background-color:#28b3e1;}
+.yl-con{ padding:20px 80px; background-color:#f6f6f6;}
+.yl-inset{ border:1px solid #e7e7e7; min-height:600px; background-color:#FFF; padding:10px;
+-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .05);
+-moz-box-shadow: 0 0 5px rgba(0, 0, 0, .05);
+box-shadow: 0 0 5px rgba(0, 0, 0, .05);
+}

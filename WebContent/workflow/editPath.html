@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>流程编辑</title>
+<link href="lib/css/createPath.css" type="text/css" rel="stylesheet" />
+<link href="../widget/frame/css/frame.css" type="text/css" rel="stylesheet" />
+
+<!--[if IE]><script type="text/javascript" src="lib/javascript/excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="lib/javascript/pathCommon.js"></script>
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="lib/javascript/createProcessPath2.js"></script>
+<script type="text/javascript" src="lib/javascript/handlerOperation.js"></script>
+<script type="text/javascript" src="../widget/frame/javascript/createDialog.js"></script>
+<script type="text/javascript">
+
+/************
+调用方法
+************/
+
+var selNode,operationFrame;
+
+function nodeEdit(){
+	selNode = this.id;
+	var isLink = true;
+	if(	selNode.match(new RegExp("link")) == null ){
+		isLink = false;
+	}
+	var content = operationList( isLink );
+	
+	operationFrame = new operation();
+	operationFrame.SetOptions({handler:document.getElementById(selNode)});
+	operationFrame.render(content);
+}
+
+function nodeQuery(){
+	var code = this.id;
+	console.log("query:"+code);
+}
+
+var operationList = function( isLink ) {
+	var html = "";
+	html += "<ul class='operationUl'>";
+	html += "<li><a onclick=\"addNode()\">添加节点</a></li>";
+	if(!isLink) {
+		html += "<li><a onclick=\"deleteNode()\">删除节点</a></li>";
+		html += "<li><a>替换节点</a></li>";
+		html += "<li><a>节点属性</a></li>";
+	}
+	html += "</ul>";
+	return html;
+}
+
+var addNode = function(){
+	var dialogUsers;
+	dialogUsers = new SfDialog();
+	dialogUsers.init("选择人员", "../coor/filter/choice/departusers.html");
+	dialogUsers.beforeHideEvent(DialogBackFun,addUserConfirm,true);
+	dialogUsers.render();
+	dialogUsers.show(600, 515, true, false);
+}
+
+var deleteNode = function(){
+	newPath.deleteNode(selNode);
+}
+
+var linkJson = [];
+var dataJson = [];
+
+window.onload = function(){
+	dataJson = window.parent.getDataJson();
+	linkJson = window.parent.getLinkJson();
+  	createPath();
+};
+
+function addUserConfirm(){
+	var userList = document.getElementById("dialogIframe").contentWindow.submitLsit();
+	var blnSerail = document.getElementById("dialogIframe").contentWindow.returnFlowType()==1 ? false : true ;
+	var newNodes = [];
+	for (var i=0;i<userList.length;i++){
+		var node = {};
+		node["code"] = userList[i]["Code"];
+		node["name"] = '[协同]';
+		node["topname"] = userList[i]["Name"];
+		node["parentCode"] = null;
+		node["childrenCode"] = null;
+		node["status"] = 2;
+		node["typeImg"] = 6;
+		node["executors"] = '[{Name:"'+userList[i]["Name"]+'", Type:"4", ID:"'+userList[i]["ID"]+'"}]';
+		node["links"] = null;
+		newNodes.push(node);
+	}
+	newPath.addNode(selNode, newNodes, blnSerail);
+}
+
+function DialogBackFun(){
+	
+}
+
+function getDataJson(){
+	return newPath.getDataJson();
+}
+
+function getLinkJson(){
+	return newPath.getLinkJson();
+}
+
+function clearProcess(){
+	newPath.clearProcess();
+}
+
+function createPath(){
+	if(dataJson.length>0){
+		//创建绘图
+		newPath = new Path();
+		newPath.SetOptions({
+			isEdit:true,
+			clickAfterFun:{		//设置点击完节点后执行方法
+				editFun:nodeEdit,
+				queryFun:nodeQuery
+			}
+		});
+		newPath.reload(dataJson, linkJson);
+	}else{
+		alert("流程数据不完整！");
+	}
+}
+
+</script>
+
+</head>
+
+<body>
+<div class="pathFrame">
+    <table border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+        <div  class="singleDiv01 start">
+            <table border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="left" valign="middle" class="e startPad"><div class="userList01 userTip" id="start">
+                    <p class="userList-t"></p>
+                    <p class="userList-img"><img src="lib/img/path-start.png"></p>
+                    <b class="userList-status"><img src="lib/img/normal.png"></b>
+                 </div></td>
+                <td align="left" valign="middle" id="start_frame"></td>
+              </tr>
+            </table>
+        </div>
+        </td>
+        <td><div  class="singleDiv01 end"><div class="userList01 userTip" id="end">
+        	<p class="userList-t"></p>
+            <p class="userList-img"><img src="lib/img/path-gray-end.png"></p>
+            <i class="userList-arrow"></i>
+            <b class="userList-status"><img src="lib/img/normal.png"></b>
+         </div></div></td>
+      </tr>
+    </table>
+</div> 
+</body>
+</html>

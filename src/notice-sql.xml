@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="notice">
+	<sql id="getNoticeSummary">
+		select 'processing' type,count(nm.NoticeID) count
+		from notice_master nm
+		left join notice_index ni on ni.NoticeID =nm.NoticeID
+		where ni.UserID=?
+		union
+		select 'create' type,count(nm.NoticeID) count
+		from notice_master nm
+		left join sys_users u on u.UserID=nm.CreateUserID
+		where nm.blnPublic=0 and nm.CreateUserID=?
+		union
+		select 'discover' type,count(nm.NoticeID) count
+		from notice_master nm
+		where nm.blnPublic=1
+	</sql>
+	<sql id="getProcessingList-select">
+		select nm.NoticeID,nm.NoticeDate,nm.NoticeTime,nm.NoticeTitle,nm.CreateUserID,nm.SourceType
+		,case nm.SourceType when 0 then '个人提醒' when 1 then '发现' when 11 then '会议助手' end CreateSource
+		,case when IFNULL(ni.ReadTime,'') = '' then 0 else 1 end blnRead
+		,case when IFNULL(ni.MarkHotTime,'') = '' then 0 else 1 end blnHot
+		,case when IFNULL(ni.MarkEndTime,'') = '' then 0 else 1 end blnEnd
+	</sql>
+	<sql id="getProcessingList-from">
+		from notice_master nm
+		left join notice_index ni on ni.NoticeID =nm.NoticeID
+		where ni.UserID=?
+		order by nm.NoticeDate DESC
+	</sql>
+	<sql id="getCreateList-select">
+		select nm.NoticeID,nm.NoticeDate,nm.NoticeTime,nm.NoticeTitle,nm.CreateTime
+	</sql>
+	<sql id="getCreateList-from">
+		from notice_master nm
+		where nm.blnPublic=0 and nm.CreateUserID=?
+		order by nm.NoticeDate DESC
+	</sql>
+</sqlGroup>
+

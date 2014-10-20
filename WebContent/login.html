@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>门户登录</title>
+<link href="login/lib/css/login.css" type="text/css" rel="stylesheet" />
+<link href="widget/select/css/select.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="widget/select/javascript/select.js"></script>
+<script type="text/javascript" src="login/lib/javascript/login.js"></script>
+<script type="text/javascript" src="login/lib/javascript/jquery.qrcode.min.js"></script>
+</head>
+
+<body>
+<div>
+	<div class="login-top">
+    	<div class="login-center">
+        	<div class="login-logo"><span></span><font>门户登录</font></div>
+        </div>
+    </div>
+    <div class="login-center">
+    	<div class="login-con">
+        	<div class="login-l">
+            	<h4>欢迎登录</h4>
+                <div class="login-i">
+                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td align="left" valign="top">
+                        	<div class="login-lb">
+                            	<div class="login-pic">
+                                	<span class="login-pic-i"><img src="login/lib/images/1.gif"/></span>
+                                    <div class="login-pic-f">
+                                   	  <h5>基于组织的手机门户</h5>
+                                      <p>任何属性的组织都能快速搭建自己的手机门户。</p>
+                                  	</div>
+                              	</div>
+                                <div class="login-pic">
+                                	<span class="login-pic-i"><img src="login/lib/images/2.gif"/></span>
+                                    <div class="login-pic-f">
+                                   	  <h5>基于组织通讯录的连接</h5>
+                                      <p>基于组织通讯录，快速发起各种沟通与协作。</p>
+                                  	</div>
+                              	</div>
+                                <div class="login-pic">
+                                	<span class="login-pic-i"><img src="login/lib/images/3.gif"/></span>
+                                    <div class="login-pic-f">
+                                   	  <h5>应用定制化</h5>
+                                      <p>定制行业专属或组织专属的APP中心。</p>
+                                  	</div>
+                              	</div>
+                              	<div class="login-down" id="app_url"></div>
+                            </div>
+                        </td>
+                        <td align="left" valign="top" class="login-td">
+                        <div class="login-lo">
+                        	<div class="login-br">
+                                <dl class="top clearfix">
+                                    <dt><label for="userid">帐号:</label></dt>
+                                    <dd>
+                                        <span class="placeholderWords" style="display: block;" id="UserFont">账号</span>	
+                                        <input type="text" id="UserName" data-fontID="UserFont" class="input-text placeholder" autocomplete="off" onfocus="inputFocus(this)" onblur="inputBlur(this)">
+                                    </dd>
+                                </dl>
+                                <dl class="pwd clearfix">
+                                    <dt><label for="password">密码:</label></dt>
+                                    <dd>
+                                        <span class="placeholderWords" style="display: block;" id="PasswordFont">密码</span>									
+                                        <input type="password" id="Password" data-fontID="PasswordFont" class="input-text" autocomplete="off" onfocus="inputFocus(this)" onblur="inputBlur(this)">
+                                    </dd>
+                                </dl>
+                                <dl class="select clearfix">
+                                    <select id="CorpList">
+                                    </select>
+                                </dl>
+                            </div>
+                            <div class="login-sub">
+                            	<a  class="login-subBtn" onclick="submitLogin()">登录</a>
+                                <span class="login-zc"><a href="register?type=register">注册</a></span>
+                                <span class="login-wjmm"><a href="register?type=retrieve">忘记密码</a></span>
+                            </div>
+                        </div></td>
+                      </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="login-shadow"></div>
+        </div>
+    </div>
+    
+    <div class="login-footer">技术支持 Sagacity Group All rights reserved. 版权所有</div>
+</div>
+
+<script type="text/javascript">
+
+    function submitLogin() {
+        //提交数据
+        if(!validateLogin()){
+        	alert('登录信息不完整！');
+        	retrun;
+        }
+        $.ajax({
+            url: "login",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	userName : $("#UserName").val(),
+            	userPass : $("#Password").val(),
+            	corpID : $("#CorpList").val()
+            	},
+            success: function(data) {
+                if (data.Result) {
+                	 window.open("user/userCustomized", "_self", "");
+                }else{
+                	alert(data.Msg);
+                }
+            }
+        });
+    }
+   
+    function validateLogin(){
+    	return true;
+    }
+    
+    function showQR(obj){
+		$(obj).find("em").show();
+	}
+    
+	function hideQR(obj){
+		$(obj).find("em").hide();
+	}
+	
+    function getAppURL(){
+    	
+    	$.getJSON(
+				"system/getAppInfo",
+				{}, 
+				function(data) {
+					var html='';
+					var ios_url,android_url;
+					for (var i=0;i<data.appInfo.length;i++){
+						if(data.appInfo[i].OSType=='IOS'){
+							ios_url = data.appInfo[i].DownloadURL;
+							html+='<a target="_new" onmouseover="showQR(this)" onmouseout="hideQR(this)" href="'+ios_url+'"><em id="ios_qr"></em><img src="login/lib/images/btn_apple.png" /></a>';
+						}else if(data.appInfo[i].OSType=="Android"){
+							android_url = data.appInfo[i].DownloadURL;
+							html+='<a target="_new" onmouseover="showQR(this)" onmouseout="hideQR(this)" href="'+android_url+'"><em id="android_qr"></em><img src="login/lib/images/btn_android.png" /></a>';
+						}
+					}
+					$("#app_url").html(html);
+					jQuery('#ios_qr').qrcode({
+					    render   : "canvas",
+					    text     :  ios_url,
+					    width : 138,
+					    height : 138
+					});
+					jQuery('#android_qr').qrcode({
+					    render   : "canvas",
+					    text     :  android_url,
+					    width : 138,
+					    height : 138
+					});
+			});	
+    }
+    
+    $(document).ready(function() {
+    	getAppURL();
+    	
+    	$('#UserName').blur(function(){
+        	$.getJSON(
+    				"user/getCorpListByLoginName",
+    				{loginName:this.value}, 
+    				function(result) {
+    					$('#CorpList option').remove();
+    					if(result.Data.length>0){
+    						for(var i=0;i<result.Data.length;i++){
+    							if(result.Data[i].blnIsPrimary==1){
+    								$('#CorpList').append("<option selected='selected' value='"+result.Data[i].CorpID+"'>"+result.Data[i].CorpName+"</option>");
+    							}else{
+    								$('#CorpList').append("<option value='"+result.Data[i].CorpID+"'>"+result.Data[i].CorpName+"</option>");	
+    							}
+    						}
+    						companySelect.clickFreed();    						
+    					}else{
+    						companySelect.clickFreed();
+    					}
+    					
+    			});
+        });
+        
+        document.onkeydown = function(e) {
+            // 兼容FF和IE和Opera
+            var theEvent = e || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            if (code == 13 && (document.activeElement.type == 'text' || document.activeElement.type == 'password')) {
+            	submitLogin(); //要触发的方法
+                return false;
+            }
+            return true;
+        }
+    });
+   
+    </script>
+    
+</body>
+</html>

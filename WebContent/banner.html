@@ -1,0 +1,35 @@
+<div class="fontLeft com-top toDiv">
+	<div class="com-top-left toLeft">
+		<div class="com-logo"><span><img height=50px src="${(resourceUrl)!}${(corpID)!}${(logoFix)!}" onerror="javascript:this.src='../org/logo/logo.png'"/></span><font>${(navInfo.Caption)!}</font></div>
+    </div>
+    <div class="com-top-right toRight">
+    	<ul>
+        	<li class="com-search"><label>搜索：</label><span><input name="" type="text" value="通讯录、消息、提醒……"/><a class="com-icons"></a></span></li>
+            <li class="com-skip">
+            	<span><a href="../message/index" class="com-icons xt" title="未读消息"></a><em>${(meesageCount)!0}</em></span>
+            	<span><a href="../notice/index" class="com-icons mes" title="未读提醒"></a><em>${(noticeCount)!0}</em></span>
+            	<span><a href="../logout" class="com-icons ext" title="退出系统"></a></span>
+            </li>
+            <li class="com-userMes" id="userInfo"><font>${(userInfo.Caption)!}</font><span><img src="${(resourceUrl)!}${(userInfo.UserID)!}${(headerFix)!}" onerror="javascript:this.src='../user/header/header.png'"/></span>
+            	<div class="com-userMes-t" id="userMenu">
+                <p><a href="../system/userSet"><i class="com-pics mes"></i>个人设置</a></p>
+                <p><a id="logout"><i class="com-pics ext"></i>安全退出</a></p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+	
+	$("#logout").click(function(){
+		window.location="../logout";
+	});
+	setUserMenu();
+});
+
+function setUserMenu(){
+  	 $("#userInfo").hover(function(){$("#userMenu").show();}, function(){$("#userMenu").hide();})
+	}
+</script>

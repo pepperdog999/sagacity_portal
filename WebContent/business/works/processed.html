@@ -1,0 +1,105 @@
+<div class="com-member-listBox">
+                        
+        <!-- Start of list -->
+        <div class="com-lo">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="left" valign="top" width="120" style="display:none;">
+                <div class="com-lo-l">
+                 <p class="dete"><b>12月</b><em>2014</em></p>
+                 <p class="day">21</p>
+                 <p class="week"><i>星期二</i></p>
+             </div>
+             </td>
+                <td align="left" valign="top">
+                <div class="com-lo-c">
+                    <ul class="com-member-list" id="coorList">
+                        
+                    </ul>
+           		</div></td>
+              </tr>
+            </table>
+        </div>
+        <!-- End of list -->                            
+</div>
+<div  class="com-member-list-page"><span><a onclick="pageLast()" class="last"><i></i></a><b id="pageInfo"><em>0</em>/0</b><a onclick="pageNext()" class="next"><i></i></a></span><font><input name="" type="text" /><a>跳转</a></font></div>
+
+<script type="text/javascript">	
+
+	var pageNumber=1;
+	var pageSize=5;
+	var totalPage=1;
+
+	$(function() {
+		 getCoor();
+	});
+	
+	function getCoor(){
+		$.ajax({
+            url: "../business/getProcessedList",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	pageNumber: pageNumber,
+				pageSize: pageSize
+            	},
+            success: function(data) {
+				//列表信息
+				var coorList='';
+				for(var i=0;i<data.list.length;i++){
+					coorList+='<li onclick="queryProject(this)" c-id="'+data.list[i].CoordinateID+'" n-id="'+data.list[i].NodeID+'">';
+					coorList+='<p class="list-time"><span>'+data.list[i].NodeName+'已处理：【'+data.list[i].SubmitDate+'】</span><font><a onclick="queryProject(this)">查看</a>|<a>删除</a></font></p>';
+					coorList+='<p class="list-del"><a>'+data.list[i].CoordinateName+'</a></p>';
+					coorList+='<p class="list-user">From：<em>'+data.list[i].Caption+'</em></p>'	
+				}
+				$("#coorList").html(coorList);
+            	
+            	//分页信息
+            	totalPage = data.totalPage;
+            	pageNumber = data.pageNumber;
+            	var pageInfo = '<em>'+data.pageNumber+'</em>/'+data.totalPage;
+				$("#pageInfo").html(pageInfo);
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+	}
+	
+	function pageNext(){
+		if(pageNumber>=totalPage)
+			return;
+		pageNumber++;
+		getCoor();
+	}
+	
+	function pageLast(){
+		if(pageNumber<=1)
+			return;			
+		pageNumber--;
+		getCoor();
+	}
+	
+	function queryProject(obj,event){
+		stopBubble(event);
+		var coordinateID;
+		var nodeID;
+		if(obj.tagName=="A"){
+			coordinateID=$(obj).parent().parent().parent().attr("c-id");
+			nodeID=$(obj).parent().parent().parent().attr("n-id");
+		}else if(obj.tagName=="LI"){
+			coordinateID=$(obj).attr("c-id");
+			nodeID=$(obj).attr("n-id");
+		}
+		window.open("../business/handlePorject?action=processed&coordinateID="+coordinateID+"&nodeID="+nodeID, "_self", "");
+	}
+	
+	function stopBubble(e) {  
+	    var e = e ? e : window.event;  
+	    if (window.event) { // IE  
+	        e.cancelBubble = true;   
+	    }else{ // no ies     
+	        e.stopPropagation();   
+	    }   
+	}
+</script>

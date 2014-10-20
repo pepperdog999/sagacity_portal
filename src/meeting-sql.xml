@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="meeting">
+	<sql id="getMeetingList">
+		select DISTINCT mm.MeetingID,mm.MeetingDate,mm.MeetingTime,mm.MeetingContent,mm.MeetingLocation,IFNULL(mui.MarkImportantTime,'') MarkImportantTime
+		from meeting_master mm
+		left join meeting_userindex mui on mui.MeetingID = mm.MeetingID
+		where mui.UserID=?
+		and (mm.MeetingDate >= ? and mm.MeetingDate &lt;= ?)
+	</sql>
+</sqlGroup>
+

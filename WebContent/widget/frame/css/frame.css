@@ -1,0 +1,24 @@
+/* CSS Document */
+.frame{ background-color:#fff; border:1px solid #dcdcdc; position:absolute; top:30px; left:300px; width:400px; text-align:left; z-index:888888;
+-webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, .02);
+-moz-box-shadow: 0 2px 3px rgba(0, 0, 0, .02);
+box-shadow: 0 2px 3px rgba(0, 0, 0, .02);
+}
+.frame-title{color: #333;border-bottom:1px solid #dcdcdc; padding-left:10px; padding-right:10px; height:35px;
+background-color: #fafafa;
+font-size: 15px;
+-webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, .03)inset;
+-moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, .03)inset;
+box-shadow: 0 -1px 2px rgba(0, 0, 0, .03)inset;}
+.frame-title font{ float:left; font-size:14px; margin-top:5px;}
+.frame-title span{ float:right; margin-top:8px;display:inline-block; vertical-align:middle;}
+.frame-title span a{ cursor:pointer; background:url(../images/frame-close.png) 0px 0px no-repeat; width:15px; height:15px; font-size:0px; display:inline-block; vertical-align:middle;}
+.frame-title span a:hover{ background-position:-16px 0px;}
+
+
+.frame-btn{ text-align:right; border-top:1px solid #dcdcdc; padding:5px; background-color:#FFF;}
+.frame-btn a{-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px; cursor:pointer; padding:4px 15px; display:inline-block; vertical-align:middle; font-size:12px; color:#FFF; margin-right:6px;}
+.frame-btn .submit{ background-color:#28acd2;}
+.frame-btn .cancel{ background-color:#7a7a7a;}
+.frame-btn .submit:hover{ background-color:#1e99bc;}
+.frame-btn .cancel:hover{ background-color:#6a6868;}

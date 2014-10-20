@@ -1,0 +1,227 @@
+/* CSS Document */
+
+.mess-l{ background-color:#f8f8f8; padding-top:20px; overflow:hidden;
+-webkit-box-shadow: 0 0px 2px rgba(0, 0, 0, .15);
+-moz-box-shadow: 0 0px 2px rgba(0, 0, 0, .15);
+box-shadow: 0 0px 2px rgba(0, 0, 0, .15);
+}
+
+.mess-l-l{width:220px;}
+.mess-l-r{background-color:#f6f6f6; position:relative; z-index:1;
+-webkit-box-shadow: 0 0px 7px rgba(0, 0, 0, .2);
+-moz-box-shadow: 0 0px 7px rgba(0, 0, 0, .2);
+box-shadow: 0 0px 7px rgba(0, 0, 0, .2);
+}
+
+.mess-l-l h4{ text-align:center; font-size:20px; padding:10px 0px;}
+
+
+.mess-l-oper{ background-color:#bfbfbf; height:38px;}
+.mess-l-oper a{ display:inline-block; vertical-align:middle; margin-left:20px;height:38px; cursor:pointer;}
+.mess-l-oper a i{ margin-top:6px;}
+.mess-l-oper a.check{ background:url(../images/mesIco-uparr.png) no-repeat bottom center;}
+.messOperIco{ background:url(../images/mes-icons.png) no-repeat; width:26px; height:22px; display:inline-block;}
+.messOperIco.ico01{ background-position:0px 0px;}
+.messOperIco.ico02{ background-position:-26px 0px;}
+.messOperIco.ico03{ background-position:-52px 0px;}
+.mess-l-oper a.check .messOperIco.ico01{ background-position:0px -22px;}
+.mess-l-oper a.check .messOperIco.ico02{ background-position:-26px -22px;}
+.mess-l-oper a.check .messOperIco.ico03{ background-position:-52px -22px;}
+
+.mess-tips{ padding:5px 15px;}
+.mess-tips a{ border:1px dashed #ccc; background-color:#fbfbfb; display:block;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px; text-align:center; font-size:16px; font-family:Arial, Helvetica, sans-serif; padding:0px; font-weight:normal; color:#ccc; cursor:pointer; /*text-shadow:0px 1px 2px rgba(0, 0, 0, .5);*/ height:35px; line-height:35px;}
+.mess-tips a:hover{ color:#acacac;}
+.mess-add{ padding:5px 15px;}
+.mess-add a{ border:1px dashed #ccc; background-color:#fbfbfb; display:block;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px; text-align:center; font-size:32px; font-family:Arial, Helvetica, sans-serif; padding:0px; font-weight:bold; color:#ccc; cursor:pointer; /*text-shadow:0px 1px 2px rgba(0, 0, 0, .5);*/ height:35px; line-height:35px;}
+.mess-add a:hover{ color:#acacac;}
+.mess-return { padding:4px 20px;}
+.mess-return a{color:#acacac; cursor:pointer;border:1px dashed #ccc; padding:3px 13px; display:inline-block; vertical-align:middle;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+.mess-return a:hover{ background-color:#f2f2f2; color:#e7714d; border:1px dashed #bdbdbd;}
+
+.mess-perlistBox-rel{border-top:1px solid #e9e9e9; /*position:relative;*/}
+.mess-perlistBox{ /*position:absolute; left:0px; top:0px;*/ width:220px; overflow:hidden; height:580px;
+-webkit-user-select: none; /* Chrome all / Safari all */
+-moz-user-select: none; /* Firefox all */
+-ms-user-select: none; /* IE 10+ *//* No support for these yet, use at own risk */
+-o-user-select: none;
+user-select: none; 
+}
+
+.mess-perlist{ border-bottom:1px solid #e9e9e9; border-top:1px solid #fbfbfb; padding-left:15px; padding-top:2px; padding-bottom:2px;}
+.mess-perlist font{ border-left:4px solid #b6b6b6; padding:6px 0px 6px 15px; font-weight:normal; display:inline-block; vertical-align:middle; font-size:14px; color:#a0a0a0; font-family:"宋体";}
+.mess-perlist span{ float:right; margin-top:6px; margin-right:10px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#cacaca;}
+.mess-perlist span i{ cursor:pointer;}
+
+.mess-perlist.check{ background:url(../images/checkPer-arr.png) no-repeat right center; background-color:#e7714d; border-bottom:1px solid #e7714d; position:relative; z-index:111;}
+.mess-perlist.check font{border-left:4px solid #f7f7f7; color:#FFF;}
+.mess-perlist.hasMes font{border-left:4px solid #e7714d;}
+
+
+.mess-perlist01{ border-bottom:1px solid #e9e9e9; border-top:1px solid #fbfbfb; padding-left:15px; padding-top:2px; padding-bottom:2px;}
+.mess-perlist01 font{ padding:6px 0px 6px 10px; font-weight:normal; display:inline-block; vertical-align:middle; font-size:14px; color:#a0a0a0; font-family:"宋体";}
+.mess-perlist01 span{ float:left; margin-top:6px; margin-right:0px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#cacaca;}
+.mess-perlist01 span i{ cursor:pointer;}
+.mess-perlist01 .unfold{ float:right;display:inline-block; vertical-align:middle; cursor:pointer; margin:8px 10px; position:relative; z-index:11;}
+.mess-perlist01 .unfold s{ background:url(../images/toDel-ico.png) no-repeat; width:7px; height:9px; font-size:0px; display:inline-block; vertical-align:middle; font-size:0px;}
+/*****翻页****/
+.mess-page{ padding:5px 10px;}
+.mess-page s{ text-decoration:none; margin-left:10px; margin-right:10px;}
+.mess-page a{ border:1px solid #dcdcdc; padding:3px 10px; display:inline-block; vertical-align:middle;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;}
+
+/*右边内容*/
+.mess-lrc{ padding:15px;*border:1px solid #e2e2e2;border:1px solid #e2e2e2 \\o; }
+html>/**/body .mess-lrc{}
+
+
+.mess-overFlow{height:700px; overflow:auto; *position:relative;}
+.mess-del{ position:relative; }
+.mess-del-mark{ position:absolute; left:0px; top:0px;}
+.mess-del-mark p{ margin-bottom:0px; font-size:12px; color:#bebab7; font-family:"宋体";}
+.mess-del-mark p span{ display:inline-block; vertical-align:middle; width:10px; height:6px; font-size:0px; margin-right:10px;}
+.mess-del-mark p span.blue{ background-color:#28acd2;}.mess-del-mark p span.red{ background-color:#e7714d;}
+.mess-del-mark p b{ color:#333; font-weight:normal; font-family:Arial, Helvetica, sans-serif;}
+
+.mess-del-more{ text-align:center; padding:5px 0px 15px 0px;width:98%;}
+.mess-del-more a{ font-size:12px; color:#666;}
+.mess-del-more a:hover{ color:#28acd2; text-decoration:underline;}
+.mess-del-c{ position:relative;}
+
+
+.datelist{ position:relative;}
+.datelist .dateK{position:relative; height:24px; text-align:center; width:98%;*width:96.5%; }
+.datelist.today .dateK b{ background-color:#bebab7;}
+.datelist .dateK b{ width:80px;background-color:#28acd2; color:#FFF; text-align:center; height:24px; line-height:24px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px; display:inline-block; vertical-align:middle;
+-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .1)inset;
+-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .1)inset;
+box-shadow: 0 1px 3px rgba(0, 0, 0, .1)inset;
+}
+
+.listContainer{}
+.listBorder{ padding-right:3px; background:#28acd2; width:49%; *width:47.8%;}
+.listBorder.listRight{ margin-left:49%;padding-left:3px; padding-right:0px; *position:relative;*left:49%;}
+.datelist.today .listBorder{ background:#bebab7;}
+.listBorder.today{
+background-repeat: no-repeat;
+background: #28acd2;
+background: -webkit-gradient(linear, left top, left bottom, from(#28acd2), to(#bebab7));
+background: -moz-linear-gradient(top,  #28acd2,  #bebab7);
+background: -o-linear-gradient(top, #28acd2, #bebab7);  
+background: -ms-linear-gradient(top, #28acd2, #bebab7);    
+background: linear-gradient(to bottom, #28acd2, #bebab7);
+filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#28acd2', endColorstr='#bebab7'); 
+}
+.listInert{background-color:#f4f4f4; padding:10px 0px;}
+
+
+.listCon{ position:relative; border:1px solid #dcdcdc; background-color:#f9f9f9; margin-right:20px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;
+-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+}
+.listBorder.listRight .listCon{ margin-left:20px; margin-right:0px;}
+.listCon-arr{ background:url(../images/toright-arr.png) no-repeat 0px 0px; width:9px; height:17px; font-size:0px; display:inline-block; vertical-align:middle; position:absolute; right:-9px; top:16px;}
+.listCon-cricle{ background-color:#28acd2; width:13px; height:13px; display:inline-block; vertical-align:middle;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px; position:absolute; right:-31px; top:10px; border:2px solid #f4f4f4;}
+.datelist.today .listCon-cricle{background-color:#bebab7;}
+.listCon-name{ position:absolute; right:-135px; top:5px; width:100px; font-size:12px; font-weight:normal;}
+.listCon-name span{  float:left; text-align:center;}
+.listCon-name em{ font-size:14px; font-weight:bold; color:#28acd2; font-style:normal; padding-left:4px;}
+.listCon-name s{ font-size:12px; font-weight:normal; color:#c3c3c3; font-style:normal; text-decoration:none; font-family:Arial, Helvetica, sans-serif;}
+
+.listBorder.listRight .listCon-cricle{ left:-31px;}
+.listBorder.listRight .listCon-arr{ background-position:-9px 0px; left:-9px;}
+.listBorder.listRight .listCon-name{ left:-135px;}
+.listBorder.listRight .listCon-name span{ float:right;}
+.listBorder.listRight .listCon-name em{ float:right;}
+
+.datelist.today .listCon-name em{color:#bebab7;}
+.datelist.today .listCon-name s{color:#bebab7;}
+
+.listConTime{ padding:5px 15px;}
+.listConTime span{ float:left; font-weight:bold; font-size:32px; color:#333; font-family:Arial, Helvetica, sans-serif; margin-top:-2px;}
+.listConTime .listConTime-p{ padding-left:46px;}
+.listConTime .listConTime-p .x{ font-weight:bold; font-size:12px; color:#333;}
+.listConTime .listConTime-p .d{ font-weight:normal; font-size:12px; color:#b2b2b2; padding-top:3px;s}
+.listConTime .listConTime-p .d b{ font-weight:normal;}
+
+.listDel{ padding:0px 15px 5px 15px;min-height:50px; 
+-webkit-box-shadow: 0 -1px 3px rgba(0, 0, 0, .03)inset;
+-moz-box-shadow: 0 -1px 3px rgba(0, 0, 0, .03)inset;
+box-shadow: 0 -1px 3px rgba(0, 0, 0, .03)inset;
+}
+.listDel p{ line-height:20px; font-family:"宋体"; font-size:12px; color:#999;text-indent:24px; }
+.listDel.submit p{ text-indent:0px;}
+
+.listDel-area{height: 50px;line-height: 20px;border: 1px solid #dcdcdc;padding:3px 5px;font-size: 12px;color: #333;display: inline-block;vertical-align: middle;
+-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;overflow: auto; width:96%; color:#999;}
+.listDel img{ margin-top:-3px; display:inline-block; vertical-align:middle; margin-right:5px;}
+.listDel-btn{background-color: #51b5eb;border: 1px solid #4c92c8;font-size: 12px;color: #FFF;padding:0px 15px;display: inline-block;vertical-align: middle;-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;cursor: pointer; text-indent:0px;}
+.listDel-btn:hover{ background-color:#42a4d9;}
+.listDelB{ padding-top:5px; text-align:right;}
+
+.mess-del-point p{ margin-left:49%; background:url(../images/point.png) no-repeat left top; height:29px; *position:relative;*left:49%;}
+
+
+
+.mess-checkNBox{ background:url(../images/checkBox.png) no-repeat; width:16px; height:16px; font-size:0px; display:inline-block; vertical-align:middle;}
+.mess-checkNBox.check{ background-position:-16px 0px;}
+
+.mess-arrive{ background:url(../images/arrive.png) no-repeat;width:16px; height:16px; font-size:0px; display:inline-block; vertical-align:middle;}
+.mess-arrive.up{ background-position:-16px 0px;}
+.mess-arrive.down{ background-position:0px 0px;}
+
+
+/*通讯录 load页面*/
+.mess-rel{ padding-top:0px;}
+.mess-rel-users{ border:1px solid #e3e3e3;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;}
+.mess-rel-users h5{ text-align:center; background-color:#f0f0f0;  padding:10px 0px;-webkit-border-radius:5px 5px 0px 0px;-moz-border-radius:5px 5px 0px 0px;border-radius:5px 5px 0px 0px; border-bottom:1px solid #e3e3e3; position:relative;}
+.mess-rel-users h5 font{font-size:18px; font-weight:bold; color:#e7714d;}
+.mess-rel-users span{ color:#b4b4b4; position:absolute; left:5px; top:10px; font-size:12px; font-weight:normal;}
+.mess-rel-users span i{ margin:-3px 3px 0px 3px;}
+.mess-rel-users-c{-webkit-border-radius:0px 0px 5px 5px;-moz-border-radius:0px 0px 5px 5px;border-radius:0px 0px 5px 5px; padding:10px 20px;}
+.mess-rel-users-c b{ font-size:12px; font-weight:normal; margin-right:10px;white-space:nowrap; color:#28acd2; margin-bottom:5px; display:inline-block; vertical-align:middle; font-family:"宋体";}
+
+.mess-rel-l{ margin-top:8px;}
+.mess-rel-l b{ font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#e7714d;}
+
+.mess-rel-btn{ text-align:left; padding-top:15px;}
+.mess-rel-btn a.btn01{ background-color:#28acd2; color:#FFF; font-size:14px; padding:6px 20px; display:inline-block; vertical-align:middle; cursor:pointer;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px; text-shadow:0px 1px 1px  rgba(0, 0, 0, .18);
+-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .18);
+-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .18);
+box-shadow: 0 1px 1px rgba(0, 0, 0, .18);
+}
+.mess-rel-btn a.btn01:hover{ background-color:#1a99be;}
+.mess-rel-textarea{height:70px;line-height: 20px;border: 1px solid #dcdcdc;padding:3px 5px;font-size: 12px;color: #333;display: inline-block;vertical-align: middle;
+-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;overflow: auto; width:98%; color:#999;}
+
+
+
+.mess-basic{ clear:both; overflow:hidden; padding-top:120px; padding-left:20%;}
+
+.mess-bs-fl{ float:left; text-align:center; margin-right:60px;}
+.mess-bs-fl h5 span{ background:url(../images/crile-number.png) no-repeat 0px 0px; width:117px; height:117px; display:inline-block; vertical-align:middle;}
+.mess-bs-fl h5 span b{ font-size:48px; font-family:Arial, Helvetica, sans-serif; color:#FFF; font-weight:normal; margin-top:26px;display:inline-block; vertical-align:middle;}
+.mess-bs-fl p{ font-size:24px; padding-top:10px;}
+.mess-bs-fl.hang01 p{ color:#e7714d;}
+.mess-bs-fl.hang02 p{ color:#28acd2;}
+
+.mess-bs-fl.hang02 h5 span{ background-position:-120px 0px;}
+
+/********************************************************************************/
+.mess-d-ti{ margin-bottom:20px;}
+.mess-d-ti h5{ font-size:12px; padding:5px; border-bottom:1px dashed #cfcfcf; color:#7d7d7d;}
+.mess-d-l{ padding:10px;}
+.mess-d-l span{ display:inline-block; vertical-align:middle; margin-right:10px;-webkit-border-radius: 25px;-moz-border-radius: 25px;border-radius: 25px; background-color:#e2e2e2; padding:4px 12px 4px 15px; margin-bottom:5px; font-family:"宋体"; font-size:12px; color:#5c5c5c;}
+.mess-d-l span a{ display:inline-block; cursor:pointer; vertical-align:middle; margin-left:6px; margin-top:-3px;}
+.mess-d-l span a i{ background:url(../images/single-close.png) no-repeat; width:7px; height:7px; display:inline-block; vertical-align:middle; font-size:0px;}
+.mess-d-ti.group .mess-d-l span{ background-color:#28acd2; color:#fff;}
+.mess-d-ti.part .mess-d-l span{ background-color:#e7714d; color:#fff;}
+
+.mess-d-ti.group .mess-d-l span i,.mess-d-ti.part .mess-d-l span i{ background-position:-7px 0px;}
+
+.mess-send{ border:1px solid #dbdbdb;-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;}
+.mess-send h4{ padding:6px 10px; font-size:14px; border-bottom:1px dashed #dbdbdb; background-color:#FFF;}
+.mess-send-con{ padding:5px; background-color:#FFF;}
+.mess-send-con textarea{ width:100%; overflow:auto; height:90px; background-color:#FFF; font-size:12px; line-height:20px;}
+.mess-send-btn{background-color:#fafafa;border-top:1px dashed #dbdbdb; text-align:right; height:28px;}
+.mess-send-btn button{ font-size:12px; background-color:#28acd2; color:#fff; height:30px; line-height:30px; padding:0px 15px; display:inline-block; vertical-align:middle;  cursor:pointer; position:relative; top:-1px; z-index:1;}
+.mess-send-btn button:hover{ background-color:#209cc0;}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="corp">
+    <sql id="deptList">
+    	select 0 id,-1 pId,CorpName name,0 LevelIndex
+		from zq_corpinfo c
+		left join (select CorpID,count(CContactID) CCount from zq_corpcontact group by CorpID) cc on cc.CorpID=c.corpID
+		where c.CorpID = ?
+		union 
+		select d.DeptID id,d.PDeptID pId,d.DeptName name,d.LevelIndex
+		from zq_deptinfo d
+		left join (select DeptID,count(CContactID) CCount from zq_corpcontact group by DeptID) dc on dc.DeptID=d.DeptID
+		where d.CorpID = ?
+		order by LevelIndex
+    </sql>
+</sqlGroup>
+

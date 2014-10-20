@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>人员选择</title>
+<link href="../../../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="../../lib/css/details.css" type="text/css" rel="stylesheet" />
+
+
+<link href="../../../widget/tree/css/zTreeStyle.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../../../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../../lib/javascript/json2.js"></script>
+<script type="text/javascript" src="../../../widget/tree/javascript/jquery.ztree.core-3.5.min.js"></script>
+<script type="text/javascript" src="javascript/departusers.js"></script>
+</head>
+
+<body>
+<div class="fontLeft depart">
+	<div class="depart-float depart-l">
+    	<div class="depart-b depart-hei01" id="mentTree">
+				
+                
+
+				<!-- Start of tree -->
+                <ul id="tree" class="ztree" style="overflow:auto;"></ul>
+    			<!-- End of tree -->
+                
+                
+                
+                
+        </div>
+        <div class="depart-b depart-hei01 depart-mar">
+        
+        	<ul class="depart-ul" id="departUL">
+        		
+            </ul>
+            
+        </div>
+    </div>
+    <div class="depart-float depart-m depart-hei02">
+    	<p><a class="toRight" id="toRight"><i class="depart-ico"></i></a></p>
+        <p><a class="toLeft" id="toLeft"><i class="depart-ico"></i></a></p>
+    </div>
+    <div class="depart-float depart-r">
+    	<div class="depart-b depart-hei02">
+        
+        		<ul class="depart-ul" id="departFiterUL">
+           		</ul>
+                
+        </div>
+    </div>
+    <div class="depart-float depart-m depart-hei02">
+    	<p><a class="toUp" id="toUp"><i class="depart-ico"></i></a></p>
+        <p><a class="toDown" id="toDown"><i class="depart-ico"></i></a></p>
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var t = $("#tree");
+		var zNodes;
+		$.ajax({
+            url: "../../../corp/getDetpTreeInfo",
+            type: "GET",
+            dataType: "json",
+            data: {},
+            success: function(data) {
+				zNodes=eval('(' + JSON.stringify(data.DeptTree) + ')');
+				t = $.fn.zTree.init(t, setting, zNodes);
+            }
+        });
+	});
+	
+	function getDeptContact(id, name){
+		$.ajax({
+            url: "../../../user/getDetpContacts",
+            type: "GET",
+            dataType: "json",
+            data: {deptID : id},
+            success: function(data) {
+            	dataJson=eval('(' + JSON.stringify(data.Data) + ')');            	
+            	getDepartList(dataJson);
+            }
+        });
+	}
+	
+	function submitLsit(){
+		var userList=[];
+		$("#departFiterUL").children().each(function(index){
+				var single = new Object();
+				single["ID"]=$(this).attr("data-id");
+				single["Name"]=$(this).attr("data-name");
+				userList.push(single);
+		});
+		return userList;
+	}
+</script>
+</body>
+</html>

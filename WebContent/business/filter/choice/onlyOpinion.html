@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>流程提交</title>
+<link href="../../../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="../../lib/css/details.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript" src="../../../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+	function closeBeforeFunction(){
+		window.parent.dialogOpinion.free();
+	}
+</script>
+</head>
+
+<body>
+<div class="fontLeft comment">
+
+    <div class="comment-l">
+    	<div class="comment-c"><a class="check last">填写流程意见</a></div>
+        <div class="comment-n">
+            <h4>填写流程意见：</h4>
+            <div><textarea id="coorContent" cols="" rows=""></textarea></div>
+            <div class="comment-btnh"><button onclick="submit()" class="comment-btn">提交</button><button onclick="closeBeforeFunction()" class="comment-cancelbtn">取消</button></div>
+        </div>
+    </div>    
+</div>
+<script type="text/javascript">
+	function submit(){
+		window.parent.coorContent=$("#coorContent").val();
+		window.parent.submitProcess();
+		//关闭对话框
+		closeBeforeFunction();
+	}
+</script>
+</body>
+</html>

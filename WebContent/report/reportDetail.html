@@ -1,0 +1,73 @@
+<div class="report-s">
+	<h5><font>${(reportMaster.ReportingTitle)!('暂无标题')}</font><span></span></h5>
+    <div class="report-s-con">
+    		
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="left" valign="top">
+                <div class="del">
+	            	<div class="content">${(reportMaster.ReportingContent)!}</div>
+	                <div class="time"><label>发布时间：</label><b>${(reportMaster.CreateTime)!}</b></div>
+	                <div class="fileFont"><h4><img src="lib/images/links.png" width="17" height="17" />简报附图：</h4></div>
+	                <div class="img"><p>
+	                <#list reportAttach as attach>
+	                	<img src="${(resourceUrl)!}${(attach.AttachURL)!}"/>
+	                </#list>
+	                </p></div>
+            	</div>
+            	</td>
+                <td align="left" valign="top" style="width:120px; padding-left:10px;">
+                	
+                    <div>
+                    	<div class="reg-link-ti">操作</div>
+                        <div>
+                        	<#if (reportMaster.MarkImportantTime=="")>
+                        		<div class="reg-hi"><a onClick="markImportant(1)" class="report-links check"><i class="reg-linkIco ico03"></i><b>设为重要</b></a></div>
+                        	<#else>
+                        		<div class="reg-hi"><a onClick="markImportant(2)" class="report-links"><i class="reg-linkIco ico03"></i><b>取消重要</b></a></div>
+                        	</#if>
+                            <#if (userID==reportMaster.CreateUserID)>
+                            	<div class="reg-hi"><a onClick="delReporting()" class="report-links"><i class="reg-linkIco ico02"></i><b>删除</b></a></div>
+                            <#else>
+                           		<div class="reg-hi"><a class="report-links"><i class="reg-linkIco ico01"></i><b>批阅</b></a></div>
+                            </#if>
+                        </div>
+                    </div>
+                    
+                </td>
+              </tr>
+            </table>
+            
+    </div>
+</div>
+
+<script type="text/javascript">
+	function markImportant(operateType){
+		$.ajax({
+            url: "../report/markImportant",
+            type: "POST",
+            dataType: "json",
+            data: {
+            	operateType : operateType,
+            	reportID : ${(reportMaster.ReportingID)!}
+            	},
+            success: function(data) {
+                alert(data.Msg);
+            }
+        });	
+	}
+	
+	function delReporting(){
+		$.ajax({
+            url: "../report/delReporting",
+            type: "POST",
+            dataType: "json",
+            data: {
+            	reportID : ${(reportMaster.ReportingID)!}
+            	},
+            success: function(data) {
+                alert(data.Msg);
+            }
+        });
+	}
+</script>

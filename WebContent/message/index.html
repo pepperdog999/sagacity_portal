@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>消息中心</title>
+<link href="../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/message.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="lib/javascript/message.js"></script>
+</head>
+
+<body class="bodyBack">
+
+<!-- Start of toppart -->
+<div id="banner" class="fontLeft com-top toDiv">
+</div>
+<!-- End of toppart -->
+
+<!-- Start of con -->
+<div class="comMarginTop01 fontLeft">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="top" class="menu-left" id="memuFrame">
+        	
+        	<div class="menu-line"></div>
+            <div class="menu-c" id="navTree">
+            </div>
+        </td>
+        <td align="left" valign="top" class="com-right">
+        	<div class="com-rightPosition">
+            	<div class="com-optionMenu">
+            		<a class="returnHome" title="返回主页" href="index" hidefocus="true"><i></i></a>
+            		<a class="closeMenu close" id="setMenuFrame" title="打开菜单"><i></i></a>
+            	</div>
+        		<div class="com-member">
+
+					<!-- Start of mess -->
+                    <div class="mess-v">
+                    	
+                        <div class="mess-l">
+                    			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                    <td align="left" valign="top" class="mess-l-l">
+                                    
+                                    	<div>
+                                            <div class="mess-l-oper" id="navBar">
+                                            	<a nav-type="userMes" class="check" title="消息列表"><i class="messOperIco ico01"></i></a>
+                                            	<a nav-type="contact" title="组织通讯录"><i class="messOperIco ico03"></i></a>
+                                            	<a nav-type="groupMes" title="自定组"><i class="messOperIco ico02"></i></a>
+                                            </div>
+                                            <div>
+                                                <div class="mess-add" id="operate"><a>+</a></div>
+                                                <div class="mess-perlistBox-rel">
+                                                    <div class="mess-perlistBox" id="scrollList" style="top:0px; left:0px;-moz-user-select:none;" 
+                                                    	oncontextmenu="self.event.returnValue=false" onselectstart="return false" unselectable="on" >
+                                                    
+                                                    </div>
+                                                     <div class="mess-page"><a onclick="pageLast()">上一页</a><s id="pageInfo">1/1</s><a onclick="pageNext()">下一页</a></div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    
+                                    </td>
+                                    <td align="left" valign="top" class="mess-l-r">
+                                    	<div class="mess-lrc">
+                                    		<div class="mess-overFlow" id="content" content="">
+                                 				
+                                    		</div>
+                                        </div>    
+                                    </td>
+                                  </tr>
+                                </table>
+                                    
+                        </div>
+                  	
+                    </div>
+                    <!-- End of mess -->
+                    
+                </div>
+            </div>
+        </td>
+      </tr>
+    </table>
+</div>
+<!-- End of con -->
+
+<!-- Start of footer -->
+<div id="footer" class="comMarginTop01 com-footer">
+</div>
+<!-- End of footer -->
+<script type="text/javascript">
+	
+	var pageNumber=1;
+	var pageSize=18;
+	var totalPage=1;
+	var navType='userMes';
+	var selectedList=[];
+	
+	function operateSelectedList(operate,ID,Type,Name){
+		if(operate=='add'){
+			for(var i=0;i<selectedList.length;i++){
+				if(selectedList[i]["ID"]==ID && selectedList[i]["Type"]==Type){
+					return false;
+				}
+			}
+			var single = {};
+			single["ID"]=ID;
+			single["Type"]=Type;
+			single["Name"]=Name;
+			selectedList.push(single);
+			buildSelectedPage();
+		}else if(operate=='remove'){
+			for(var i=0;i<selectedList.length;i++){
+				if(selectedList[i]["ID"]==ID && selectedList[i]["Type"]==Type){
+					selectedList.splice(i,1);
+				}
+			}
+		}
+	}
+	
+	function loadInteractMessage(authorID,urCount){
+		$("#content").load("../message/getInteractMessage?authorID="+authorID+"&urCount="+urCount);
+		$("#content").attr("content","interactMessage");
+	}
+	
+	function loadGroupMessageSend(){
+		if($("#content").attr("content")!="groupMessageSend"){
+			$("#content").load("../message/groupSend.html");	
+		}
+		$("#content").attr("content","groupMessageSend");
+	}
+	
+	function loadMessageSummary(){
+		if($("#content").attr("content")!="messageSummary"){
+			$("#content").load("../message/messageSummary.html");	
+		}
+		$("#content").attr("content","messageSummary");
+	}
+	
+	$(function() {
+		$("#banner").load("../banner?navInfo=m,1");
+		$("#navTree").load("../navTree?navInfo=m,1");
+		$("#footer").load("../footer");
+		$("#memuFrame").show();
+				
+		loadUserMessageList(); //导航部分
+		loadMessageSummary(); //内容部分
+		
+		$("#navBar").find("a").each(function(){ 
+			$(this).bind("click",function(){
+				$(this).siblings().removeClass("check");
+				$(this).addClass("check");
+				navType = $(this).attr("nav-type");
+				pageNumber=1;
+				switch(navType)
+				{
+				case "userMes":
+					$("#operate").attr("class","mess-add").html("<a>+</a>");
+					loadUserMessageList();
+					break;
+				case "groupMes":
+					$("#operate").attr("class","mess-tips").html("<a onclick='navGroup()'>返回上级</a>");
+					initGroupPath();
+					break;	
+				case "contact":
+					$("#operate").attr("class","mess-tips").html("<a onclick='navDept()'>返回上级</a>");
+					initDeptPath();
+					break;	
+				default:
+					alert("选择出错啦！");
+				}
+			});
+		});
+		
+	});
+	
+	function loadUserMessageList(){
+		$.ajax({
+            url: "../message/getUserGroupingMessage",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	pageNumber : pageNumber,
+            	pageSize : pageSize
+            	},
+            success: function(data) {
+            	var html='';
+            	for(var i=0;i<data.list.length;i++){
+            		var row = data.list[i];
+            		var dClass = 'mess-perlist';
+            		if(row.urCount>0){
+            			dClass = 'mess-perlist hasMes';
+            		}
+            		var iClass = 'mess-arrive';
+            		if(row.direction == 'receive'){
+            			iClass = 'mess-arrive down';
+            		}else if(row.direction == 'send'){
+            			iClass = 'mess-arrive up';
+            		}
+            		html+='<div data-id="'+row.AuthorID+'" urCount="'+row.urCount+'" class="'+dClass+'"><font>'+row.Caption+'</font><span><i class="'+iClass+'"></i></span></div>';
+            	}
+                $("#scrollList").html(html);
+                
+                pageNumber = data.pageNumber;
+                totalPage = data.totalPage;
+            	var pageInfo = pageNumber+'/'+totalPage;
+				$("#pageInfo").html(pageInfo);
+                
+                //绑定列表的点击事件
+                $("div .mess-perlist").each(function(){ 
+					$(this).bind("click",function(){
+						$(this).siblings().removeClass("check");
+						$(this).addClass("check");
+						var authorID = $(this).attr("data-id");
+						var urCount = $(this).attr("urCount");
+						loadInteractMessage(authorID,urCount);
+					});
+                });
+                if($("#content").attr("content")=="groupMessageSend"){
+                	loadMessageSummary();
+                }
+               
+            }
+        });
+	}
+	
+	function pageNext(){
+		if(pageNumber>=totalPage)
+			return;
+		pageNumber++;
+		switch(navType)
+		{
+		case "userMes":
+			loadUserMessageList();
+			break;
+		case "groupMes":
+			loadGroupList();
+			break;	
+		case "contact":
+			loadContactList();
+			break;	
+		default:
+			alert("选择出错啦！");
+		}
+	}
+	
+	function pageLast(){
+		if(pageNumber<=1)
+			return;			
+		pageNumber--;
+		switch(navType)
+		{
+		case "userMes":
+			loadUserMessageList();
+			break;
+		case "groupMes":
+			loadGroupList();
+			break;	
+		case "contact":
+			loadContactList();
+			break;	
+		default:
+			alert("选择出错啦！");
+		}
+	}
+	
+	var groupPath_list = [];
+	function initGroupPath(){
+		var newPath = {};
+		newPath["pathID"] = 0;
+		newPath["pathType"] = 'all';
+		newPath["pathName"] = '所有组';
+		groupPath_list.push(newPath);
+		loadGroupList();
+	}
+	
+	function navGroup(){
+		if(groupPath_list.length>1){
+			groupPath_list.shift();
+			pageNumber=1;
+			loadGroupList();	
+		}
+	}
+	
+	function loadGroupList(){
+		$.ajax({
+            url: "../contact/getGroupContactList",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	pageNumber: pageNumber,
+				pageSize: pageSize,
+				pathID: groupPath_list[0].pathID,
+				pathType: groupPath_list[0].pathType
+            	},
+            success: function(data) {
+            	var html="";
+            	for(var i=0;i<data.DataList.length;i++){
+            		if(data.DataList[i].Type==3){//组
+            			html+='<div class="mess-perlist01" type="group" id="'+data.DataList[i].ID+'"><font>'+data.DataList[i].Name+'</font><span><i class="mess-checkNBox"></i></span><a class="unfold"><s></s></a></div>';
+            		}else if(data.DataList[i].Type==2){ //通讯录
+            			html+='<div class="mess-perlist01" type="contact" id="'+data.DataList[i].ID+'"><font>'+data.DataList[i].Name+'</font><span><i class="mess-checkNBox"></i></span></div>';
+            		}
+            	}
+        		$("#scrollList").html(html);
+        		//绑定列表的点击事件
+                $("div .mess-perlist01").each(function(){ 
+                	if($(this).attr("type")=='group'){
+                		$(this).bind("click",function(){
+                			var newPath = {};
+                			newPath["pathID"] = $(this).attr("id");
+                			newPath["pathType"] = $(this).attr("type");
+                			newPath["pathName"] = $(this).find("font").html();
+                			groupPath_list.unshift(newPath);
+                			loadGroupList();
+            			});	
+                	}
+        			$(this).find("i.mess-checkNBox").bind("click",function(event){
+        				event.stopPropagation();
+        				if($(this).hasClass("check")){
+        					$(this).removeClass("check");	
+        				}else{
+        					$(this).addClass("check");	
+        				}
+        				var obj = $(this).parent().parent();
+        				var type = obj.attr("type")=='group' ? 3 : 2;
+        				operateSelectedList('add',obj.attr("id"),type,obj.find("font").html());
+        			});
+                });
+        		//分页控制
+                pageNumber = data.PageNumber;
+                totalPage = Math.ceil(data.TotalCount/pageSize);
+            	var pageInfo = pageNumber+'/'+totalPage;
+        		$("#pageInfo").html(pageInfo);                
+      			
+        		//加载发送页面
+        		loadGroupMessageSend();
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+        
+	}
+	
+	var deptPath_list;
+	function initDeptPath(){
+		$.ajax({
+            url: "../contact/getFullPath",
+            type: "GET",
+            dataType: "json",
+            data: {},
+            success: function(data) {
+            	deptPath_list = data.path_list;
+				loadContactList();
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+	}
+	
+	function navDept(){
+		if(deptPath_list.length>1){
+			deptPath_list.shift();
+			pageNumber=1;
+			loadContactList();	
+		}
+	}
+	
+	function loadContactList(){
+		$.ajax({
+            url: "../contact/getContactList",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	pageNumber: pageNumber,
+				pageSize: pageSize,
+				pathID: deptPath_list[0].pathID,
+				pathType: deptPath_list[0].pathType
+            	},
+            success: function(data) {
+            	var html="";
+            	for(var i=0;i<data.DataList.length;i++){
+            		if(data.DataList[i].Type==1){//部门
+            			html+='<div class="mess-perlist01" type="dept" id="'+data.DataList[i].ID+'"><font>'+data.DataList[i].Name+'</font><span><i class="mess-checkNBox"></i></span><a class="unfold"><s></s></a></div>';
+            		}else if(data.DataList[i].Type==2){ //通讯录
+            			html+='<div class="mess-perlist01" type="contact" id="'+data.DataList[i].ID+'"><font>'+data.DataList[i].Name+'</font><span><i class="mess-checkNBox"></i></span></div>';
+            		}
+            	}
+        		$("#scrollList").html(html);
+        		//绑定列表的点击事件
+                $("div .mess-perlist01").each(function(){ 
+                	if($(this).attr("type")=='dept'){
+                		$(this).bind("click",function(){
+                			var newPath = {};
+                			newPath["pathID"] = $(this).attr("id");
+                			newPath["pathType"] = $(this).attr("type");
+                			newPath["pathName"] = $(this).find("font").html();
+                			deptPath_list.unshift(newPath);
+            				loadContactList();
+            			});	
+                	}
+        			$(this).find("i.mess-checkNBox").bind("click",function(event){
+        				event.stopPropagation();
+        				if($(this).hasClass("check")){
+        					$(this).removeClass("check");	
+        				}else{
+        					$(this).addClass("check");	
+        				}
+        				var obj = $(this).parent().parent();
+        				var type = obj.attr("type")=='dept' ? 1 : 2;
+        				operateSelectedList('add',obj.attr("id"),type,obj.find("font").html());
+        			});
+                });
+        		//分页控制
+                pageNumber = data.PageNumber;
+                totalPage = Math.ceil(data.TotalCount/pageSize);
+            	var pageInfo = pageNumber+'/'+totalPage;
+        		$("#pageInfo").html(pageInfo);                
+      			
+        		//加载发送页面
+        		loadGroupMessageSend();
+            },
+           	error: function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+            }
+        });
+	}
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<script type="text/javascript">
+$(function(){
+	$('.fixed').fixScroll({defultTop:0,center:false});
+});
+</script>
+<style>
+.radioFrameTD{ padding-left:5px;}
+.radioFrameTD label{ margin-right:20px;display:inline-block; vertical-align:middle;}
+.radioFrameTD input{ display:inline-block; vertical-align:top; margin-top:-5px;}
+</style>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" valign="top" class="com-oriented">
+        <div class="oriented fixed">
+            <div class="oriented-lineCir oriented-ico"></div>
+            <div class="oriented-listBox" id="orientedFrame">
+                <div class="oriented-list check" data-id="oriented01">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>招投标申请</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="oriented02">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>招投标过程管理</h5>
+                    
+                </div>
+                <div class="oriented-list" data-id="oriented03">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>招标结果</h5>
+                    
+                </div>
+            </div>
+        </div>
+    </td>
+    <td align="left" valign="top"> 
+                <div id="oriented-content">
+                <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                  <tr>
+                    <th>项目编号</th>
+                    <td>&nbsp;</td>
+                    <th>MIS编号</th>
+                    <td>&nbsp;</td>
+                    <th>创建时间</th>
+                    <td>&nbsp;</td>
+                  </tr>
+                </table>
+				<div id="oriented01">
+                	<h4 class="com-tab-tit">招投标申请</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr>
+                        <th>项目负责人</th>
+                        <td><ul class="upNameList">
+                            	<li><b>某某某</b><i></i></li>
+                            	<li><b>某某某</b><i></i></li>  
+                            </ul>
+                        	<a class="process-icons bm bindDialog" data-type="ment"></a></td>
+                        <th>填报时间</th>
+                        <td><input type="text" name="textfield2" id="textfield2" class="com-tabInput inputWidth01" /></td>
+                      </tr>
+                      <tr>
+                        <th>内部项目名称</th>
+                        <td colspan="3"><input type="text" name="textfield2" id="textfield2" class="com-tabInput inputWidth01" /></td>
+                      </tr>
+                      <tr>
+                        <th>客户名称</th>
+                        <td colspan="3"><input type="text" name="textfield2" id="textfield2" class="com-tabInput inputWidth01" /></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="oriented02">
+                	<h4 class="com-tab-tit">招投标过程管理</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <th>招标机构</th>
+                        <td><input type="text" name="textfield7" id="textfield7" class="com-tabInput inputWidth01"/></td>
+                        <th>招标时间</th>
+                        <td><input type="text" name="textfield2" id="textfield2" class="com-tabInput inputWidth01" /></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>招标编号</th>
+                        <td colspan="3"><input type="text" name="textfield2" id="textfield2" class="com-tabInput inputWidth01" /></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>招标公告</th>
+                        <td colspan="3"><textarea name="" cols="" rows="" class="com-tabTextarea inputWidth"></textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>相关附件</th>
+                        <td colspan="3"><ul class="up-ul">
+                            	<li><t>上传申请表名称.doc</t><a class="process-icons down" title="下载附件"></a><a class="process-icons delate" title="删除附件"></a></li>
+                                <li><t>上传申请表名称.doc</t><a class="process-icons down" title="下载附件"></a><a class="process-icons delate" title="删除附件"></a></li>
+                            </ul>
+                        	<div class="up-add"><a><i class="process-icons updata"></i>上传附件</a></div></td>
+                     
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>备注</th>
+                        <td colspan="3"><textarea name="" cols="" rows="" class="com-tabTextarea inputWidth"></textarea></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>招投标负责人</th>
+                        <td colspan="3"><ul class="upNameList">
+                            	<li><b>某某某</b><i></i></li>
+                            	<li><b>某某某</b><i></i></li>  
+                            </ul>
+                        	<a class="process-icons bm bindDialog" data-type="ment"></a></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>商务文件</th>
+                        <td colspan="3"><ul class="up-ul">
+                            	<li><t>上传申请表名称.doc</t><a class="process-icons down" title="下载附件"></a><a class="process-icons delate" title="删除附件"></a></li>
+                                <li><t>上传申请表名称.doc</t><a class="process-icons down" title="下载附件"></a><a class="process-icons delate" title="删除附件"></a></li>
+                            </ul>
+                        	<div class="up-add"><a><i class="process-icons updata"></i>上传附件</a></div></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>技术部分</th>
+                        <td colspan="3"><ul class="up-ul">
+                            	<li><t>上传申请表名称.doc</t><a class="process-icons down" title="下载附件"></a><a class="process-icons delate" title="删除附件"></a></li>
+                                <li><t>上传申请表名称.doc</t><a class="process-icons down" title="下载附件"></a><a class="process-icons delate" title="删除附件"></a></li>
+                            </ul>
+                        	<div class="up-add"><a><i class="process-icons updata"></i>上传附件</a></div></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th colspan="4" class="com-tab-remark">由<em>某某某</em>于<time>2014-10-10</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="4" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="oriented03">
+                	<h4 class="com-tab-tit">招标结果</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <th>招投标结果</th>
+                        <td class="radioFrameTD"><label><input name="" type="radio" value="" checked="checked" /> 中标</label><label><input name="" type="radio" value="" /> 未中标</label></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>中标公告</th>
+                        <td><input type="text" name="textfield2" id="textfield2" class="com-tabInput inputWidth01" /></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>中标通知书</th>
+                        <td><ul class="up-ul">
+                            	<li><t>上传申请表名称.doc</t><a class="process-icons down" title="下载附件"></a><a class="process-icons delate" title="删除附件"></a></li>
+                                <li><t>上传申请表名称.doc</t><a class="process-icons down" title="下载附件"></a><a class="process-icons delate" title="删除附件"></a></li>
+                            </ul>
+                        	<div class="up-add"><a><i class="process-icons updata"></i>上传附件</a></div></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>总结</th>
+                        <td><textarea name="" cols="" rows="" class="com-tabTextarea inputWidth"></textarea></td>
+                      </tr>
+                      
+                      <tr class="com-tab-hidden">
+                        <th>详细结果</th>
+                        <td class="radioFrameTD"><label><input name="" type="radio" value="" checked="checked"/> 废标</label><label><input name="" type="radio" value="" /> 流标</label><label><input name="" type="radio" value="" /> 丢标</label></td>
+                      </tr>
+                      <tr class="com-tab-hidden">
+                        <th>总结和分析</th>
+                        <td><textarea name="" cols="" rows="" class="com-tabTextarea inputWidth"></textarea></td>
+                      </tr>
+                      
+                      <tr class="com-tab-hidden">
+                        <th colspan="2" class="com-tab-remark">由<em>某某某</em>于<time>2014-10-10</time>处理</th>
+                      </tr>
+                      <tr>
+                        <td colspan="2" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                
+              </div>
+    </td>
+  </tr>
+</table>
+<script type="text/javascript" src="lib/javascript/process.js"></script>
+

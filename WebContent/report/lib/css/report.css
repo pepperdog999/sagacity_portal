@@ -1,0 +1,173 @@
+/* CSS Document */
+
+.report-frame{ border:1px solid #e1e1e1; background-color:#fbfbfb; height:600px;-webkit-box-shadow: 0 0 3px #eee,inset 0 0 3px #fff;box-shadow: 0 0 3px #e3e3e3,inset 0 0 3px #fff;padding: 15px;}
+
+.report-tg dt{ font-size:18px; color:#646b75; border-bottom:1px solid #e1e1e1; padding:0px 10px 10px 10px;}
+
+.rep-list{ position:relative; padding:15px 10px; border-bottom:1px solid #e1e1e1; clear:both; overflow:hidden; }
+.rep-list .rep-list-name{position:absolute; z-index:1; right:10px; top:35px; font-size:12px; color:#999;}
+.rep-list .rep-list-name font{ display:inline-block; vertical-align:middle; margin-left:10px; font-size:14px; color:#a2a2a2;}
+.rep-list .rep-list-del{ float:left; margin-left:5%; width:55%;}
+.rep-list .rep-list-del p{ font-size:14px; color:#646b75; text-align:left; line-height:21px; height:42px; overflow:hidden;}
+.rep-list .rep-list-pre{ float:left;}
+.rep-list .rep-list-pre img{width:45px; height:45px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; display:inline-block; vertical-align:middle;}
+.rep-list .rep-list-type{ float:right; font-size:12px; color:#d7d7d7;}
+
+.report-list-page{ padding:10px;}
+
+
+.report-port{border:1px solid #e1e1e1; background-color:#fbfbfb;-webkit-box-shadow: 0 0 3px #eee,inset 0 0 3px #fff;box-shadow: 0 0 3px #e3e3e3,inset 0 0 3px #fff;padding: 15px;}
+.report-p-u{ height:60px; padding:0px;}
+.report-bor{ border-right:1px solid #e1e1e1;}
+.report-p-i{ float:left; width:82px; text-align:center; height:55px;}
+.report-p-i b{ font-family:Arial, Helvetica, sans-serif; font-size:22px;}
+.report-p-i b.red{ color:#ffac0b}
+.report-p-i b.green{color:#88b244}
+.report-p-i p{ font-size:12px; padding-top:8px;}
+.report-p-i p a{ color:#646b75;}
+.report-p-i .report-create{ width:55px; height:55px; display:inline-block; cursor:pointer; background:none; border:1px dashed #cfcfcf; color:#FFF;}
+.report-p-i .report-create i{ background:url(../images/addReport.png) no-repeat; width:35px; height:35px; display:inline-block; vertical-align:middle; margin-top:10px;}
+
+
+.report-port01{border:1px solid #e1e1e1; background-color:#fbfbfb;-webkit-box-shadow: 0 0 3px #eee,inset 0 0 3px #fff;box-shadow: 0 0 3px #e3e3e3,inset 0 0 3px #fff;padding: 15px; margin-top:15px;}
+
+.report-g dt{ border-bottom:1px solid #e1e1e1; padding-bottom:8px;}
+.report-g dt i{display:inline-block; vertical-align:middle; margin-right:10px;}
+.report-g dt b{font-size: 16px;color: #ffac0b; display:inline-block; vertical-align:middle; font-weight:normal;}
+.report-g-uf{ height:459px;}
+.report-g-li{ border-bottom:1px solid #e1e1e1; padding:10px 5px;}
+.report-g-li p.del{ font-size:14px; line-height:20px; height:40px; overflow:hidden;}
+.report-g-li p.del a{color:#646b75;}.report-g-li p.del a:hover{ text-decoration:none;color:#2090d0;}
+.report-g-li p.time{ font-size:12px; text-align:right; width:100%; color:#d7d7d7; padding-top:8px; height:auto;}
+
+
+
+.report-s h5{ border-bottom:1px solid #e5e5e5; padding:14px 20px 15px 20px;}
+.report-s h5 font{ font-size:16px; font-weight:normal;}
+.report-s-con{  border-top:1px solid #FFF; padding:20px;}
+
+.del .title{ font-size:16px; color:#333; line-height:22px;}
+.del .content{ font-size:16px; color:#333; line-height:22px;}
+.del .fileFont{ border-bottom:1px solid #FFF;}
+.del .fileFont h4{ font-size:16px; padding-bottom:10px; font-weight:normal; color:#d84c31; text-shadow:0px 1px 0px #FFF;  border-bottom:1px solid #e5e5e5;}
+.del .fileFont h4 img{ display:inline-block; vertical-align:middle; margin-right:10px;}
+.del .time{ padding:10px 0px; font-size:12px; color:#aaa; width:100%; margin:0px;}
+.del .time b{ font-weight:normal;}
+.del .img{ padding-top:20px;}
+.del .img img{ margin-right:10px; margin-bottom:10px; max-width:170px; height:auto;}
+
+.reg-link-ti{ font-size:16px; padding-bottom:10px; color:#d84c31; text-shadow:0px 1px 0px #FFF;}
+
+.reg-hi{ margin-bottom:15px;}
+.report-links{ border:1px solid #e1e1e1;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px; width:120px; text-align:center; height:33px; line-height:33px; display:inline-block; vertical-align:middle; font-size:14px;background-color:#f9f9f7; cursor:pointer;}
+.report-links:hover{ background-color:#f2f2ea;}
+.report-links b{ width:60px; display:inline-block; vertical-align:middle; font-weight:normal;}
+
+.report-links.check{ background-color:#d84c31; border:1px solid #ec674d;}
+.report-links.check b{ color:#FFF;}
+
+.reg-linkIco{ background:url(../images/reg-operIco.png) no-repeat; width:17px; height:16px; display:inline-block; vertical-align:middle;}
+.reg-linkIco.ico01{  background-position:0px 0px;}
+.reg-linkIco.ico02{  background-position:-17px 0px;}
+.reg-linkIco.ico03{  background-position:-34px 0px;}
+
+.report-links.check .reg-linkIco.ico01{  background-position:0px -16px;}
+.report-links.check .reg-linkIco.ico02{  background-position:-17px -16px;}
+.report-links.check .reg-linkIco.ico03{  background-position:-34px -16px;}
+
+/***********************************************************************************************/
+.report-s h5{ border-bottom:1px solid #e5e5e5; padding:14px 20px 15px 20px;}
+.report-s h5 font{ font-size:16px; font-weight:normal;}
+.report-s-con{  border-top:1px solid #FFF; padding:20px;}
+
+.del .title{ position:relative;}
+.del .title label{ width:15%; text-align:right;font-size:14px;}
+
+.del .title a.title-star{ position:absolute; left:0px; top:3px;}
+.del .title a.title-star i{ background:url(../images/star.png) no-repeat; width:17px; height:16px; display:inline-block; vertical-align:middle;}
+.del .title a.title-star.check i{  background-position:-17px 0px;}
+.del .title p{ font-size:16px; color:#333; line-height:22px; padding-left:25px;}
+.del .fileFont{ border-bottom:1px solid #FFF; margin-top:10px;}
+.del .fileFont h4{ font-size:16px; padding-bottom:10px; font-weight:normal; color:#d84c31; text-shadow:0px 1px 0px #FFF;  border-bottom:1px solid #e5e5e5;}
+.del .fileFont h4 img{ display:inline-block; vertical-align:middle; margin-right:10px;}
+.del .time{ padding:10px 0px; font-size:12px; color:#aaa; width:100%; margin:0px;}
+.del .time b{ font-weight:normal;}
+.del .img{ padding-top:20px; clear:both; overflow:hidden;}
+.del .img img{ margin-right:10px; margin-bottom:10px; max-width:170px; height:auto;}
+
+.reg-link-ti{ font-size:16px; padding-bottom:10px; color:#d84c31; text-shadow:0px 1px 0px #FFF;}
+
+.reg-hi{ margin-bottom:15px;}
+.report-links{ border:1px solid #e1e1e1;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px; width:120px; text-align:center; height:33px; line-height:33px; display:inline-block; vertical-align:middle; font-size:14px;background-color:#f9f9f7; cursor:pointer;}
+.report-links:hover{ background-color:#f2f2ea;}
+.report-links b{ width:60px; display:inline-block; vertical-align:middle; font-weight:normal;}
+
+.report-links.check{ background-color:#d84c31; border:1px solid #ec674d;}
+.report-links.check b{ color:#FFF;}
+
+.reg-linkIco{ background:url(../images/reg-operIco.png) no-repeat; width:17px; height:16px; display:inline-block; vertical-align:middle;}
+.reg-linkIco.ico01{  background-position:0px 0px;}
+.reg-linkIco.ico02{  background-position:-17px 0px;}
+.reg-linkIco.ico03{  background-position:-34px 0px;}
+
+.report-links.check .reg-linkIco.ico01{  background-position:0px -16px;}
+.report-links.check .reg-linkIco.ico02{  background-position:-17px -16px;}
+.report-links.check .reg-linkIco.ico03{  background-position:-34px -16px;}
+
+.meetingDel-tab{ background-color:#dddddd; width:100%; margin-top:10px;}
+.meetingDel-tab th{ font-size:14px; font-weight:normal; width:140px; background-color:#f9f9f7; height:50px; line-height:50px; text-align:right; padding-right:10px;}
+.meetingDel-tab td{ font-size:14px; font-weight:normal; background-color:#f9f9f7; padding:5px; line-height:14px; text-align:left;}
+.meetingDel-tab td b{ font-size:14px; font-weight:normal; color:#d84c31;}
+.meetingDel-tab td i{ font-size:14px; font-weight:normal; font-style:normal; color:#333; margin-right:8px; margin-bottom:3px; display:inline-block; vertical-align:middle;}
+
+
+.meeting-textarea{ border:1px solid #cccccc; background-color:#FFF; overflow:auto; width:97%;height:60px;
+padding:6px 5px; line-height:20px; font-size:14px;font-family: "Helvetica Neue",Helvetica,"Hiragino Sans GB","Segoe UI","Microsoft Yahei",Tahoma,Arial,STHeiti,sans-serif;
+-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;
+-webkit-box-shadow:0 1px 1px rgba(0, 0, 0, .075)inset;
+-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .075)inset;
+box-shadow: 0 1px 1px rgba(0, 0, 0, .075)inset;}
+.meeting-input{ border:1px solid #cccccc; background-color:#FFF; width:97%;font-size:14px;
+padding:0px 5px; height:28px !important; height:28px; +line-height:28px; line-height:28px\0;
+
+-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;
+-webkit-box-shadow:0 1px 1px rgba(0, 0, 0, .075)inset;
+-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .075)inset;
+box-shadow: 0 1px 1px rgba(0, 0, 0, .075)inset;}
+.meeting-input01{ background:none; border-bottom:1px solid #ddd; width:85%; padding:6px 10px;font-size:14px;}
+/*选人*/
+.upNameList{ list-style:none; background-color:#FFF; border:1px solid #dcdcdc; clear:both; overflow:hidden; display:inline-block; vertical-align:middle; padding:3px 5px 3px 0px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; min-width:390px; height:26px; position:relative;}
+.upNameList li{ list-style:none; float:left; background-color:#28acd2; border:1px solid #199abf; margin-left:5px; padding-left:5px; padding-right:5px;
+-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px; height:24px; line-height:24px; position:relative;}
+.upNameList li b{ font-weight:normal; color:#FFF; font-size:12px; margin-right:5px;}
+.upNameList li i{ background:url(../images/upNameList-ico.png) no-repeat; width:8px; height:8px; display:inline-block; vertical-align:middle; font-size:0px; cursor:pointer; margin-top:-2px;}
+.upNameList li.part{ background-color:#f99a05;border:1px solid #e58c01;}
+.upNameList li.more{ background-color:#FFF; border:0px; position:absolute; right:2px; top:2px;}
+.upNameList li.more a{ cursor:pointer; background:url(../images/updown.png) no-repeat; width:11px; height:12px; display:inline-block; vertical-align:middle; font-size:0px;}
+.upNameList li.more a:hover{ background-position:0px -12px;}
+.upNameList li.more.up a{ background-position:-11px 0px;}
+.upNameList li.more.up a:hover{ background-position:-11px -12px;}
+
+.userListMore{ position:absolute; left:0px; top:35px; height:200px; width:445px; display:none; overflow:auto; background-color:#fafafa; border:1px solid #dcdcdc;}
+.upNameList.reStyle{ border:0px; background:none; height:auto;}
+.upNameList.reStyle li{ margin-bottom:5px;}
+
+.addList{ float:left; width:100px; height:100px; border:1px dashed #dddddd;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;text-align:center; margin-right:10px; margin-bottom:8px; position:relative;}
+.addList .free{ cursor:pointer; position:absolute; background:url(../images/delate.png) no-repeat; width:16px; height:16px; display:inline-block; vertical-align:middle; right:5px; top:5px;}
+.addList .down{ cursor:pointer; position:absolute; background:url(../images/down.png) no-repeat; width:17px; height:16px; display:inline-block; vertical-align:middle; right:5px; top:5px;}
+.addList i{  display:inline-block; vertical-align:middle; margin-top:20px;}
+.addList p{ overflow:hidden; width:90px; margin-top:8px; height:35px; padding:0px 5px;}
+.addList img{ margin:0px; width:32px; height:32px;}
+.addList.upimg{ border:0px;}
+.addList.upimg .pImg{width:102px; height:102px; margin:0px; padding:0px;}
+.addList.upimg .pImg img{ width:102px; height:102px;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;}
+
+.addList-oper{ float:left; width:100px; height:100px; border:1px dashed #dddddd;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;text-align:center;margin-right:10px; margin-bottom:8px; background:url(../images/add-ico.png) no-repeat center; cursor:pointer;}
+.addList-oper:hover{ border:1px dashed #adadad;}
+
+.meeting-linkFrame{ padding-top:10px;}
+.meeting-linkFrame a{ margin-right:10px;}
+.meeting-subbtn{ background-color:#d84c31; font-size:14px; color:#FFF; cursor:pointer;-webkit-border-radius:3px;-moz-border-radius: 3px;border-radius: 3px; width:100px; text-align:center; height:30px; line-height:30px; display:inline-block; vertical-align:middle; border:1px solid #d84c31;}
+.meeting-subbtn:hover{background-color:#cb4126; }
+.meeting-cancelbtn{ background-color:#f9f9f7;border:1px solid #e1e1e1; font-size:14px; color:#333; cursor:pointer;-webkit-border-radius:3px;-moz-border-radius: 3px;border-radius: 3px; width:100px; text-align:center; height:30px; line-height:30px; display:inline-block; vertical-align:middle;}
+.meeting-cancelbtn:hover{background-color:#f2f2ea; }

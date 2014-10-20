@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>流程查看</title>
+<link href="lib/css/createPath.css" type="text/css" rel="stylesheet" />
+
+<!--[if IE]><script type="text/javascript" src="lib/javascript/excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="lib/javascript/pathCommon.js"></script>
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="lib/javascript/createProcessPath2.js"></script>
+<script type="text/javascript">
+
+/************
+调用方法
+************/
+function nodeEdit(){
+	var code = this.id;
+	console.log("编辑节点："+code);
+}
+
+function nodeQuery(){
+	var code = this.id;
+	console.log("查询节点："+code);
+}
+
+function getQueryParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+
+var coordinateID=getQueryParam("coordinateID");
+var blnArchive = true;
+window.onload = function(){
+  	createPath();
+};
+
+function createPath(){
+	$.ajax({
+        url: "../system/getWorkflowRuntime",
+        type: "GET",
+        dataType: "json",
+        data: {
+        	coordinateID : coordinateID
+        },
+        success: function(data) {
+        	if(data.Result){
+        		var linkJson=[];
+        		var dataJson=[];
+        		for( var i=0; i<data.Data.length; i++){
+        			var handler = {};
+        			handler["code"] = data.Data[i]["code"];			//把所有节点转换到nodes里面
+        			handler["name"] = data.Data[i]["name"];
+        			handler["topname"] = data.Data[i]["topname"];
+        			handler["typeImg"] = data.Data[i]["typeImg"];
+        			handler["status"] = data.Data[i]["status"];
+        			if(data.Data[i]["status"] != 1){
+        				blnArchive=false;
+        			}
+        			handler["executors"] = data.Data[i]["executors"];
+        			handler["parentCode"] = data.Data[i]["parentCode"];
+        			handler["childrenCode"] = data.Data[i]["childrenCode"];
+        			handler["links"] = data.Data[i]["links"];
+        			if(data.Data[i]["nodeType"]==1){
+        				dataJson.push(handler);
+        			}else{
+        				linkJson.push(handler);
+        			}
+        		}
+        		//创建绘图
+        		newPath = new Path();
+        		newPath.SetOptions({
+        			isEdit:false,
+        			clickAfterFun:{		//设置点击完节点后执行方法
+        				editFun:nodeEdit,
+        				queryFun:nodeQuery
+        			}
+        		});
+        		newPath.reload(dataJson, linkJson);
+        		//设置尾节点图标
+        		if(blnArchive){
+        			$("#endNode").attr("src","lib/img/path-end.png");
+        		}
+        	}else{
+        		alert(data.Msg);
+        	}
+	      	
+        }
+	});
+}
+
+</script>
+
+</head>
+
+<body>
+<div class="pathFrame">
+    <table border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+        <div  class="singleDiv01 start">
+            <table border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="left" valign="middle" class="e startPad"><div class="userList01 userTip" id="start">
+                    <p class="userList-t"></p>
+                    <p class="userList-img"><img src="lib/img/path-start.png"></p>
+                    <b class="userList-status"><img src="lib/img/normal.png"></b>
+                 </div></td>
+                <td align="left" valign="middle" id="start_frame"></td>
+              </tr>
+            </table>
+        </div>
+        </td>
+        <td><div  class="singleDiv01 end"><div class="userList01 userTip" id="end">
+        	<p class="userList-t"></p>
+            <p class="userList-img"><img id="endNode" src="lib/img/path-gray-end.png"></p>
+            <i class="userList-arrow"></i>
+            <b class="userList-status"><img src="lib/img/normal.png"></b>
+         </div></div></td>
+      </tr>
+    </table>
+</div> 
+</body>
+</html>

@@ -1,0 +1,253 @@
+<script type="text/javascript">
+$(function(){
+	$('.fixed').fixScroll({defultTop:0,center:false});
+	$('#coorContent').click(function() {
+		$.getScript('../kindeditor/kindeditor-min.js', function() {
+			KindEditor.basePath = '../kindeditor/';
+			KindEditor.create('textarea[name="coorContent"]', {
+				uploadJson : '../coor/imageUploader',
+				allowFileManager : false,
+				items : [
+                         'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'cut', 'copy', 'paste',
+                         'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                         'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                         'superscript', '|', 'clearhtml', 'quickformat', 'selectall',  '|',
+                         'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                         'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+                         'table', 'hr', 'emoticons', 'map',  'pagebreak', 'anchor', 'link', 'unlink'
+                     ],
+				afterBlur:function(){ 
+		            this.sync(); 
+		        }
+			});
+		});
+	});
+	$("#attachFile").change(function() {
+		var fileInfo = $("#attachFile").val().split('.');
+        var fileType = fileInfo[fileInfo.length-1].toLowerCase();
+        if(!(fileType =='exe' || fileType=='com' || fileType=='bat' || fileType=='sh' || fileType=='msi')){ //控制不能上传执行文件
+        	$("#attachForm").ajaxSubmit({
+                url: "../coor/uploadAttach?coordinateID="+coordinateID,
+                type: "post",
+                dataType: "json",
+                resetForm: "true",
+                beforeSubmit: function() {
+                	$("#attUpload").hide();
+                },
+                success: function(data) {
+                    if(data.Result){
+                    	alert(data.Msg);
+                    	$("#attUpload").show();
+						var html='<li attach-id="'+data.AttachmentID+'"><t>'+data.AttachmentName+'</t><a class="process-icons eye" onclick="viewAttach(this)" title="查看附件"></a><a class="process-icons delate" onclick="delAttach(this)" title="删除附件"></a></li>';
+						$("#attachList").append(html);
+                    }else{
+                    	alert(data.Msg);
+                    	$("#attUpload").show();
+                    }
+                },
+                error: function(jqXHR, errorMsg, errorThrown) {
+                    alert(errorMsg);
+                }
+            });
+        }else{
+        	alert("不允许上传可执行文件！");
+        	return;
+        }
+	});
+});
+
+function uploadAttach(){
+	$("#attachFile").click();
+}
+
+function updateExtraContent(){
+	var extraContent = $("#extraContent").val();
+	if(extraContent != ''){
+		$.ajax({
+            url: "../coor/updateExtraContent",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	coordinateID : coordinateID,
+            	extraContent : extraContent
+            	},
+            success: function(data) {
+            	alert(data.Msg);                           	
+            }
+		});
+	}else{
+		alert("请填写协同附言！");
+	}
+}
+
+function viewAttach(obj){
+	var attachID= $(obj).parent().attr("attach-id");
+	if(attachID>0){
+		$.ajax({
+            url: "../coor/getAttachFileURL",
+            type: "GET",
+            dataType: "json",
+            data: {
+				attachID : attachID
+            	},
+            success: function(data) {
+            	if(data.Result){
+            		window.open('../preview/filePreview?dir='+data.FilePath+'&fileName='+data.FileName,'_new', '');
+            	}else{
+            		alert("附件地址获取失败！");	
+            	}                            	
+            }
+		});
+	}else{
+		alert("请选择需要查看的协同附件！");
+	}
+}
+
+function delAttach(obj){
+	var attachID= $(obj).parent().attr("attach-id");
+	if(attachID>0){
+		$.ajax({
+            url: "../coor/delAttachFile",
+            type: "GET",
+            dataType: "json",
+            data: {
+				attachID : attachID
+            	},
+            success: function(data) {
+            	if(data.Result){
+					alert(data.Msg);
+					$(obj).parent().remove();
+            	}else{
+            		alert(data.Msg);	
+            	}                            	
+            }
+		});
+	}else{
+		alert("请选择需要删除的协同附件！");
+	}
+}
+
+function downloadAttach(obj){
+	var attachID= $(obj).parent().attr("attach-id");
+	if(attachID>0){
+		$.ajax({
+            url: "../coor/getAttachFileURL",
+            type: "GET",
+            dataType: "json",
+            data: {
+				attachID : attachID
+            	},
+            success: function(data) {
+            	if(data.Result){
+            		try{
+                   	   var elemIF = document.createElement("iframe");
+                   	   elemIF.src = data.FileURL;
+                   	   elemIF.style.display = "none";
+                   	   document.body.appendChild(elemIF);
+                     }catch(e){
+                     	
+                     }
+            	}else{
+            		alert("附件地址获取失败！");	
+            	}                            	
+            }
+		});
+	}else{
+		alert("请选择需要下载的协同附件！");
+	}
+}
+
+</script>
+
+<#assign coordinateID = (coordinateInfo.CoordinateID)!(0) >
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" valign="top" class="com-oriented">
+        <div class="oriented fixed" style="min-height:180px;">
+            <div class="oriented-lineCir oriented-ico"></div>
+            <div class="oriented-listBox" id="orientedFrame">
+                <div class="oriented-list check" data-id="oriented01">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>协同正文</h5>
+                </div>
+                <div class="oriented-list" data-id="oriented02">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>协同附件</h5>
+                </div>
+                <div class="oriented-list" data-id="oriented03">
+                    <div class="oriented-circle oriented-ico"></div>
+                    <div class="oriented-direction oriented-ico"></div>
+                    <h5>协同附言</h5>                    
+                </div>
+               
+            </div>
+        </div>
+    </td>
+    <td align="left" valign="top"> 
+                <div id="oriented-content">
+				<div id="oriented01">
+                	<h4 class="com-tab-tit">协同正文</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+					  <tr>
+                        <td style="padding:5px">
+                        	<#if coordinateID == 0>
+                        		<textarea name="coorContent" id="coorContent" cols="" rows="" class="com-tabTextarea inputWidth" style="display:block; height:300px; width:98%;"></textarea>
+                        	<#else>
+                        		<style type="text/css">
+                        			.content-class p {line-height:15px; margin-bottom:8px}
+                        		</style>
+                        		<div class="content-class" style="height:300px; overflow:auto;border: 2px solid #dcdcdc; padding:10px;">
+                        			${(coordinateInfo.Content)!}
+                        		</div>
+                        	</#if>
+                        </td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="oriented02">
+                	<h4 class="com-tab-tit">协同附件</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <td style="padding:5px">
+                        	<ul class="up-ul" id ="attachList">
+                        		<#list (attachments)! as attach>
+                        		<li attach-id="${(attach.AttachmentID)!}"><t>${(attach.AttachmentName)!}</t><a class="process-icons down" onclick="downloadAttach(this)" title="下载附件"></a><a class="process-icons eye" onclick="viewAttach(this)" title="查看附件"></a></li>
+                        		</#list>
+                            </ul>
+                            <#if coordinateID == 0>
+                        	<div id="attUpload"  onclick="uploadAttach()" class="up-add"><i class="process-icons updata"></i>上传附件</div>
+                        	<form id="attachForm" name="attachForm" style="display:none" enctype="multipart/form-data">
+					      		<input id="attachFile" name="attachFile" type="file" />
+					      	</form>
+					      	</#if>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="1" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                <div id="oriented03">
+                	<h4 class="com-tab-tit">协同附言</h4>
+                    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="com-tab">
+                      <tr class="com-tab-hidden">
+                        <td style="padding:5px">
+                        	<div><textarea id="extraContent" cols="" rows="" class="com-tabTextarea inputWidth" style="height:110px; width:98%;">${(coordinateInfo.ExtraContent)!}</textarea></div>
+                        	<#if coordinateID != 0 && userID == coordinateInfo.OwnerID!(0) >
+                        	<div class="mess-send-btn"><button><a onclick="updateExtraContent()">更新</a></button></div>
+                        	</#if>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="1" class="com-tab-arrows"><a class="arrowsLink"><i></i></a></td>
+                      </tr>
+                    </table>
+                </div>
+                
+              </div>
+    	</td>
+	</tr>
+</table>
+<script type="text/javascript" src="lib/javascript/process.js"></script>

@@ -1,0 +1,82 @@
+/* CSS Document */
+body, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote,p{
+    margin:0px;
+    padding:0px;
+	border:0px;
+}
+body{ overflow:auto; font-size:12px; background-color:#ffffff;text-align:center;}
+*:focus { outline: none; -moz-outline:none; }
+
+a img{ border:0px;}
+a{ text-decoration:none;}
+a:focus { -moz-outline-style: none; } /* IE不支持 */
+div{ font-size:12px;font-family:"微软雅黑", "宋体";}
+
+/*disPath*/
+/*.disPath{ position:relative; border:1px solid #dcdcdc; overflow:auto;}
+.disPath-user{ position:absolute; left:0px; top:0px; z-index:11; width:1700px; height:500px;}
+.disPath-b{ background-color:#FFF;}
+
+.userList{ font-size:12px; position:absolute; left:200px; top:200px; display:inline-block;text-align:center;}
+.userList .userList-t{ position:absolute; top:-18px; left:-15px; width:80px;height:17px; overflow:hidden; color:#0000fe;}
+.userList .userList-b{ position:absolute; bottom:-18px; left:-15px; width:80px; height:17px; overflow:hidden;color:#0000fe;}
+.userList .userList-img{width:48px; height:48px; background:#F9F; *display:block;}
+.userList .userList-img img{width:48px; height:48px;}
+.userList .userList-arrow{ position:absolute; background:url(../img/path-arrow.png) no-repeat; width:12px; height:7px; display:inline-block; vertical-align:middle; font-size:0px; left:-12px; top:21px;}
+.userList .userList-status{position:absolute;width:18px; height:15px; display:inline-block;vertical-align:middle;font-size:0px;right:0px; bottom:0px; z-index:111;}
+
+.userLink{ position:absolute; width:48px; height:48px; display:inline-block; vertical-align:middle; font-size:0px; text-align:center; }
+.userLink i{background-color:#666; width:10px; height:10px; font-size:0px; display:inline-block; vertical-align:top; margin-top:19px;-webkit-border-radius: 16px;-moz-border-radius: 16px;border-radius: 16px; cursor:pointer;}*/
+
+
+
+
+.pathFrame{ position:relative; text-align:left; padding:20px;}
+
+.singleDiv01{ padding-left:20px; background:url(../img/line.png) repeat-x center left; float:left; position:relative;}
+.singleDiv01.start{ padding-left:0px;}
+.singleDiv01.end{ padding-right:0px;}
+
+.singleDiv02{ padding:0px 30px; background:url(../img/line.png) repeat-x center left; float:left; position:relative;}
+.singleDiv02.s{ padding:0px;}
+.singleDiv02.s td.e{ background-color:#fff; background:url(../img/line.png) repeat-x center left; padding:0px 0px;}
+
+
+.singleDiv{ padding:0px 30px; background:url(../img/line.png) repeat-x center left; float:left; position:relative;}
+.singleDiv .link{ position:absolute; width:8px; height:8px; display:inline-block; vertical-align:middle; background-color:#5a6478; font-size:0px; z-index:11; right:26px; top:49.5555%;-webkit-border-radius:10px;-moz-border-radius: 10px;border-radius: 10px; cursor:pointer;}
+.singleDiv .link:hover{ background-color:#ff8003;}
+.singleTab{  background-color:#fff; position:relative;}
+.singleTab td.c{ padding:3px 20px;}
+.singleTab td.d{ background-color:#fff; background:url(../img/line.png) repeat-x center left; padding:15px 20px; position:relative;}
+
+
+.userList01{ font-size:12px; position:relative;display:inline-block;text-align:center; width:48px;}
+.userList01 .userList-t{ position:absolute; top:-18px; left:-15px; width:80px;height:17px; overflow:hidden; color:#5a6478;}
+.userList01 .userList-b{ position:absolute; bottom:-18px; left:-15px; width:80px; height:17px; overflow:hidden;color:#5a6478;}
+.userList01 .userList-img{width:48px; height:48px; background:#F9F; *display:block;}
+.userList01 .userList-img img{width:48px; height:48px;}
+.userList01 .userList-arrow{ position:absolute; background:url(../img/path-arrow.png) no-repeat; width:12px; height:7px; display:inline-block; vertical-align:middle; font-size:0px; left:-12px; top:21px;*top:21px; outline:none;}
+.userList01 .userList-status{position:absolute;width:18px; height:15px; display:inline-block;vertical-align:middle;font-size:0px;right:0px; bottom:0px; z-index:111;}
+
+.userLink{ position:absolute; width:48px; height:48px; display:inline-block; vertical-align:middle; font-size:0px; text-align:center; }
+.userLink i{background-color:#666; width:10px; height:10px; font-size:0px; display:inline-block; vertical-align:top; margin-top:19px;-webkit-border-radius: 16px;-moz-border-radius: 16px;border-radius: 16px; cursor:pointer;}
+
+.stringLine{ position:absolute; font-size:0px; width:1px; background-color:#5a6478; height:40px;top:50%;}
+.stringLine.left{ left:0px;}
+.stringLine.right{ right:0px;}
+
+.stringLine01{ position:absolute; font-size:0px; width:1px; background-color:#5a6478; height:40px;top:0px;}
+.stringLine01.left{ left:0px;}
+.stringLine01.right{ right:0px;}
+
+
+.operationUl{ list-style:none;padding:0px; background-color:#fff; width:80px;}
+.operationUl li{ list-style:none;}
+.operationUl li a{ display:block; cursor:pointer; padding:6px 15px; color:#333;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+.operationUl li a:hover{ background-color:#5a6478; color:#FFF;}
+
+
+.startPad{ padding-right:20px;}
+
+
+

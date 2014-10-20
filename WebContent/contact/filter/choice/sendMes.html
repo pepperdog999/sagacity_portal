@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>发送消息</title>
+<link href="../../../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="../../lib/css/frameDetail.css" type="text/css" rel="stylesheet" />
+<style>
+.signature{ margin-top:4px; display:inline-block; vertical-align:middle;}
+.signature input{ margin-right:5px; display:inline-block; vertical-align:middle; margin-top:-2px;}
+</style>
+<script type="text/javascript" src="../../../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+	
+	function closeBeforeFunction(){
+		window.parent.dialogSendMes.free();
+	}
+
+	function getQueryParam(name) {
+	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	    var r = window.location.search.substr(1).match(reg);
+	    if (r != null) return unescape(r[2]); return null;
+    }
+	
+	var id=getQueryParam("id");
+	var type=getQueryParam("type");
+	var indexData=[];
+	
+	function sendMsg(){
+		var blnIsPrefix = $("#blnIsPrefix").is(':checked') ? 1:0;
+		var blnIsSMS = $("#blnIsSMS").is(':checked') ? 1:0;
+		$.ajax({
+            url: "../../../system/sendMsg",
+            type: "POST",
+            dataType: "json",
+            data: {
+            	contents : $("#contents").val(),
+            	indexData : JSON.stringify(indexData),
+            	blnIsPrefix : blnIsPrefix,
+            	blnIsSMS : blnIsSMS
+            },
+            success: function(data) {
+            	$("#contents").val("");
+            	alert(data.Msg);
+            }
+		});
+	}
+	
+	function removeContact(obj){
+		if(indexData.length>1){
+			for(var i=0;i<indexData.length;i++){
+				if(indexData[i]["CContactID"]==$(obj).attr("data-id")){
+					indexData.splice(i,1);
+				}
+			}
+			$(obj).remove();	
+		}else{
+			alert("不允许删除！");
+		}
+		
+	}
+	
+	$(function() {
+		if(type==1){
+			$.ajax({
+	            url: "../../../contact/getDeptContactByID",
+	            type: "GET",
+	            dataType: "json",
+	            data: {id:id},
+	            success: function(data) {
+					var html1='';
+					var html2='<ul class="upNameList reStyle">';
+					for(var i=0;i<data.Contacts.length;i++){
+						if(i<=5){
+	            			html1+='<li data-id="'+data.Contacts[i].CContactID+'" onclick="removeContact(this)"><b>'+data.Contacts[i].Name+'</b><i></i></li>';
+						}else{
+							html2+='<li data-id="'+data.Contacts[i].CContactID+'" onclick="removeContact(this)"><b>'+data.Contacts[i].Name+'</b><i></i></li>'
+						}
+	            		var single = new Object();
+						single["CContactID"]=data.Contacts[i].CContactID;
+						single["Name"]=data.Contacts[i].Name;
+						indexData.push(single);
+					}
+					html1+='<li onclick="more(this)" class="more"><a title="显示更多"></a></li>';
+					html2+='</ul>'
+	            	$("#sendName").html(html1);
+					$("#moreDiv").html(html2);
+	            }
+			});
+		}else if(type==2){
+			$.ajax({
+	            url: "../../../contact/getContactInfoByID",
+	            type: "GET",
+	            dataType: "json",
+	            data: {id:id},
+	            success: function(data) {
+	            	var html='<li><b>'+data.Name+'</b><i></i></li>';
+	            	$("#sendName").html(html);
+	            	var single = new Object();
+					single["CContactID"]=data.CContactID;
+					single["Name"]=data.Name;
+					indexData.push(single);
+	            }
+			});
+		}else if(type==3){
+			$.ajax({
+	            url: "../../../contact/getGroupContactByID",
+	            type: "GET",
+	            dataType: "json",
+	            data: {id:id},
+	            success: function(data) {
+					var html1='';
+					var html2='<ul class="upNameList reStyle">';
+					for(var i=0;i<data.Contacts.length;i++){
+						if(i<=5){
+	            			html1+='<li data-id="'+data.Contacts[i].CContactID+'" onclick="removeContact(this)"><b>'+data.Contacts[i].Name+'</b><i></i></li>';
+						}else{
+							html2+='<li data-id="'+data.Contacts[i].CContactID+'" onclick="removeContact(this)"><b>'+data.Contacts[i].Name+'</b><i></i></li>'
+						}
+	            		var single = new Object();
+						single["CContactID"]=data.Contacts[i].CContactID;
+						single["Name"]=data.Contacts[i].Name;
+						indexData.push(single);
+					}
+					html1+='<li onclick="more(this)" class="more"><a title="显示更多"></a></li>';
+					html2+='</ul>'
+	            	$("#sendName").html(html1);
+					$("#moreDiv").html(html2);
+	            }
+			});
+		}
+	});
+	
+	function more(obj){
+		if($(obj).hasClass("up")){
+			$(obj).removeClass("up");
+			$("#moreDiv").hide();
+		}else{
+			$(obj).addClass("up");
+			$("#moreDiv").show();
+		}
+	}
+</script>
+</head>
+
+<body>
+<div class="fontLeft comment">
+
+    <div class="comment-l">
+        <div class="comment-n" style="border-top:0px; margin:0px;">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="left" valign="top">
+		        	<h3>发送消息给：
+		        		<ul class="upNameList" style="width:400px;" id="sendName"></ul>
+		        		<div class="userListMore" id="moreDiv"></div>	
+		        	</h3>
+        		</td>
+                <td align="left" valign="top" width="42">
+                	<label class="signature"><input id="blnIsPrefix" type="checkbox" value="" checked="checked" />签名</label>
+                	<label class="signature"><input id="blnIsSMS" type="checkbox" value="" checked="checked" />短信</label>
+                </td></tr>
+            </table>
+            <h4>消息内容：</h4>
+            <div><textarea id="contents" cols="" rows=""></textarea></div>
+            <div class="comment-btnh"><button class="comment-btn" onclick="sendMsg()">发送消息</button><button class="comment-cancelbtn" onclick="closeBeforeFunction()">取消</button></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

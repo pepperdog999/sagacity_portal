@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="contact">
+	<sql id="getContactSummary">
+		select 'corpContact' type,count(cc.CContactID) count 
+		from zq_corpcontact cc
+		where cc.CorpID=?
+		union
+		select 'groupContact' type,count(gm.MemberID) count
+		from zq_contactgroupmember gm
+		left join zq_usercontactgroup ug on ug.ContactGroupID=gm.ContactGroupID
+		where ug.UserID=?
+	</sql>
+</sqlGroup>
+

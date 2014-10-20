@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>处理项目</title>
+<link href="../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/common.css" type="text/css" rel="stylesheet" />
+<link href="../widget/frame/css/frame.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../lib/javascript/json2.js"></script>
+<script type="text/javascript" src="../lib/javascript/jquery.form.min.js"></script>
+<script type="text/javascript" src="lib/javascript/addprocess.js"></script>
+<script type="text/javascript" src="lib/javascript/common.js"></script>
+<script type="text/javascript" src="lib/javascript/fixscroll.js"></script>
+<script type="text/javascript" src="../widget/frame/javascript/createDialog.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$('.fixed').fixScroll({defultTop:0,center:false});
+});
+</script>
+</head>
+
+<body class="bodyBack">
+
+<!-- Start of toppart -->
+<div id="banner" class="fontLeft com-top toDiv">
+</div>
+<!-- End of toppart -->
+
+
+<!-- Start of con -->
+<div class="comMarginTop01 fontLeft">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="top" class="menu-left" id="memuFrame">
+        	
+        	<div class="menu-line"></div>
+            <div class="menu-c" id="navTree">
+            </div>
+        </td>
+        <td align="left" valign="top" class="com-right">
+        	<div class="com-rightPosition">
+            <div class="com-optionMenu"><a class="returnHome" title="返回主页" href="index" hidefocus="true"><i></i></a><a class="closeMenu" id="setMenuFrame" title="打开菜单" hidefocus="true"><i></i></a></div>
+            <div class="com-content">
+                 <div class="process">
+                       <h1>项目核心管控单</h1>
+                       <div class="com-op">
+                               <div class="com-op-padding">  
+                                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                   <tr>
+                                   <td align="left" valign="top" class="com-fp">
+                                   <p><label>标题：</label><input name="" type="text" value="${(coordinateInfo.CoordinateName)!}" class="com-tabInput inputWidth"/><select name="">
+                                   <option>普通</option>
+                                   </select></p>
+                                   <p><label>流程：</label><input name="" type="text" disabled="disabled" value="流程信息" class="com-tabInput inputWidth"/><a class="com-lookBtn">流程选择</a></p>
+                                   </td>
+                                   <td align="left" valign="top" class="com-fpBtn">
+                                   <div>
+                                   		<div class="fixed com-fpBtn-back" data-border="true">
+		                                   	<#if (action)! == 'processing'>
+		                                   	<a class="tjfs bindDialog" data-title="提交发送" data-type="opinion"><i class="process-icons"></i><p>提交发送</p></a>
+		                                   	<a class="ht" data-title="流程回退"><i class="process-icons"></i><p>流程回退</p></a>
+		                                   	</#if>
+		                                   	<#if (action)! == 'created'>
+		                                   	<a class="cx" data-title="撤销"><i class="process-icons"></i><p>撤销</p></a>
+		                                   	</#if>
+		                                   	<a class="dy" data-title="打印"><i class="process-icons"></i><p>打印</p></a>
+		                                   	<a class="zk" data-title="节点展开" id="processNodesShow"><i class="process-icons"></i><p>节点展开</p></a>
+		                                   	<a class="sq" data-title="节点收起" id="processNodesHide"><i class="process-icons"></i><p>节点收起</p></a>
+                                   		</div>
+                                   	</div>
+                                    </td>
+                                   </tr>
+                                   </table>
+                               </div>
+                       </div>
+                       <div class="comMarginTop">
+                           <p class="com-selections" id="selections"><a class="first check">项目内容</a><a>流程查看</a><a class="last">流程意见</a></p>
+                       </div>
+                       <div class="process-frame">
+                           <h5 id="selectionsArrows"><i></i></h5>
+                           <div class="process-frame-dashed" id="frameProcess">
+                              <script type="text/javascript">
+                             	var coordinateID = ${(coordinateInfo.CoordinateID)!};
+                              	var nodeID = ${(nodeInfo.NodeID)!(0)};
+                              	var projectID = ${(coordinateInfo.FormDataID)!};
+		 						processText(projectID,'${(nodeInfo.FormCode)?default("business_projectBase")}');
+		 					  </script> 
+                           </div>
+                       </div>
+                 </div>
+          </div>
+          </div>
+    </td>
+      </tr>
+    </table>
+</div>
+<!-- End of con -->
+
+<!-- Start of footer -->
+<div id="footer" class="comMarginTop01 com-footer">
+</div>
+<!-- End of footer -->
+<script type="text/javascript">
+    
+	$(function() {
+		$("#banner").load("../banner?navInfo=a,12");
+		$("#navTree").load("../navTree?navInfo=a,12");
+		$("#footer").load("../footer");
+		$("#memuFrame").hide();
+		$("#processNodesHide").hide();
+	});
+	
+	var coorContent;
+	function submitProcess() {
+		//根据当前流程的阶段（取流程code），取表单不同部分的数据，并提交
+		
+		var ci_json='{';
+		ci_json+='"Name":"'+$("#ci_Name").val()+'",';
+		ci_json+='"Code":"'+$("#ci_Code").val()+'",';
+		ci_json+='"ContactPerson":"'+$("#ci_ContactPerson").val()+'",';
+		ci_json+='"ContactInfo":"'+$("#ci_ContactInfo").val()+'",';
+		ci_json+='"ClientManager":"'+$("#ci_ClientManager").val()+'"}';
+		
+		var ts_json='{';
+		ts_json+='"Budget":"'+$("#ts_Budget").val()+'",';
+		ts_json+='"Estimate":"'+$("#ts_Estimate").val()+'",';
+		ts_json+='"Memo":"'+$("#ts_Memo").val()+'",';
+		ts_json+='"AttachURL":"'+$("#ts_AttachURL").val()+'"}';
+		
+		var sc_json='{';
+		sc_json+='"blnConfirm":"'+$("#sc_blnConfirm").val()+'",';
+		sc_json+='"AttachURL1":"'+$("#sc_AttachURL1").val()+'",';
+		sc_json+='"AttachURL2":"'+$("#sc_AttachURL2").val()+'",';
+		sc_json+='"AttachURL3":"'+$("#sc_AttachURL3").val()+'",';
+		sc_json+='"Memo":"'+$("#sc_Memo").val()+'"}';
+		
+		var cr_json='{';
+		cr_json+='"blnAgree":"'+$("#cr_blnAgree").val()+'",';
+		cr_json+='"Key1":"'+$("#cr_Key1").val()+'",';
+		cr_json+='"Key2":"'+$("#cr_Key2").val()+'",';
+		cr_json+='"Key3":"'+$("#cr_Key3").val()+'",';
+		cr_json+='"Key4":"'+$("#cr_Key4").val()+'",';
+		cr_json+='"Key5":"'+$("#cr_Key5").val()+'",';
+		cr_json+='"Key6":"'+$("#cr_Key6").val()+'",';
+		cr_json+='"Key7":"'+$("#cr_Key7").val()+'",';
+		cr_json+='"Key8":"'+$("#cr_Key8").val()+'",';
+		cr_json+='"Key9":"'+$("#cr_Key9").val()+'",';
+		cr_json+='"Key10":"'+$("#cr_Key10").val()+'",';
+		cr_json+='"Key11":"'+$("#cr_Key11").val()+'",';
+		cr_json+='"AttachURL":"'+$("#cr_AttachURL").val()+'",';
+		cr_json+='"CommercialType":"'+$("#checkboxList").attr("group-ids")+'",';
+		cr_json+='"Memo":"'+$("#cr_Memo").val()+'"}';
+		
+		var mr_json='{';
+		mr_json+='"Conclusion":"'+$("#mr_Conclusion").val()+'",';
+		mr_json+='"AttachURL":"'+$("#mr_AttachURL").val()+'",';
+		mr_json+='"Memo":"'+$("#mr_Memo").val()+'"}';
+		
+		var sr_json='{';
+		sr_json+='"Conclusion":"'+$("#sr_Conclusion").val()+'",';
+		sr_json+='"AttachURL1":"'+$("#sr_AttachURL1").val()+'",';
+		sr_json+='"AttachURL2":"'+$("#sr_AttachURL2").val()+'",';
+		sr_json+='"Memo":"'+$("#sr_Memo").val()+'"}';
+		
+		var cc_json='{';
+		cc_json+='"AttachURL1":"'+$("#cc_AttachURL1").val()+'",';
+		cc_json+='"AttachURL2":"'+$("#cc_AttachURL2").val()+'",';
+		cc_json+='"Memo":"'+$("#cc_Memo").val()+'"}';
+		
+		var ii_json='{';
+		ii_json+='"AttachURL1":"'+$("#ii_AttachURL1").val()+'",';
+		ii_json+='"AttachURL2":"'+$("#ii_AttachURL2").val()+'",';
+		ii_json+='"AttachURL3":"'+$("#ii_AttachURL3").val()+'",';
+		ii_json+='"MISCode":"'+$("#ii_MISCode").val()+'",';
+		ii_json+='"Memo":"'+$("#ii_Memo").val()+'"}';
+		
+		var cl_json='{';
+		cl_json+='"CodeJson":'+$("#cl_CodeJson").val()+',';
+		cl_json+='"Memo":"'+$("#cl_Memo").val()+'"}';
+		
+		$.ajax({
+            url: "../business/submitProcess",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	 ci_json : ci_json,
+            	 ts_json : ts_json,
+            	 sc_json : sc_json,
+            	 cr_json : cr_json,
+            	 mr_json : mr_json,
+            	 sr_json : sr_json,
+            	 cc_json : cc_json,
+            	 ii_json : ii_json,
+            	 cl_json : cl_json,
+            	 coordinateID : ${(coordinateInfo.CoordinateID)!},
+            	 nodeID : ${(nodeInfo.NodeID)?default(0)},
+            	 coorContent : coorContent
+            	},
+            success: function(data) {
+                if (data.Result) {
+                	alert(data.Msg);
+                	window.open("index", "_self", "");
+                }else{
+                	alert(data.Msg);
+                }
+            }
+        });
+	}
+	
+</script>
+</body>
+</html>

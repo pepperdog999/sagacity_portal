@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>发现</title>
+<link href="../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/common.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="lib/javascript/index.js"></script>
+<script type="text/javascript" src="lib/javascript/common.js"></script>
+</head>
+
+<body class="bodyBack">
+
+<!-- Start of toppart -->
+<div class="fontLeft com-top toDiv">
+	<div class="com-top-left toLeft">
+    	<div class="com-logo"><span><img src="../lib/images/logo.png" width="268" height="50" /></span><font>商机管理平台</font></div>
+    </div>
+    <div class="com-top-right toRight">
+    	<ul>
+        	<li class="com-search"><label>搜索：</label><span><input name="" type="text" value="人物姓名"/><a class="com-icons"></a></span></li>
+            <li class="com-skip"><span><a class="com-icons xt" title="查询统计"></a><em>9</em></span><span><a class="com-icons mes" title="文档中心"></a><em>12</em></span><span><a class="com-icons ext" title="退出"></a></span></li>
+            <li class="com-userMes"><font>密密麻麻</font><span><img src="../lib/images/user/header/header.png" /></span></li>
+        </ul>
+    </div>
+</div>
+<!-- End of toppart -->
+
+
+<!-- Start of con -->
+<div class="comMarginTop01 fontLeft">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="top" class="menu-left" id="memuFrame">
+        	
+        	<div class="menu-line"></div>
+            <div class="menu-c">
+            	<h5><font>我的功能</font><span class="all-icons"></span></h5>
+                <ul class="menu-ul">    
+                	<li class="check"><a><i class="menu-icons menuIco01"></i>信息频道</a></li>
+                    <li><a><i class="menu-icons menuIco02"></i>通讯录</a></li>
+                    <li><a><i class="menu-icons menuIco03"></i>提醒中心</a></li>
+                    <li><a><i class="menu-icons menuIco04"></i>应用中心</a></li>
+                    <li><a><i class="menu-icons menuIco05"></i>网盘</a></li>
+                </ul>
+                <h5><font>应用中心</font><span class="all-icons up"></span></h5>
+                <ul class="menu-ul">       
+                	<li><a><i class="menu-icons menuIco02"></i>政企通讯录</a></li>
+                    <li><a><i class="menu-icons menuIco06"></i>企业OA</a></li>
+                    <li><a><i class="menu-icons menuIco07"></i>云短信</a></li>
+                    <li><a><i class="menu-icons menuIco08"></i>企业OA</a></li>
+                </ul>
+            </div>
+        </td>
+        <td align="left" valign="top" class="com-right">
+        	<div class="com-rightPosition">
+        	<div class="com-optionMenu"><a class="closeMenu" id="setMenuFrame" title="打开菜单"><i></i></a></div>
+        	<div class="com-tit" style="display:none;"><font>个人信息</font><em>/</em><b>User Message</b></div>
+            <div class=" com-userDel">
+            	
+                <div class="com-userDel-ik">
+                	<h5>某某某</h5>
+                	<p class="green"><i class="com-pics dw"></i><label>单位：</label>成都启迪信息技术</p>
+                    <p><span><i class="com-pics bm"></i><label>部门：</label>开发部</span></p>
+                    <p><span><i class="com-pics zw"></i><label>职务：</label>开发人员</span></p>
+                </div>
+                <div class="com-in">
+                    <div class="com-info mes"><a><p class="com-info-ic"><b><i class="com-icons"></i></b></p><p class="com-info-num">3</p><font>待处理项目</font></a></div>
+                    <div class="com-info xt"><a><p class="com-info-ic"><b><i class="com-icons"></i></b></p><p class="com-info-num">3</p><font>项目库</font></a></div>
+                </div>
+                
+            </div>
+            
+            <div class="com-member">
+            	<div class="com-member-tit">
+                	<font><a class="red">项目库</a></font>
+                    <span>
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="padding-right:5px;"><link href="../widget/select/css/select.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../widget/select/javascript/select.js"></script>
+                    <select name="" id="company">
+                	  <option>编号</option>
+                	  <option>发起人</option>
+               	  </select>
+                  <script type="text/javascript">
+                  var company = document.getElementById("company");
+	
+					var companySelect = new select();
+					companySelect.SetOptions({
+						width: 101,
+						handler:company,
+						isClick:true,
+						tipTitle:"您未输入用户名、密码！请先正确输入,再选择！"
+					});
+					companySelect.render();
+                  </script></td>
+                        <td><input name="" type="text" class="com-tabInput inputWidth01 strInput"  value="项目编号查询"/>&nbsp;<button class="com-lookBtn01">查询</button></td>
+                      </tr>
+                    </table>
+                    
+                  </span>
+                </div>
+            	<table width="100%" border="0" cellspacing="1" cellpadding="0" class="member-tab">
+                  <tr>
+                    <th width="9%">项目编号</th>
+                    <th width="10%">发起人</th>
+                    <th width="15%">项目名称</th>
+                    <th width="13%">发起时间</th>
+                    <th width="13%">最后处理时间</th>
+                    <th width="15%">客户名称</th>
+                    <th width="10%">当前处理状态</th>
+                    <th>所属分公司</th>
+                  </tr>
+                  <tr>
+                    <td><span class="red">345342342</span></td>
+                    <td>某某某</td>
+                    <td>教育部教育信息发布</td>
+                    <td>【2014-05-27 16:52:22】</td>
+                    <td>【2014-05-27 16:52:22】</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>成华分公司</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </table>
+				<div  class="com-member-list-page comMarginTop"><span><a class="last"><i></i></a><b><em>2</em>/17</b><a class="next"><i></i></a></span><font><input name="" type="text" /><a>跳转</a></font></div>
+            </div>
+            </div>
+        </td>
+      </tr>
+    </table>
+</div>
+<!-- End of con -->
+
+<!-- Start of footer -->
+<div class="comMarginTop01 com-footer">
+	<div class="com-footer-b">
+        <div class="com-footer-link">
+            <a class="green">关于我们</a><a>业务介绍</a><a>联系我们</a>
+        </div>
+        <div class="com-footer-info">
+            <p>Copyright (c) 2013 成都启迪信息技术 All Rights ReservedV</p>
+        </div>
+    </div>
+</div>
+<!-- End of footer -->
+</body>
+</html>

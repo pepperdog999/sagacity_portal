@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>云协同</title>
+<link href="../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/common.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="lib/javascript/index.js"></script>
+<script type="text/javascript" src="lib/javascript/common.js"></script>
+</head>
+
+<body class="bodyBack">
+
+<!-- Start of toppart -->
+<div id="banner" class="fontLeft com-top toDiv">
+</div>
+<!-- End of toppart -->
+
+
+<!-- Start of con -->
+<div class="comMarginTop01 fontLeft">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="top" class="menu-left" id="memuFrame">
+        	
+        	<div class="menu-line"></div>
+            <div class="menu-c" id="navTree">
+            </div>
+        </td>
+        <td align="left" valign="top" class="com-right">
+        	<div class="com-rightPosition">
+        	<div class="com-optionMenu">
+        		<a class="returnHome" title="返回主页" href="index" hidefocus="true"><i></i></a>
+        		<a class="closeMenu close" id="setMenuFrame" title="打开菜单"><i></i></a>
+        	</div>
+        	<div class="com-tit" style="display:none;"><font>个人信息</font><em>/</em><b>User Message</b></div>
+            <div class=" com-userDel">
+            	
+                <div class="com-userDel-ik">
+                	<h5>${(userContact.Name)!}</h5>
+                	<p class="green"><i class="com-pics dw"></i><label>组织：</label>${(userContact.CorpName)!}</p>
+                    <p><span><i class="com-pics bm"></i><label>部门：</label>${(userContact.DeptName)!}</span></p>
+                    <p><span><i class="com-pics zw"></i><label>职务：</label>${(userContact.PosName)!}</span></p>
+                </div>
+                <div class="com-in">
+                	<#list coorSummary as coor>
+                		<#switch coor.type>
+  							<#case "processing">
+							    <div class="com-info mes"><a href="index"><p class="com-info-ic"><b><i class="com-icons"></i></b></p><p class="com-info-num">${(coor.count)!}</p><font>待办协同</font></a></div>
+							    <#break>
+  							<#case "archived">
+	  							<div class="com-info xt"><a href="index"><p class="com-info-ic"><b><i class="com-icons"></i></b></p><p class="com-info-num">${(coor.count)!}</p><font>归档协同</font></a></div>
+							    <#break>
+  							<#default>
+						</#switch>
+                	</#list>
+                </div>
+                
+            </div>
+            </div>
+            
+            <div class="com-member">
+            	<div class="com-member-tit">
+                	<font id="TabMenu">
+                		<#list coorSummary as coor>
+                		<#switch coor.type>
+  							<#case "processing">
+							    <a class="ckeck">待办协同<em>${(coor.count)!}</em></a>
+							    <#break>
+							<#case "processed">
+							    <a>已办协同<em>${(coor.count)!}</em></a>
+							    <#break>
+  							<#case "created">
+	  							<a>已发协同<em>${(coor.count)!}</em></a>
+							    <#break>
+  							<#default>
+						</#switch>
+                		</#list>
+                	</font>
+                    <span><a title="新建协同" href="addCoor"><i class="com-icons"></i>新建协同</a></span>
+                </div>
+                <div id="memberList">
+                	 <script type="text/javascript">
+						processingWorkList();
+					 </script>  
+                </div>
+            </div>
+            </div>
+        </td>
+      </tr>
+    </table>
+</div>
+<!-- End of con -->
+
+<!-- Start of footer -->
+<div id="footer" class="comMarginTop01 com-footer">
+</div>
+<!-- End of footer -->
+<script type="text/javascript">
+		
+	$(function() {
+		$("#banner").load("../banner?navInfo=a,16");
+		$("#navTree").load("../navTree?navInfo=a,16");
+		$("#footer").load("../footer");
+		$("#memuFrame").show();		
+	});
+</script>
+</body>
+</html>

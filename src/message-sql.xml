@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup name="message">
+	<sql id="GetMessageSummary">
+		select ur.UserID,cc.CCCount,mc.URCount
+		from sys_usercorprelation ur
+		left join (select CorpID,count(CContactID) CCCount from zq_corpcontact group by CorpID) cc on cc.CorpID=ur.CorpID
+		left join (select UserID,count(IndexID) URCount from message_index where PushReceiveTime is null group by UserID) mc on mc.UserID=ur.UserID
+		where ur.UserID=? and ur.CorpID=?
+	</sql>
+	<sql id="GetUserGroupingMessageList_Select">
+		select u.UserID AuthorID,u.Caption,u.NickName,mmc.MessageID,ma.Title,ma.Content,ma.CreateDate
+		,IFNULL(mau.urCount,0) urCount,case when ma.UserID=mmc.UserID then 'recive' else 'send' end direction
+	</sql>
+	<sql id="GetUserGroupingMessageList_From">
+		from message_master ma
+		left join (select max(MessageID) MessageID,UserID from
+		(
+			select ma.MessageID,mi.UserID
+			from message_master ma
+			inner join message_index mi on mi.MessageID=ma.MessageID and ma.UserID = ?
+			union
+			select ma.MessageID,ma.UserID
+			from message_master ma
+			inner join message_index mi on mi.MessageID=ma.MessageID and mi.UserID = ?
+		) mc group by UserID) mmc on mmc.MessageID=ma.MessageID
+		left join 
+		(
+			select count(ma.MessageID) urCount,ma.UserID AuthorID,mi.UserID
+			from message_master ma
+			left join message_index mi on mi.MessageID=ma.MessageID
+			where mi.PushReceiveTime is null
+			group by ma.UserID,mi.UserID
+		) mau on mau.AuthorID=mmc.UserID and mau.UserID=?
+		inner join sys_users u on u.UserID=mmc.UserID
+		where mmc.UserID != ?
+		order by ma.CreateDate DESC
+	</sql>
+	<sql id="GetInteractMessageListByAuthorID">
+		select u1.Caption,ma.MessageID,ma.Title,ma.Content,ma.CreateDate
+		,case when mi.PushReceiveTime is NULL then 0 else 1 end ReadMark
+		,case when ma.UserID=u.UserID then 'recive' else 'send' end direction
+		from message_master ma
+		left join message_index mi on mi.MessageID=ma.MessageID
+		left join sys_users u on u.UserID=?
+		left join sys_users u1 on u1.UserID = ma.UserID 
+		where substring(ma.CreateDate,1,7)=? and 
+		((ma.UserID=? and mi.UserID=?) or (ma.UserID=? and mi.UserID=?))
+		order by ma.CreateDate Desc
+	</sql>
+	<sql id="GetLastInteractDateByAuthorID">
+		select subString(max(ma.CreateDate),1,7) LastDate
+		from message_master ma
+		left join message_index mi on mi.MessageID=ma.MessageID
+		where (ma.UserID=? and mi.UserID=?) or (ma.UserID=? and mi.UserID=?)
+	</sql>
+	<sql id="GetNextInteractDateByAuthorID">
+		select substring(max(ma.CreateDate),1,7) NextDate
+		from message_master ma
+		left join message_index mi on mi.MessageID=ma.MessageID
+		where ((ma.UserID=? and mi.UserID=?) or (ma.UserID=? and mi.UserID=?)) and substring(ma.CreateDate,1,7) &lt; ?
+	</sql>
+</sqlGroup>
+

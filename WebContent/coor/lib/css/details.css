@@ -1,0 +1,75 @@
+/* CSS Document */
+
+.depart{ clear:both; overflow:hidden; padding:5px;}
+.depart-float{ float:left;}
+.depart-l,.depart-r{ width:240px;}
+.depart-m{ width:35px; padding-left:3px; padding-right:3px;}
+
+.depart-b{ border:1px solid #dcdcdc;}
+.depart-hei01{ height:200px; overflow:auto;}
+.depart-hei02{ height:407px;overflow:auto;}
+.depart-mar{ margin-top:5px;}
+
+.depart-m a{ cursor:pointer;}
+.depart-m a:hover{ background-color:#1f9ec3;}
+
+.checkbox-ico{ background:url(../images/checkbox-ico.png) no-repeat 0px 0px; width:14px; height:12px; display:inline-block; vertical-align:middle; font-size:0px;}
+
+.depart-ul{ list-style:none; padding:8px;}
+.depart-ul li{ list-style:none; font-size:12px; color:#333; padding:3px 5px; line-height:20px;}
+.depart-ul li i{ margin-right:5px;}
+.depart-ul li a{ display:block; cursor:pointer;}
+.depart-ul li.check{ background-color:#fff;}
+.depart-ul li.check i{ background-position:-14px 0px;}
+
+.depart-ico{ background:url(../images/depart-arrows.png) no-repeat; font-size:0px; display:inline-block; vertical-align:middle;}
+.toRight{ background-color:#28acd2; display:block; padding:8px 10px; text-align:center; margin-top:179px;}
+.toRight i{ width:12px; height:7px; background-position:0px 0px;}
+.toLeft{ background-color:#28acd2; display:block; padding:8px 10px; text-align:center; margin-top:5px;}
+.toLeft i{ width:12px; height:7px; background-position:0px -7px;}
+.toUp{ background-color:#28acd2; display:block; padding:5px 10px; text-align:center; margin-top:179px;}
+.toUp i{ width:7px; height:12px; background-position:-12px 0px;}
+.toDown{ background-color:#28acd2; display:block; padding:5px 10px; text-align:center; margin-top:5px;}
+.toDown i{ width:7px; height:12px; background-position:-19px 0px;}
+
+
+/**/
+.comment{ padding:10px 20px;}
+.comment-c{background:url(../images/comment-bg.png) repeat-x center; height:20px; display:inline-block;}
+
+.comment-c a{ background:url(../images/comment-ico.png) no-repeat 0px -21px; width:111px; height:20px; display:inline-block; vertical-align:middle; text-align:center; line-height:20px; margin-right:15px; color:#797979;}
+.comment-c a.last{ margin-right:0px;}
+.comment-c a.check{ background-position:0px 0px; color:#FFF;}
+.comment-n{ border-top:1px dashed #ccc; margin-top:10px;}
+.comment-n h4{ font-size:14px; line-height:30px; position:relative;}
+.comment-n span.comment-opspan{ position:absolute; right:0px; top:0px;}
+.comment-n span.comment-opspan label{ margin-right:15px;}
+.comment-n span.comment-opspan label input{ display:inline-block; vertical-align:middle; margin-top:-3px;}
+.comment-n textarea{ border:1px solid #ccc; overflow:auto; width:520px; line-height:18px; height:150px;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px; padding:5px;
+-webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, .08)inset;
+-moz-box-shadow: 0 2px 3px rgba(0, 0, 0, .08)inset;
+box-shadow: 0 2px 3px rgba(0, 0, 0, .08)inset;
+}
+
+.comment-btnB{ text-align:right; padding-top:5px;}
+.comment-btn{ background-color:#28acd2; color:#FFF;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px; width:70px; height:24px; line-height:24px; text-align:center; display:inline-block; vertical-align:middle; cursor:pointer;}
+.comment-btn:hover{ background-color:#1f9ec3;}
+.comment-cancelbtn{ background-color:#d3d3d3; color:#666;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px; width:70px; height:24px; line-height:24px; text-align:center; display:inline-block; vertical-align:middle; cursor:pointer;}
+.comment-cancelbtn:hover{ background-color:#cacaca;}
+
+.comment-over{ height:350px; overflow:auto;}
+.comment-end p{ margin-bottom:10px; color:#999; font-family:"宋体"; border:1px solid #e7e7e7; padding:10px;}
+.comment-end h5{ font-size:12px; margin-bottom:5px;}
+.comment-end p b{ font-weight:normal; font-size:12px; text-indent:30px; line-height:20px;}
+.comment-end p em{ font-style:normal; font-size:12px; margin-right:10px; line-height:20px;}
+
+.comment-btnh{ text-align:center; padding-top:5px;}
+.comment-btnh button{ margin-right:5px;}
+
+
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>文件预览</title>
+<link href="../lib/css/public.css" type="text/css" rel="stylesheet" />
+<link href="lib/css/preview.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="../lib/javascript/jquery-1.9.1.min.js"></script>
+</head>
+
+<body>
+<div class="yl">
+	<h3 class="yl-tit">${(fileName)!}<span><a class="yl-btn">手机查看附件</a><a class="yl-btn">下载</a></span></h3>
+    <div class="yl-con">
+    	<div class="yl-inset">
+    	<iframe id="viewifrmae" width="100%" height="100%" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" 
+    	scrolling="auto" allowtransparency="true"  style="background-color:transparent;" src="${(parameters)!}"></iframe>
+    	</div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		function setFrameHeight(){
+			var h = $(document).height();
+			$("#viewifrmae").height(h-115);
+		}
+		$("#viewifrmae").bind("load", setFrameHeight);
+		
+		window.onresize = function(){
+			setFrameHeight();
+		}
+	});
+</script>
+</body>
+</html>

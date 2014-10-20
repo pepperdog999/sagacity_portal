@@ -1,0 +1,178 @@
+<div class="mess-del">
+        <div class="mess-del-mark"><p><span class="blue"></span>未读消息：<b>${(urCount)!(0)}</b></p></div>
+        <div class="mess-del-more"><a href="#" onclick="getMore()">显示更多消息</a></div>
+        <div class="mess-del-c" id="interactContent-last">
+                
+                <!-- Start of 循环消息 -->
+                
+                <!-- End of 循环消息 -->
+                <div class="datelist today">
+	                <h5 class="dateK"><b>近期</b></h5>
+	                    <div class="listContainer" id="interactContent-now">
+		                   	<div class="listBorder listRight">
+	                                <div class="listInert">
+	                                        
+	                                        <div class="listCon">
+	                                            <div class="listCon-name"><span><img src="lib/images/cri-me.png"/><br/></span><em></em></div>
+	                                            <i class="listCon-cricle"></i>
+	                                            <i class="listCon-arr"></i>
+	                                            <div class="listConTime"><p>新消息窗口</p>
+	                                            </div>
+	                                            <div class="listDel submit">
+	                                                <p><textarea id="messageContent" cols="" rows="" class="listDel-area">发个新消息吧!</textarea></p>
+	                                                <p class="listDelB"><a class="listDel-btn" href="#" onclick="sendMessage()">提交</a></p>
+	                                            </div>
+	                                        </div>
+	                                        
+	                                </div>
+	                          </div>
+	                     </div>
+                </div>
+                
+        </div>
+        <div class="mess-del-point"><p></p></div>
+</div>
+
+<script type="text/javascript">
+	var nowDate = "${(nowDate)!}";
+	var lastDate = "";
+	var authorID = "${(authorID)!}";
+	
+	Date.prototype.dateDiff = function(interval,objDate2) 
+	{ 
+	    var d=this, i={}, t=d.getTime(), t2=objDate2.getTime(); 
+	    i['y']=objDate2.getFullYear()-d.getFullYear(); 
+	    i['q']=i['y']*4+Math.floor(objDate2.getMonth()/4)-Math.floor(d.getMonth()/4); 
+	    i['m']=i['y']*12+objDate2.getMonth()-d.getMonth(); 
+	    i['ms']=objDate2.getTime()-d.getTime(); 
+	    i['w']=Math.floor((t2+345600000)/(604800000))-Math.floor((t+345600000)/(604800000)); 
+	    i['d']=Math.floor(t2/86400000)-Math.floor(t/86400000); 
+	    i['h']=Math.floor(t2/3600000)-Math.floor(t/3600000); 
+	    i['n']=Math.floor(t2/60000)-Math.floor(t/60000); 
+	    i['s']=Math.floor(t2/1000)-Math.floor(t/1000); 
+	    return i[interval]; 
+	}
+	
+	$(document).ready(function(){
+		getInteractMessage(authorID);		
+	});
+	
+	function sendMessage(){
+		var indexData=[];
+		var single = new Object();
+		single["UserID"]=authorID;
+		single["Name"]="";
+		indexData.push(single);
+			
+		$.ajax({
+            url: "../system/sendMsg",
+            type: "GET",
+            dataType: "json",
+            data: {
+            	contents : $("#messageContent").val(),
+            	indexData : JSON.stringify(indexData)
+            },
+            success: function(data) {
+            	$("#messageContent").val("");
+            	alert(data.Msg);
+            }
+		});
+	}
+	
+	function getMore(){
+		$.getJSON("../message/getNextInteractDateByAuthorID", 
+				  {
+					authorID : authorID,
+					lastDate : lastDate
+				  }, 
+				  function(data) {
+					if (data.Success) {
+						lastDate=data.NextDate;
+						setDialogue(authorID,data.NextDate.substr(0,4),data.NextDate.substr(5,2),'getMore');
+					}else{
+						alert("已无更多数据！");
+					}
+				  });
+	}
+	
+	function getInteractMessage(){
+		$.getJSON("../message/getLastInteractDateByAuthorID", 
+				  {authorID : authorID}, 
+				  function(data) {
+					if (data.Success) {
+						lastDate=data.LastDate;
+						setDialogue(authorID,data.LastDate.substr(0,4),data.LastDate.substr(5,2),'init');
+					}
+				  });
+	}
+	
+	function setDialogue(authorID, year, month, type){
+		$.getJSON(
+				"../message/getInteractMessageByAuthorID",
+				{	yearMonth : year+'-'+month,
+					authorID: authorID}, 
+				function(data) {
+					var html_now=''; 
+					var html='<div class="datelist">';
+					html+='<h5 class="dateK"><b>'+year+'-'+month+'</b></h5>';
+					html+='<div class="listContainer">';
+					for (var i =0;i < data.List.length;i++) {
+						var row = data.List[i];
+						var listBorderClass = row.direction=="send" ? "listBorder" : "listBorder listRight";
+						var userName = row.direction=="send" ? row.Caption : "我";
+						var headerImg = row.direction=="send" ? '<img src="lib/images/cri.png"/>' : '<img src="lib/images/cri-meold.png"/>';
+						var headerImg_now = row.direction=="send" ? '<img src="lib/images/cri-today.png"/>' : '<img src="lib/images/cri-me.png"/>';
+						var date1 = new Date(nowDate);
+						var date2 = new Date(row.CreateDate);
+						if (date2.dateDiff('d',date1)>2){
+							html+='<div class="'+listBorderClass+'">';
+		                    html+='<div class="listInert"><div class="listCon">';
+		                    html+='<div class="listCon-name"><span>'+headerImg+'<br/><s>'+row.CreateDate.substr(11,5)+'</s></span><em>'+userName+'</em></div>';
+		                    html+='<i class="listCon-cricle"></i>';
+		                    html+='<i class="listCon-arr"></i>';
+		                    html+='<div class="listConTime"><span>'+row.CreateDate.substr(8,2)+'</span><div class="listConTime-p">';
+		                    html+='<p class="x">星期'+date2.getDay()+'</p>';
+		                    html+='<p class="d"><b>'+row.CreateDate.substr(5,2)+'</b>-<b>'+row.CreateDate.substr(0,4)+'</b></p>';
+		                    html+='</div></div>';
+		                    if (row.ReadMark==0){
+								html+='<div class="listDel"><p title="'+row.Title+'"><img src="lib/images/unread.png">'+row.Content+'</p></div>';	
+							}else{
+								html+='<div class="listDel"><p title="'+row.Title+'">'+row.Content+'</p></div>';
+							}
+		                    html+='</div></div></div>';
+						}else{
+							html_now+='<div class="'+listBorderClass+'">';
+							html_now+='<div class="listInert"><div class="listCon">';
+							html_now+='<div class="listCon-name"><span>'+headerImg_now+'<br/><s>'+row.CreateDate.substr(11,5)+'</s></span><em>'+userName+'</em></div>';
+							html_now+='<i class="listCon-cricle"></i>';
+							html_now+='<i class="listCon-arr"></i>';
+							html_now+='<div class="listConTime"><span>'+row.CreateDate.substr(8,2)+'</span><div class="listConTime-p">';
+							html_now+='<p class="x">星期'+date2.getDay()+'</p>';
+							html_now+='<p class="d"><b>'+row.CreateDate.substr(5,2)+'</b>-<b>'+row.CreateDate.substr(0,4)+'</b></p>';
+							html_now+='</div></div>';
+							if (row.ReadMark==0){
+								html_now+='<div class="listDel"><p title="'+row.Title+'"><img src="lib/images/unread.png">'+row.Content+'</p></div>';	
+							}else{
+								html_now+='<div class="listDel"><p title="'+row.Title+'">'+row.Content+'</p></div>';
+							}							
+							html_now+='</div></div></div>';
+						}
+						
+					}
+					html+='</div></div>';
+					$("#interactContent-last").prepend(html); //此处为之前消息
+					$("#interactContent-now").prepend(html_now); //此处为近期消息
+						
+					switch(type){
+					case 'init' :
+						//var sHeight= $(".interMes-dialogue-l").height();
+						//$(".interMes-dialogue").scrollTop(sHeight);
+						break;
+					case 'getMore' :
+						break;
+					default :
+						break;
+					}
+			});	
+	}
+</script>

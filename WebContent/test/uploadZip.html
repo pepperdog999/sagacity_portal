@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+   
+    <title>测试上传打包附件</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+	<script src="../scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+  </head>
+  
+  <body>
+	<form method="post" action="http://127.0.0.1:8080/sagacity_coor/cloud/UpdateReportingAttach" enctype="multipart/form-data">
+		 <input name="reportingID" type="text" value="2">
+		 <input name="userID" type="text" value="76d0865e-c934-11e3-bc6a-19298419ef">
+		 <br/>
+	     <input name="attachFile" type="file" />
+	     <br/>
+	     <input type="submit" name="提交">
+	</form>
+
+  </body>
+</html>
